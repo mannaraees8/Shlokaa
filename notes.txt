@@ -1,6 +1,8 @@
 SIMS
 ***********************
 
+AFTER PAYMENT
+-----------------------------------------
 Password needs to be hashed
 password needs 256SHA hashing algo
 email confirmation 
