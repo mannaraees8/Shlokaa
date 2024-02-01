@@ -1,0 +1,15 @@
+SIMS
+***********************
+
+Password needs to be hashed
+password needs 256SHA hashing algo
+email confirmation 
+get access to the portal only if email is verified
+generate token for password reset form
+token should expire after 5mins 
+token should be ecryption of date time, userid, useremail
+send and email to user with password reset page with token
+get the token decrypt check the time if < 5min show the password reset form and delete the token or 
+update the status to inactive or expired else show link expired an
+
+dynamic sorting for all colums
