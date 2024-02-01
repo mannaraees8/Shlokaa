@@ -1,0 +1,147 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.Models.LeaveApplyModel>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $('#leaveTable').dataTable({
+            paging: false,
+            "aaSorting": [[2, "desc"]]
+        });
+    </script>
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Leave Approval List</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                        <!-- table-striped -->
+                        <table class="table table-responsive-xl  table-sm w3-table w3-striped w3-border" id="leaveTable">
+                            <thead>
+                                <tr>
+                                    <th class="d-none" width="200">
+                                        @Html.DisplayNameFor(model => model.First().Id)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().UserName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().Date)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().LeaveCategory)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().Leavetype)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().Reason)
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="d-none">
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td>
+                                        <span hidden> @Html.ValueFor(modelItem => item.Date, "{0:MM-dd-yyyy}")</span>
+                                        @Html.ValueFor(modelItem => item.Date, "{0:dd-MM-yyyy}")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LeaveCategory)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Leavetype)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Reason)
+                                    </td>
+                                    <td>
+                                        @if (item.Isdeleted == false)
+                                        {
+                                            if (item.Isadminauthorised == true)
+                                            {
+
+                                                <b>Approved</b>
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Approve", "AdminApprove", "LeaveApply", new { id = item.Id }, new { @class = "btn btn-sm btn-success btn-block" })
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+
+                                        @if (item.Isadminauthorised == false)
+                                        {
+                                            if (item.Isdeleted == true)
+                                            {
+
+                                                <b>Rejected</b>
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Reject", "Delete", "LeaveApply", new { id = item.Id }, new { @class = "btn btn-sm btn-danger btn-block" })
+                                            }
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </table>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        @Html.PagedListPager(Model, pageIndex => Url.Action("AdminApprovalPage", new
+                        {
+                            pageIndex,
+                       search = Request.QueryString["search"],
+                       startdate = Request.QueryString["startdate"],
+                       enddate = Request.QueryString["enddate"]
+                   }),
+                      new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

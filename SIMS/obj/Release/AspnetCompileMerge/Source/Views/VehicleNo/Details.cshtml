@@ -1,0 +1,113 @@
+@model SIMS.ViewModels.VehicleNoModel.VehicleNoModel
+
+@{
+    ViewBag.Title = "VehicleNo";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using SIMS.BL
+@{
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("VehicleNo");
+    if (accessMatrix != null)
+    {
+        AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccessByModuleId(userId, accessMatrix.Id);
+
+        if (accessMatrixDetails != null)
+        {
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3> VehicleNo Details</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-12 col-md-10">
+                            <div class="row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-4 col-6">
+                                    <label>Id</label>
+                                </div>
+                                <div class="col-sm-6 col-6">
+                                    : @Html.DisplayFor(model => model.Id)
+                                </div>
+                            </div>
+                            <div class="row d-none">
+                                <div class="col-12">&nbsp;</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.VehicleNum)
+                                </div>
+                                <div class="col-sm-6 col-6">
+                                    : @Html.DisplayFor(model => model.VehicleNum)
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">&nbsp;</div>
+                            </div>
+
+                            <div class="row d-none">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Isdeleted)
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DisplayFor(model => model.Isdeleted)
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">&nbsp;</div>
+                            </div>
+                            @if (accessMatrixDetails.IsEdit == true)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3 col-6">
+                                        @Html.ActionLink("Edit", "Edit", "VehicleNo", new { id = Model.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                    <div class="col-sm-3 col-6">
+                                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                </div>}
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                  
+                                    <div class="col-sm-3 col-6">
+                                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            }
+        }
+    }

@@ -1,0 +1,187 @@
+﻿@model SIMS.Models.TriviaModel
+@{
+    ViewBag.Title = "Trivia";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Delete Trivia</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+  
+
+        <div class="row d-none">
+
+            <div class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </div>
+            <div class="col-sm-4">
+                @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control " } })
+            </div>
+        </div>
+        <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+
+            <div class="col-12 col-md-12 col-lg-3">
+                @Html.DisplayFor(model => model.TabName, new { htmlAttributes = new { @class = "form-control col-12" } })
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 mt-4 mt-lg-0">
+                @Html.DisplayFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control col-12" } })
+            </div>
+            <div class="col-lg-2 col-12 col-md-12">
+                @{if (Model.Image != null)
+                    {
+                        Byte[] imgByte = (byte[])Model.Image;
+                        string base64String = Convert.ToBase64String(imgByte, 0, imgByte.Length);
+                        base64String = "data:image/png;base64," + base64String;
+                        <img src="@base64String " class="img-fluid" alt="No Image" width="150" height="150">
+                    }
+                    else
+                    {
+                        <img class="img-fluid" alt="No Image" width="150" height="150">
+
+                    }
+                }
+            </div>
+        </div>
+        <div class="row" style="padding-left:30px;padding-top:10px;margin-right:0px;">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-12 col-md-12 col-lg-9">
+                <h5>@Html.DisplayFor(model => model.Title, new { htmlAttributes = new { @class = "form-control col-6" } })</h5>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                <ul>
+                    @if (Model.Point1 != "")
+                    {
+
+                        <li>
+                            @Html.DisplayFor(model => model.Point1, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point2 != "")
+                    {
+                        <li>
+                            @Html.DisplayFor(model => model.Point2, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point3 != "")
+                    {
+
+                        <li>
+                            @Html.DisplayFor(model => model.Point3, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point4 != "")
+                    {
+
+                        <li>
+                            @Html.DisplayFor(model => model.Point4, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point5 != "")
+                    {
+                        <li>
+                            @Html.DisplayFor(model => model.Point5, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point6 != "")
+                    {
+                        <li>
+                            @Html.DisplayFor(model => model.Point6, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point7 != "")
+                    {
+
+                        <li>
+                            @Html.DisplayFor(model => model.Point7, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point8 != "")
+                    {
+
+                        <li>
+                            @Html.DisplayFor(model => model.Point8, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point9 != "")
+                    {
+                        <li>
+                            @Html.DisplayFor(model => model.Point9, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                    @if (Model.Point10 != "")
+                    {
+
+                        <li>
+                            @Html.DisplayFor(model => model.Point10, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                        </li>
+                    }
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="row" style="padding-left:30px;padding-top:10px;margin-right:0px;">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-12 col-md-12 col-lg-9">
+                @if (Model.SubContents != "")
+                {
+
+                    @Html.DisplayFor(model => model.SubContents, new { htmlAttributes = new { @class = "form-control col-12" } })
+                }
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <input type="submit" value="Delete" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                </div>
+                <div class="col-sm-3">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+    </div>
+</div>

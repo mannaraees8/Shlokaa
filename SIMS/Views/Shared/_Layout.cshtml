@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shlokaa Enterprises</title>
+    <link rel="icon" href="~/Photo/Shlokaa Jet Black.JPG" type="image/x-icon" class="rounded-circle" />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="~/Content/Admin/home.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .btnOnlineSHopping {
+            border: 2px solid orange;
+            border-radius:25px;
+        }
+    </style>
+</head>
+<body style="padding-top:0px;">
+
+
+    <section id="topbar" class="d-none d-lg-flex align-items-center fixed-top topbar-transparent" style="background-color: black;
+        opacity: 1">
+        <div class="container-fluid text-right" style="color: rgba(255, 255, 255, 0.7);font-size: 15px">
+            <i class="fa fa-phone" style="color:orange"></i>   0820 3550181
+            <a href="/Account/Login" style="color:rgba(255, 255, 255, 0.7);margin-left:10px"> <i class="fa fa-user" style="color:orange"></i>&nbsp;Employee Login</a>
+        </div>
+    </section>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-center" style="background-color:black;opacity:1;height:80px;">
+        <div class="container-fluid d-flex align-items-center">
+
+
+            <div class="logo mr-auto text-center" style="margin-left:15px">
+                <a href="~/Home/Index"><img src="~/Photo/ShlokaaLogo.jpg" alt="" class="img-fluid"></a>
+                <p style="color: white;font-size:14px;font-family: 'Alex Brush', cursive;font-weight:600">Creating Happy Kitchens</p>
+            </div>
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li class="contactNo" style="float:right;padding-right:10px;font-weight:bold"><i class="fa fa-phone" style="color:black;margin-right:5px"></i>0820 3550181</li>
+                    <li><a href="~/Home/Index" id="Home">Home</a></li>
+                    <li><a href="~/Home/Index/#About" id="AboutMnu">About</a></li>
+                    <li><a href="~/Home/Values">Values</a></li>
+                    <li><a href="~/Home/Product">Products</a></li>
+                    <li><a href="~/Home/Gallery">Gallery</a></li>
+                    <li><a href="~/Home/Contact">Contact</a></li>
+                    <li class="EmpLogin"><a href="/Account/Login">Employee Login</a></li>
+                    <li style="margin-right:25px;">
+                        <a class="btn btnOnlineSHopping " href="https://shlokaaenterprises.stores.instamojo.com/"><i class="fa fa-shopping-cart" style="padding-right:3px;"></i>&nbsp;&nbsp;Online Shopping</a>
+                    </li>
+                </ul>
+            </nav><!-- .nav-menu -->
+
+        </div>
+    </header><!-- End Header -->
+    <div  style="min-height: 54.5vh;">
+        @RenderBody()
+
+    </div>
+
+    <!-- ======= Footer ======= -->
+    <!-- ======= Footer ======= -->
+    <a href="#" class="back-to-top"><i class="fa fa-arrow-circle-up"></i></a>
+    <div class="footer-top" style="line-height:30px;background-color:rgba(255, 165, 0, 0.35);">
+
+        <div class="row">
+            <div class="col-12">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-7 col-md-8 col-12">
+                <h4 style="margin-left:25px;color:maroon;">Useful Links</h4>
+                <div class="row">
+
+                    <div class="col-md-4 col-lg-4 col-4" style="padding:0 0;">
+
+                        <ul style="color:black;list-style-type:none;">
+                            <li><i class="fa fa-home"></i> <a style="color:black;margin-left:3px" href="~/Home/Index">Home</a></li>
+                            <li><i class="fa fa-user"></i>  <a style="color:black;margin-left:4px" href="~/Home/Index#About">About</a></li>
+                            <li><i class="fa fa-thumbs-up"></i> <a style="color:black;margin-left:3px" href="~/Home/Values">Values</a></li>
+
+
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-5" style="padding:0 0;">
+                        <ul class="footerAlignment" style="color:black;list-style-type:none;margin-left:-30px">
+                            <li><i class="fa fa-product-hunt"></i> <a style="color:black;margin-left:4px" href="~/Home/Product">Products</a></li>
+                            <li><i class="fa fa-image"></i><a style="color:black;margin-left:6px" href="~/Home/Gallery">Gallery</a></li>
+                            <li><i class="fa fa-shopping-cart"></i><a style="color:black;margin-left:8px" href="https://shlokaaenterprises.stores.instamojo.com/">Online Shopping</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-2" style="padding:0 0;">
+                        <ul class="footerAlignment1" style="color:black;list-style-type:none;margin-left:-60px">
+                            <li><i class="fa fa-phone-square"></i><a style="color:black;margin-left:7px" href="~/Home/Contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-lg-4  footer-links">
+                <h4 style="margin-left:25px;color:maroon;">Social Connects</h4>
+
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-md-12 col-lg-12 ">
+                        <a href="#"><i class=" fa fa-twitter" style="font-size:32px;margin-left:20px;color:black"></i></a>
+                        <a href="#"><i class="fa fa-facebook" style="font-size:30px;color:black"></i></a>
+                        <a href="#"><i class="fa fa-instagram" style="font-size:30px;color:black"></i></a>
+                        <a href="#"><i class="fa fa-whatsapp" style="font-size:30px;color:black"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer id="footer" style="color:#777777;padding:10px 0 10px 0;">
+
+        <div class="container">
+
+            <div class="copyright">
+                <h6 style="margin-top:3px">Developed And Maintained By</h6>
+                <h6>Manna Raees Ahmed(8792883929) &nbsp;Ajith Prabhu(8073811463)&nbsp; Sujan(8618405864) </h6>
+            </div>
+            <div class="credits">
+                &copy; Copyright <strong><span>Delicious</span></strong>. All Rights Reserved
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/ -->
+                Designed by <a href="https://bootstrapmade.com/" style="color:#777777">BootstrapMade</a>
+            </div>
+
+
+        </div>
+
+    </footer><!-- End Footer -->
+
+
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <script type="text/javascript">
+
+
+
+        $(function () {
+
+            var href = window.location.href;
+            $('nav a').each(function (e, i) {
+                if (href.indexOf($(this).attr('href')) >= 0) {
+                    $(this).addClass('active');
+                }
+            });
+            if (href.indexOf('About') > 0) {
+
+                $('#Home').removeClass('active');
+            }
+
+             var msg = "@(TempData["ErrorMsg"] as string)";
+      if (msg !== "") {
+          toastr.error(msg);
+            }
+
+                 var msg = "@(TempData["SuccessMsg"] as string)";
+      if (msg !== "") {
+          toastr.success(msg);
+     }
+
+
+        });
+
+
+
+    </script>
+
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

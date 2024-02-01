@@ -1,0 +1,340 @@
+@model SIMS.ViewModels.UsersModel.UsersModel
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    .cardStyle {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        box-shadow: none;
+    }
+
+    .ui_tpicker_microsec, .ui_tpicker_microsec_label, .ui_tpicker_millisec, .ui_tpicker_millisec_label, .ui_tpicker_second, .ui_tpicker_second_label, .ui_tpicker_timezone, .ui_tpicker_timezone_label {
+        display: none;
+    }
+</style>
+@using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3> Edit User</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    @{if (Model.Photo != null)
+                        {
+                            Byte[] imgByte = (byte[])Model.Photo;
+                            string base64String = Convert.ToBase64String(imgByte, 0, imgByte.Length);
+                            base64String = "data:image/png;base64," + base64String;
+                            <img src="@base64String " width="280" height="280" class="rounded-circle shadow">
+                        }
+                        else
+                        {
+                            <i class="fa fa-user-circle img-fluid" style="font-size:100px;color:white"></i>
+                        }
+                    }
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-9">
+
+                    <div class="card cardStyle">
+                        <div class="card-body">
+                            <h4>Personal Details</h4>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Name)
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Photo)<br />
+                                    <input type="file" id="UserPhoto" name="UserPhoto">
+
+                                </div>
+                            </div>
+                            <div class="row" style="padding-bottom:10px;">
+
+                                <div class="col-sm-12">
+                                    @Html.LabelFor(model => model.Address)
+                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "col-12 form-control", style = "height:80px;" } })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Location)
+                                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.State)
+                                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Dob)
+                                    @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control  col-12 " } })
+                                    @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Doj)
+                                    @Html.EditorFor(model => model.Doj, new { htmlAttributes = new { @class = "form-control  col-12 " } })
+                                    @Html.ValidationMessageFor(model => model.Doj, "", new { @class = "text-danger" })
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Mobile)
+                                    @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Adhar)
+                                    @Html.EditorFor(model => model.Adhar, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Adhar, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Pfno)
+                                    @Html.EditorFor(model => model.Pfno, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Pfno, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Esino)
+                                    @Html.EditorFor(model => model.Esino, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Esino, "", new { @class = "text-danger" })
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card cardStyle">
+                        <div class="card-body">
+                            <h4>Bank Details</h4>
+
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Bankaccountno)
+                                    @Html.EditorFor(model => model.Bankaccountno, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Bankaccountno, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Bankname)
+                                    @Html.EditorFor(model => model.Bankname, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Bankname, "", new { @class = "text-danger" })
+
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Branch)
+                                    @Html.EditorFor(model => model.Branch, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Branch, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Ifsc)
+                                    @Html.EditorFor(model => model.Ifsc, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Ifsc, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card cardStyle">
+                        <div class="card-body">
+                            <h4>Account Details</h4>
+
+                            <div class="row" style="        padding-bottom: 10px;
+">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Email)
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Department)
+                                    @Html.DropDownListFor(model => model.Department, new SelectList(Model.DepartmentList, "DepartmentName", "DepartmentName"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.EnteringTime)
+                                    @Html.EditorFor(model => model.EnteringTime, new { htmlAttributes = new { @class = "form-control  col-12", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.EnteringTime, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.LeavingTime)
+                                    @Html.EditorFor(model => model.LeavingTime, new { htmlAttributes = new { @class = "form-control  col-12", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.LeavingTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-bottom:10px;">
+
+                                <div class="col-sm-6">
+                                    @if (Model.Usertype == "Admin")
+                                    {
+                                        @Html.LabelFor(model => model.Usertype)
+                                        @Html.DropDownListFor(model => model.Usertype, new SelectListItem[]{
+                                                new SelectListItem() {Text = "Select", Value="Select"},
+                                                             new SelectListItem() {Text = "Admin", Value="Admin"},
+                     new SelectListItem() {Text = "Group Head", Value="Group Head"},
+                     new SelectListItem() {Text = "Executive Admin", Value="Executive Admin"},
+                     new SelectListItem() {Text = "Executive Accounts", Value="Executive Accounts"},
+                     new SelectListItem() {Text = "Executive Marketing", Value="Executive Marketing"},
+                     new SelectListItem() {Text = "Executive Operations", Value="Executive Operations"},
+                     new SelectListItem() {Text = "Associate Admin", Value="Associate Admin"},
+                     new SelectListItem() {Text = "Associate Accounts", Value="Associate Accounts"},
+                     new SelectListItem() {Text = "Associate Marketing", Value="Associate Marketing"}
+                     ,new SelectListItem() {Text = "Associate Operations", Value="Associate Operations"}}, new { @class = "form-control  col-12", onchange = "RetreiveTarget(" + Model.Id + ")" })
+                                        @Html.ValidationMessageFor(model => model.Usertype, "", new { @class = "text-danger" })
+                                    }
+                                    else
+                                    {
+                                        @Html.LabelFor(model => model.Usertype)
+                                        @Html.DropDownListFor(model => model.Usertype, new SelectListItem[]{
+                                                new SelectListItem() {Text = "Select", Value="Select"},
+                                         new SelectListItem() {Text = "Group Head", Value="Group Head"},
+                                         new SelectListItem() {Text = "Executive Admin", Value="Executive Admin"},
+                                         new SelectListItem() {Text = "Executive Accounts", Value="Executive Accounts"},
+                                         new SelectListItem() {Text = "Executive Marketing", Value="Executive Marketing"},
+                                         new SelectListItem() {Text = "Executive Operations", Value="Executive Operations"},
+                                         new SelectListItem() {Text = "Associate Admin", Value="Associate Admin"},
+                                         new SelectListItem() {Text = "Associate Accounts", Value="Associate Accounts"},
+                                         new SelectListItem() {Text = "Associate Marketing", Value="Associate Marketing"}
+                                         ,new SelectListItem() {Text = "Associate Operations", Value="Associate Operations"}}, new { @class = "form-control  col-12", onchange = "RetreiveTarget(" + Model.Id + ")" })
+                                        @Html.ValidationMessageFor(model => model.Usertype, "", new { @class = "text-danger" })
+
+                                    }
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Target)
+                                    @Html.EditorFor(model => model.Target, new { htmlAttributes = new { @class = "form-control  col-12" } })
+                                    @Html.ValidationMessageFor(model => model.Target, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.SalesTarget)
+                                    @Html.EditorFor(model => model.SalesTarget, new { htmlAttributes = new { @class = "form-control  col-12"} })
+                                    @Html.ValidationMessageFor(model => model.SalesTarget, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    @if (ViewContext.HttpContext.User.IsInRole("Group Head") || ViewContext.HttpContext.User.IsInRole("Admin"))
+                    {
+                        <div class="row">
+                            <div class="col-sm-2">
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-6 col-sm-4">
+                                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+@section Scripts {
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/TimePicker/Timepicker.js"></script>
+
+    <script>
+        $(function () {
+
+            $("#EnteringTime").timepicker({ timeFormat: 'hh:mm tt' });
+            $("#LeavingTime").timepicker({ timeFormat: 'hh:mm tt' });
+        });
+        $(document).ready(function () {
+            RetreiveTarget(@Model.Id);
+        });
+        function RetreiveTarget(id) {
+           var t= document.getElementById('Target').value;
+            $.ajax({
+                type: "GET",
+                url: '/Users/RetrieveTarget',
+                data: { 'id': id },
+                success: function (target) {
+                    if (target == 0) {
+                        document.getElementById('Target').value = t;
+                    } else {
+                        document.getElementById('Target').value = target;
+                    }
+                }
+            })
+        }
+    </script>
+
+
+}
+

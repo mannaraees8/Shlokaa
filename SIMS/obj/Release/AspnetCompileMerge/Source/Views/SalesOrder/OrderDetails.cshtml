@@ -1,0 +1,321 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@using SIMS.BL
+@model IPagedList<SIMS.ViewModels.SalesOrderModel.SalesOrderModel>
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<link href="https://unpkg.com/bootstrap-table@1.18.1/dist/bootstrap-table.min.css" rel="stylesheet">
+
+@section scripts{
+
+    <script src="~/Scripts/BootstrapTable/tableExport.min.js"></script>
+    <script src="~/Scripts/BootstrapTable/jspdf.min.js"></script>
+    <script src="~/Scripts/BootstrapTable/jspdf.plugin.autotable.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script>
+
+        //var $table = $('#table')
+        //$(function () {
+        //    $('#toolbar').find('select').change(function () {
+        //        $table.bootstrapTable('destroy').bootstrapTable({
+        //            exportDataType: $(this).val(),
+        //            exportTypes: ['excel'],
+
+        //        })
+        //    }).trigger('change')
+        //});
+        $(document).ready(() => {
+            let url = window.location.href;
+            url = url.substr(url.lastIndexOf('/') + 1);
+            $('#btnExportFull').attr('value', url);
+        })
+
+        $('#btnExportFull').click(function () {
+            let id = $(this).attr('value');
+            location.href = '@Url.Action("Excel", "SalesOrder")/' + id + '';
+        })
+
+        var Id, SalesOrderDetailsId;
+        const deleteItem = (id, salesOrderDetailsId) => {
+
+            Id = id;
+            SalesOrderDetailsId = salesOrderDetailsId;
+            $('#deleteSalesOrderDetails').modal();
+        };
+
+        function confirmDelete() {
+            deleteRecord();
+
+        }
+
+        function deleteRecord() {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DeleteItem", "SalesOrder")',
+                data: {
+                    "id": Id,
+                    "salesorderdetailsid": SalesOrderDetailsId
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        window.location.href = "https://www.shlokaa.biz/SalesOrder/Index";
+                    }
+                    else {
+                        location.reload();
+                    }
+
+                },
+                error: function (error) {
+                    alert('error occurr')
+                }
+            });
+        }
+
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $(".btnExport").hide();
+            $(".btnExportIcon").hide();
+        });
+        function btnExportFullHide() {
+            var chkFull = document.getElementById("chkFull").checked;
+            if (chkFull == false) {
+                $("#btnExportFull").hide();
+                $(".btnExportFullIcon").hide();
+                $(".btnExport").show();
+                $(".btnExportIcon").show();
+            } else {
+                $("#btnExportFull").show();
+                $(".btnExportFullIcon").show();
+                $(".btnExport").hide();
+                $(".btnExportIcon").hide();
+
+            }
+        }
+        function exportToExcel(elem) {
+            var table = document.getElementById("dataTable");
+            var html = table.outerHTML;
+            var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
+            elem.setAttribute("href", url);
+            elem.setAttribute("download", "SalesOrderDetails.xls"); // Choose the file name
+            return false;
+        }
+
+    </script>
+
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteSalesOrderDetails">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title" style="color:white">
+                    Delete Sales Order Details
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                Are sure to delete this record
+            </div>
+            <div class="row p-2">
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary btn-block" onclick="confirmDelete()">
+                        Confirm
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-light btn-block" data-dismiss="modal" style="color:black">
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@{
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("SalesOrder");
+    if (accessMatrix != null)
+    {
+        AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3>Sales Order Details</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">&nbsp;</div>
+                                    </div>
+                                    @{
+                                        Html.RenderAction("RenderOrderMaster", "SalesOrder");
+                                    }
+
+                                    @if (accessMatrixDetails.IsExport == true)
+                                    {
+                                        <div class="row" style="margin-top:10px;">
+                                            <div class="col-lg-10 col-6">
+                                            </div>
+
+                                            <div class="col-lg-2 col-6">
+                                                <button id="btnExportFull" type="button" class="btn btn-sm btn-dark btn-block " style="margin-top: 15px;margin-bottom: 5px;">Export</button>
+                                                @*<a id="downloadLink" class="btn btn-sm btn-dark d-block btnExport" onclick="exportToExcel(this)" style="cursor:pointer;color: #fff !important;">Export</a>*@
+                                                @*@Html.ActionLink("Export", "Excel", "Item", new {@class = "btn btn-dark btn-block ", style = "margin-top:15px;margin-bottom:5px;" })*@
+
+
+                                            </div>
+                                            <div class="col-12">&nbsp;</div>
+                                        </div>
+
+
+                                    }
+
+                                    <!-- table-striped -->
+                                    <table class="table table-responsive-lg  table-sm w3-table w3-striped w3-border" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().ItemName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().CategoryName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().SubCategoryName)
+                                                </th>
+                                                <th class="d-none">
+                                                    @Html.DisplayNameFor(model => model.First().UnitOfMeasurement)
+                                                </th>
+
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().SizeName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Quantity)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().OrderValue)
+                                                </th>
+                                                @if (accessMatrixDetails.IsEdit)
+                                                {
+                                                    <th data-field="Edit" data-tableexport-display="none"></th>
+                                                }
+                                                @if (accessMatrixDetails.Isdeleted)
+                                                {
+                                                    <th data-field="Delete" data-tableexport-display="none"></th>
+                                                }
+                                            </tr>
+                                        </thead>
+
+                                        @foreach (var item in Model)
+                                        {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ItemName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CategoryName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SubCategoryName)
+                                        </td>
+                                        <td class="d-none">
+                                            @Html.DisplayFor(modelItem => item.UnitOfMeasurement)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SizeName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OrderValue)
+                                        </td>
+
+                                        @if (accessMatrixDetails.IsEdit)
+                                        {
+                                            <td data-field="Edit" data-tableexport-display="none">
+
+                                                @Html.ActionLink("Edit", "Edit", "SalesOrder", new { subCategoryId = item.SubCategoryId, id = item.Id, itemid = item.ItemId, }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                            </td>
+                                        }
+                                        @if (accessMatrixDetails.Isdeleted)
+                                        {
+                                            <td data-field="Delete" data-tableexport-display="none">
+
+                                                <button class="btn btn-sm btn-dark btn-block" onclick="deleteItem(@item.Id,@item.SalesOrderDetailsId)">Delete</button>
+                                                @*@Html.ActionLink("Delete", "DeleteItem", "Staff", new { id = item.Id, salesorderdetailsid = item.SalesOrderDetailsId }, new { @class = "btn btn-sm btn-dark btn-block" });*@
+                                                
+                                            </td>
+                                        }
+                                        </tr>
+                                        }
+
+                                    </table>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-6 col-sm-6">
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">&nbsp;</div>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    @Html.PagedListPager(Model, pageIndex => Url.Action("OrderDetails", new
+                               {
+                                   pageIndex,
+                                   search = Request.QueryString["search"],
+                                   startdate = Request.QueryString["startdate"],
+                                   enddate = Request.QueryString["enddate"]
+                               }),
+        new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

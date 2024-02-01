@@ -1,0 +1,115 @@
+﻿@model SIMS.Models.GalleryModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm("Create", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3> Add Content</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-8">
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.FileData)<br />
+                            <input type="file" id="GalleryPhoto" name="GalleryPhoto">
+                        </div>
+                    </div>
+                    <div class="row" id="FileTitle" style="display:none;">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Title)<br />
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "col-12 form-control"} })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.FileType)
+                            @Html.DropDownListFor(model => model.FileType, new SelectListItem[]{
+                                        new SelectListItem() {Text = "Image", Value="Image"},
+                                        new SelectListItem() {Text = "Brochure", Value="Brochure"},
+                                         new SelectListItem() {Text = "Trivia", Value="Trivia"}
+                           }, "Select", new { @class = "form-control  col-12", @onchange = "fileTypeLoad()" })
+                            @Html.ValidationMessageFor(model => model.FileType, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row" id="ThumbnailRow" style="display:none;">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Thumbnail)<br />
+                            <input type="file" id="ThumbnailPhoto" name="ThumbnailPhoto">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-6 col-sm-4">
+                            <input type="submit" value="Create" class="btn btn-sm btn-dark btn-block col-12" style="margin-bottom:20px;" />
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block col-12" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+@section Scripts {
+    <script>
+        function fileTypeLoad() {
+
+            var a = document.getElementById('FileType');
+            var type = a.options[a.selectedIndex].text;
+            if (type == "Select") {
+                alert('Please select Correct Type');
+            }
+            if (type == "Brochure" || type == "Image") {
+                $('#ThumbnailRow').css('display', 'none');
+                $('#FileTitle').css('display', 'none');
+            }
+             if (type == "Brochure"||type == "Trivia") {
+                $('#ThumbnailRow').css('display', 'block');
+                $('#FileTitle').css('display', 'block');
+            }
+        }
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

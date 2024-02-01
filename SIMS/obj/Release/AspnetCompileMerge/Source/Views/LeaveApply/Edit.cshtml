@@ -1,0 +1,108 @@
+@model SIMS.Models.LeaveApplyModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Leave Apply</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+       
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+
+                    <div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Id)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.DisplayFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Id)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Date)
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control col-12" } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Leavetype)
+                            @Html.DropDownListFor(model => model.Leavetype, new SelectListItem[]{
+                                                           new SelectListItem() {Text = "Select", Value="Select"},
+                                new SelectListItem() {Text = "Casual", Value="Casual"},
+                                new SelectListItem() {Text = "Sick", Value="Sick"},
+                            }, new { @class = "form-control  col-12" })
+                            @Html.ValidationMessageFor(model => model.Leavetype, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.LeaveCategory)
+                            @Html.DropDownListFor(model => model.LeaveCategory, new SelectListItem[]{
+                                                                                    new SelectListItem() {Text = "Select", Value="Select"},
+                                                         new SelectListItem() {Text = "Full Day", Value="Full Day"},
+                                                         new SelectListItem() {Text = "Half Day", Value="Half Day"},
+                                                     }, new { @class = "form-control  col-12" })
+                            @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Reason)
+                            @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px" } })
+                            @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4 col-6">
+                            <input type="submit" value="Save" class="btn btn-sm btn-outline-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-sm-4 col-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

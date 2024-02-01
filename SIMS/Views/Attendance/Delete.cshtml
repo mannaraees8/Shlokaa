@@ -1,0 +1,166 @@
+@model SIMS.Models.AttendanceModel
+
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Delete Attendance
+            </div>
+            <div class="card-body">
+
+                <div class="row d-none">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Id)
+                    </div>
+                </div>
+                <div class="row d-none">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row d-none">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Staffid)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Staffid)
+                    </div>
+                </div>
+                <div class="row d-none">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Date)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Enteringtime)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Enteringtime)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Leavingtime)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Leavingtime)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Lateby)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Lateby)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Ishalfdayleave)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Ishalfdayleave)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Department)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Department)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Ispresent)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Ispresent)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Reason)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Reason)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+            </div>
+            <div class="card-footer text-muted">
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <input type="submit" value="Delete" class="btn btn-sm btn-info btn-block" />
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-info btn-block" })
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

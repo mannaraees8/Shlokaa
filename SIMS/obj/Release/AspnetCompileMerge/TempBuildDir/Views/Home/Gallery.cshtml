@@ -1,0 +1,191 @@
+﻿@model IEnumerable<SIMS.Models.GalleryModel>
+
+
+<link href="~/Content/Admin/GalleryCss.css" rel="stylesheet" />
+<style>
+    img {
+        cursor: pointer;
+    }
+</style>
+
+<div class="row d-none d-lg-block">
+    <div class="col-sm-12">&nbsp;</div>
+</div>
+<div class="row  d-none d-lg-block">
+    <div class="col-sm-12">&nbsp;</div>
+</div>
+<div class="row  d-none d-lg-block">
+    <div class="col-sm-12">&nbsp;</div>
+</div>
+<div id="loader" class="center"></div>
+
+<!-- ======= Specials Section ======= -->
+<div id="GalleryBody">
+    <section id="specials" class="specials">
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-2">
+                <ul class="nav nav-tabs flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#tab-1">Images</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-2">Brochure/Product Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-3">Trivia</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <div class="col-12">&nbsp;</div>
+                <a href="" id="pdf" onclick="printPreview(this);"></a>
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="tab-1">
+                        <section id="gallery" class="gallery" style="padding:0 0;margin-top:10px">
+                            <div class="row no-gutters">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.FileType == "Image")
+                                    {
+                                        <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px;">
+                                            @if (item.FileData != null)
+                                            {
+
+                                                <div class="gallery-item">
+                                                    <a class="venobox" data-gall="gallery-item">
+                                                        <img src="@Url.Content(item.FileData)" alt="" height="250" class="imgMobileAdjustment" style="background-position:center;">
+                                                    </a>
+
+                                                </div>
+                                                <br />
+
+                                            }
+                                            else
+                                            {
+                                                <img src="" alt="No image" height="250" class="imgMobileAdjustment" style="background-position:center;">
+                                                <br />
+                                            }
+
+
+
+
+                                        </div>
+
+                                    }
+                                }
+
+                            </div>
+
+
+
+                        </section><!-- End Gallery Section -->
+
+                    </div>
+
+                    <div class="tab-pane" id="tab-2">
+                        <section id="gallery" class="gallery" style="padding:0 0;margin-top:10px">
+                            <div class="row no-gutters">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.FileType == "Brochure")
+                                    {
+                                        <div class="brochreCol col-lg-4 col-6 col-md-4" style="margin-bottom:10px;">
+                                            @{
+
+                                                <div class="wrapper" style="margin-left:10px">
+                                                    <!-- Just to make things a bit smaller -->
+
+                                                    <div class="image-container ratio-4-3">
+                                                        <!-- Lets go for a 4:3 aspect ratio -->
+                                                        <a href="@Url.Content(item.FileData)" target="_blank" style="cursor:pointer;margin-bottom:5px;">
+                                                            <img src="@Url.Content(item.Thumbnail)" alt="" height="250" style="background-position:center;">
+                                                        </a>
+                                                    </div>
+                                                    <h5 style="color:orange;margin-top:5px;margin-bottom:5px;">@Html.DisplayFor(model => item.Title)</h5>
+                                                </div>
+
+                                            }
+
+                                        </div>
+
+
+
+
+                                    }
+                                }
+                            </div>
+                        </section><!-- End Gallery Section -->
+
+                    </div>
+                    <div class="tab-pane" id="tab-3">
+
+
+                        <section id="gallery" class="gallery" style="padding:0 0;margin-top:10px">
+                            <div class="row no-gutters">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.FileType == "Trivia")
+                                    {
+                                        <div class="col-lg-4 col-6 col-md-4" style="margin-bottom:55px;">
+                                            @{
+
+                                                <div class="wrapper" style="margin-left:10px">
+                                                    <!-- Just to make things a bit smaller -->
+
+                                                    <div class="image-container ratio-4-3">
+                                                        <!-- Lets go for a 4:3 aspect ratio -->
+                                                        <a href="@Url.Content(item.FileData)" target="_blank" style="cursor:pointer;margin-bottom:5px;">
+                                                            <img src="@Url.Content(item.Thumbnail)" alt="" height="250" style="background-position:center;">
+                                                        </a>
+                                                    </div>
+                                                    <h5 style="color:orange;margin-top:5px;margin-bottom:5px;">@Html.DisplayFor(model => item.Title)</h5>
+                                                </div>
+
+
+                                            }
+
+
+
+                                        </div>
+
+
+
+
+                                    }
+                                }
+
+                            </div>
+                        </section><!-- End Gallery Section -->
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section><!-- End Specials Section -->
+</div>
+<!-- ======= Gallery Section ======= -->
+
+
+
+@section  scripts{
+    <script>
+        document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+
+                document.querySelector("#loader").style.visibility = "visible";
+            } else {
+                document.querySelector("#loader").style.display = "none";
+                document.querySelector("#GalleryBody").style.display = "block";
+            }
+        };
+    </script>
+
+
+
+
+}

@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>@ViewBag.Title - Shlokaa Enterprises</title>
+    <link rel="icon" href="~/Photo/Shlokaa Jet Black.JPG" type="image/x-icon" class="rounded-circle" />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="~/Content/home.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        html, body {
+            padding-top: 50px;
+            padding-bottom: 0px;
+            overflow-x: hidden;
+        }
+
+        .body-content {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .btnlogin, .btnOnlineSHopping {
+            margin-left: 25px;
+            color: white;
+            border-radius: 50px;
+            padding: 6px 25px 7px 25px;
+            white-space: nowrap;
+            transition: 0.3s;
+            font-size: 14px;
+            display: inline-block;
+            border: 2px solid orange;
+            font-weight: 600;
+            background: black;
+        }
+
+            .btnOnlineSHopping i {
+                color: orange;
+            }
+
+            .btnlogin:hover {
+                background: orange;
+                color: white;
+            }
+
+
+            .btnOnlineSHopping:hover {
+                background: orange;
+            }
+
+
+                .btnOnlineSHopping:hover i {
+                    color: white;
+                }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        /* Style the tab */
+        .tab {
+            float: left;
+        }
+
+            /* Style the buttons inside the tab */
+            .tab button {
+                display: block;
+                background-color: inherit;
+                color: orange;
+                padding: 8px 14px;
+                width: 280px;
+                border: none;
+                outline: none;
+                text-align: left;
+                cursor: pointer;
+                transition: 0.3s;
+                font-size: 17px;
+                border-radius: 5px;
+            }
+
+                /* Change background color of buttons on hover */
+                .tab button:hover {
+                    background-color: rgba(255, 106, 0, 0.49);
+                    color: white;
+                    width: 280px;
+                }
+
+                /* Create an active/current "tab button" class */
+                .tab button.active {
+                    background-color: #ff6a00;
+                    color: white;
+                    display: block;
+                    width: 280px;
+                }
+
+        /* Style the tab content */
+        .tabcontent {
+            float: left;
+            padding: 0px 12px;
+            width: 100%;
+            border-left: none;
+        }
+
+        .tabcontents {
+            float: left;
+            padding: 0px 12px;
+            width: 100%;
+            border-left: none;
+            background-color: white;
+        }
+
+
+        .producttitle {
+            color: orange;
+            margin-top: 50px;
+        }
+
+
+        #header .logo img {
+            max-height: 50px;
+            margin-top: 8px;
+        }
+
+        @@media (min-width:992px) {
+            .EmpLogin, .contactNo {
+                display: none;
+            }
+
+                .contactNo a {
+                    float: right;
+                }
+
+            .footerAlignment {
+                margin-left: -30px;
+            }
+
+            .footerAlignment1 {
+                margin-left: -60px;
+            }
+        }
+
+        .nav-menu .active {
+            color: orange;
+        }
+
+        .nav-menu ul li a {
+            color: white;
+        }
+
+            .nav-menu ul li a:hover {
+                color: white;
+            }
+
+        #footer .credits1,
+        #footer a {
+            color: #3a2f2c;
+        }
+
+        .mobile-nav .btnOnlineSHopping {
+            color: white;
+        }
+
+            .mobile-nav .btnOnlineSHopping:hover {
+                color: white;
+            }
+
+        .fa-bars {
+            margin-top: 10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function MoveTo() {
+            window.location.href = "https://shlokaaenterprises.stores.instamojo.com/";
+
+        }
+    </script>
+
+
+
+</head>
+<body style="padding-top:0px;">
+
+
+    <div class="carousel-item active" style="background: url('../../Photo/BG Fork Knife.jpg');background-size:cover;background-position:center center">
+        <!-- End Header -->
+        <div style="overflow-x:hidden;overflow-y:hidden">
+            @RenderBody()
+
+        </div>
+
+     
+
+        <footer id="footer" class="fixed-bottom" style="color:#777777;padding:10px 0 10px 0">
+
+            <div class="container">
+
+                <div class="copyright">
+                    <a href="#"><i class=" fa fa-twitter" style="font-size:30px;margin-left:20px;color:grey"></i></a>
+                    <a href="#"><i class="fa fa-facebook" style="font-size:30px;color:grey"></i></a>
+                    <a href="#"><i class="fa fa-instagram" style="font-size:30px;color:grey"></i></a>
+                    <a href="#"><i class="fa fa-whatsapp" style="font-size:30px;color:grey"></i></a>
+                </div>
+                <div class="credits">
+                    &copy; Copyright <strong><span>Delicious</span></strong>. All Rights Reserved
+                    <!-- All the links in the footer should remain intact. -->
+                    <!-- You can delete the links only if you purchased the pro version. -->
+                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/ -->
+                    Designed by <a href="https://bootstrapmade.com/" style="color:#777777">BootstrapMade</a>
+                </div>
+
+
+            </div>
+
+        </footer><!-- End Footer -->
+
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    <script>
+  $(function(){
+     var msg = "@(TempData["ErrorMsg"] as string)";
+      if (msg !== "") {
+          toastr.error(msg);
+     }
+  });
+    </script>
+    <script>
+  $(function(){
+     var msg = "@(TempData["SuccessMsg"] as string)";
+      if (msg !== "") {
+          toastr.success(msg);
+     }
+  });
+    </script>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

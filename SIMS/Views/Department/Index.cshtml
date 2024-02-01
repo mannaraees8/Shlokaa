@@ -1,0 +1,144 @@
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.Models.DepartmentModel>
+
+@{
+    ViewBag.Title = "Department";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+@using SIMS.BL
+
+@{
+
+
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("Department");
+    if (accessMatrix != null)
+    {
+AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3> Department List</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    @if (accessMatrixDetails.IsCreate == true)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-9"></div>
+                                            <div class="col-sm-3">
+                                                @Html.ActionLink("Create New Department", "Create", null, new { @class = "btn btn-dark btn-block" })
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="row">
+                                        <div class="col-xs-12">&nbsp;</div>
+                                    </div>
+                                    <!-- table-striped -->
+                                    <table class="table table-responsive-lg  w3-table w3-striped w3-border" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="d-none">
+                                                    @Html.DisplayNameFor(model => model.First().Id)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Department)
+                                                </th>
+                                                <th></th>
+                                                <th hidden></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    @Html.DisplayFor(modelItem => item.Id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Department)
+                                                </td>
+                                                <td>
+
+                                                    @if (accessMatrixDetails.IsEdit == true)
+                                                    {
+                                                        @Html.ActionLink("Edit", "Edit", "Department", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                                    }
+                                                </td>
+                                                <td hidden>
+
+                                                    @if (accessMatrixDetails.IsDetails == true)
+                                                    {
+                                                        @Html.ActionLink("Details", "Details", "Department", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                    }
+                                                </td>
+                                                <td>
+
+                                                    @if (accessMatrixDetails.Isdeleted == true)
+                                                    {
+
+                                                        @Html.ActionLink("Delete", "Delete", "Department", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                    }
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </table>
+
+
+                                </div>
+                                <div class="card-footer text-muted">
+                                    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new
+                               {
+                                   pageIndex,
+                                   search = Request.QueryString["search"],
+                                   startdate = Request.QueryString["startdate"],
+                                   enddate = Request.QueryString["enddate"]
+                               }),
+        new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                                    @*@Html.Partial("_PagingFooter")*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+}

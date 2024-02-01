@@ -1,0 +1,1420 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    .admin-form {
+        padding: 20px;
+        /* background-color: #d8e2ee82 !important;*/
+        background-color: #d8e2ee00 !important
+    }
+
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+            background-color: #eee !important
+        }
+    }
+</style>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: '/Chart/TallyPendingCount',
+                success: function (data) {
+                    if ($('#tallyEntyrPending'))
+                        $('#tallyEntyrPending').html(data)
+                }
+            });
+        })
+    </script>
+    <script src="~/Scripts/Chart/PaymentChequePending.js"></script>
+    <script src="~/Scripts/Chart/SalesOrder.js"></script>
+    <script src="~/Scripts/Chart/SpinningProduction.js"></script>
+    <script src="~/Scripts/Chart/OrderStatus.js"></script>
+    <script src="~/Scripts/Chart/Payment.js"></script>
+    <script src="~/Scripts/Chart/VehicleLog.js"></script>
+    <script src="~/Scripts/Chart/SalesTrend.js"></script>
+    <script src="~/Scripts/Chart/Sales.js"></script>
+    <script src="~/Scripts/Chart/ProductCategory_Trend_Share.js"></script>
+    <script src="~/Scripts/Chart/VisitLog_CollectionTrend_Collcetion.js"></script>
+}
+
+
+
+@using SIMS.BL;
+@{
+    var startDayOfMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+    var lastDayOfMonth = startDayOfMonth.AddMonths(1).AddDays(-1);
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    List<Users> usersList = Users.RetrieveAll();
+    List<Category> categoryList = Category.RetrieveAll();
+
+
+}
+<div class="admin-outer-form">
+    <div class="admin-form">
+        @if (ViewContext.HttpContext.User.IsInRole("Executive Accounts"))
+        {
+
+            <div class=" py-2" style="border-radius:15px;">
+                <div class="d-flex flex-wrap justify-content-around ">
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#ffb03b42;height:60px;width:60px;border-radius:50%;font-weight:600">
+                                    <i class="fas fa-file-signature position-relative" style="font-size:30px;left: 5px;top: -4px;color:orange"></i>
+                                </span>
+                                Tally Entry Pending
+                            </span><label id="lblTallyEntryPending" style="color:orange;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#b007073b;height:60px;width:60px;border-radius:50%;font-weight:600">
+                                    <img src="~/Photo/payment-pending-icon.png" style="width:35px" />
+                                </span>
+                                Payment Pending
+                            </span><label id="lblPaymentPending" style="color:#B00707;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#c4c0d975;height:60px;width:60px;border-radius:50%;font-weight:600"><img src="~/Photo/cheque.png" style="width:40px" /></span>
+                                Cheque Pending
+                            </span><label id="lblChequePending" style="color:#071972;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#0786082e;height:60px;width:60px;border-radius:50%;font-weight:600">
+
+                                    <img src="~/Photo/payment-amount.png" style="width:35px" />
+                                </span>
+                                Payment Amount
+                            </span><label id="lblChequePaymentAmountPending" style="color:#078608;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+        }
+
+        @if (ViewContext.HttpContext.User.IsInRole("Group Head") || ViewContext.HttpContext.User.IsInRole("Admin"))
+        {
+
+            <div class=" py-2" style="border-radius:15px;">
+                <div class="d-flex flex-wrap justify-content-around ">
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#ffb03b42;height:60px;width:60px;border-radius:50%;font-weight:600">
+                                    <i class="fas fa-file-signature position-relative" style="font-size:30px;left: 5px;top: -4px;color:orange"></i>
+                                </span>
+                                Tally Entry Pending
+                            </span><label id="lblTallyEntryPending" style="color:orange;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#b007073b;height:60px;width:60px;border-radius:50%;font-weight:600">
+                                    <img src="~/Photo/payment-pending-icon.png" style="width:35px" />
+                                </span>
+                                Payment Pending
+                            </span><label id="lblPaymentPending" style="color:#B00707;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#c4c0d975;height:60px;width:60px;border-radius:50%;font-weight:600"><img src="~/Photo/cheque.png" style="width:40px" /></span>
+                                Cheque Pending
+                            </span><label id="lblChequePending" style="color:#071972;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+                    <div class="card border-0" style="border-radius:28px">
+                        <div class="card-body shadow text-center d-flex flex-column justify-content-center  px-3 pt-3 pb-1" style="border-radius:28px">
+                            <span class="d-flex align-items-center" style="gap: 15px; font-weight: 600">
+                                <span class="d-flex justify-content-center align-items-center" style="background:#0786082e;height:60px;width:60px;border-radius:50%;font-weight:600">
+
+                                    <img src="~/Photo/payment-amount.png" style="width:35px" />
+                                </span>
+                                Payment Amount
+                            </span><label id="lblChequePaymentAmountPending" style="color:#078608;font-weight:600;font-size:30px"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            //sales trend graphs pending
+
+            <div class="salesTrend shadow p-3 bg-white" x-data="salesTrendGraph" style="border-radius:15px;">
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+                            <label>Employees:</label>
+                            <select id="salesTrendUserSelect" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR()}" class="form-control">
+                                <option value="0">All Employees</option>
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR()}" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Sales Trend</h3>
+                                    <div x-show="!selectDateRequiredSalesTrend" style="width:100%">
+                                        <div class="bg-white mr-2 mb-2 py-2" style="border-radius:15px;">
+                                            <div id="salesTrendGraph"></div>
+                                        </div>
+                                    </div>
+                                    <div x-show="selectDateRequiredSalesTrend" style="width:100%">
+                                        <div class="w-100">
+                                            <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                                <img src="~/Photo/notDataYet.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoadingSR" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingSR">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Sales Return Trend</h3>
+                                    <div x-show="!selectDateRequiredSalesTrendReturn" style="width:100%">
+                                        <div class="bg-white mr-2 mb-2 py-2" style="border-radius:15px;">
+                                            <div id="salesReturnTrendGraph"></div>
+                                        </div>
+                                    </div>
+                                    <div x-show="selectDateRequiredSalesTrendReturn" style="width:100%">
+                                        <div class="w-100">
+                                            <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                                <img src="~/Photo/notDataYet.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+
+            //SALES ORDER GRAPH
+            <div class="salesOder d-flex flex-wrap shadow p-3 bg-white" id="salesOderGraph" x-data="salesOrderGraph" x-init="getuserList()" style="border-radius:15px;">
+                <h3 class="text-center w-100" x-init="getTallyEntryPendingCount()">Sales Order</h3>
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <label></label>
+                        <p class="font-weight-bolder" style="font-size:18px">
+                            Tally Entry Pending &nbsp;<span x-text="tallyEntyrPending" style="color:red;background-color:ghostwhite"></span>
+                        </p>
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+                <div x-show="isLoading" class="w-100">
+                    <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                        <div class="spinner-border text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100" x-show="!isLoading">
+                    <div class="d-flex flex-column w-100">
+                        <template x-if="dataNotFound">
+                            <div class="alert alert-warning font-weight-bold w-100" style="background-color: #ffc400;font-size:15px">
+                                Data not found for current month! (Below chart uses one year data)
+                            </div>
+                        </template>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <template x-for="(user,index) in userList">
+                                <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                    <div :id="'salesOrderGrap_'+user.StaffId">
+
+                                    </div>
+                                </div>
+                            </template>
+                            <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                    <img src="~/Photo/notDataYet.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+
+            //SALES GRAPH
+            <div class="sales d-flex flex-wrap shadow p-3 bg-white" x-data="salesGraphData" style="border-radius:15px;">
+                <h3 class="text-center w-100 mb-3">Sales</h3>
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        @{
+                            <label>Employees:</label>
+                            <select id="salesUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                <option value="0">All Employees</option>
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+                <div x-show="isLoading" class="w-100">
+                    <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                        <div class="spinner-border text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100" x-show="!isLoading">
+                    <div class="d-flex flex-column w-100">
+                        <template x-if="dataNotFound">
+                            <div class="alert alert-warning font-weight-bold w-100" style="background-color: #ffc400;font-size: 15px">
+                                Data not found for current month! (Below chart uses one year data)
+                            </div>
+                        </template>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                <div id="salesGraph"></div>
+                            </div>
+                            <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                <div class="ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                    <img src="~/Photo/notDataYet.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            //PRODUCT CATEGORY GRAPH
+            <div class="productCategory  shadow p-3 bg-white" x-data="productCategoryGraph" style="border-radius:15px;">
+
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+                            <label>Product Category:</label>
+                            <select id="productCategorySelect" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR}" class="form-control">
+                                <option value="">All Products</option>
+                                @for (int i = 0; i < categoryList.Count; i++)
+                                {
+                                    <option value="@categoryList[i].Name">@categoryList[i].Name</option>
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR}" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR}" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 col-md-6 col-sm-12">
+                        <div x-show="isLoadingProductTrend" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingProductTrend">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Product Category Sales Trend</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredTrend" style="border-radius:15px;">
+
+                                        <div id="productCategoryTrendGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div x-show="selectDateRequiredTrend" style="width:100%">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <div x-show="isLoadingProductShare" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingProductShare">
+                            <div class="d-flex flex-column w-100">
+                                <div class=" d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Product Category</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredSR" style="border-radius:15px;">
+
+                                        <div id="productCategoryShareGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div x-show="selectDateRequiredSR" style="width:100%">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4 mb-md-0">
+                    <div class="orderStatus d-flex flex-wrap shadow p-3 bg-white" x-data="orderStatusGraph" style="border-radius:15px;">
+                        <h3 class="text-center w-100 mb-3">Order Status</h3>
+                        <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                @{
+                                    <label>Employees:</label>
+                                    <select id="orderStatusUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                        @for (int i = 0; i < usersList.Count; i++)
+                                        {
+                                            <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                        }
+                                    </select>
+                                }
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <label>Start Date:</label>
+                                <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <label>End Date:</label>
+                                <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+
+                            <div class="col-12">&nbsp;</div>
+                            <hr class="w-100" />
+                        </div>
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                        <div id="orderStatusGraph">
+
+                                        </div>
+                                    </div>
+                                    <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                        <div class="ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*payment graph*@
+                <div class="col-sm-12 col-md-6">
+                    <div class="payment d-flex flex-wrap shadow p-3 bg-white" x-data="paymentGraphData" style="border-radius:15px;">
+                        <h3 class="text-center w-100 mb-3">Collection Status</h3>
+                        <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                @{
+                                    <label>Employees:</label>
+                                    <select id="paymentUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                        @for (int i = 0; i < usersList.Count; i++)
+                                        {
+                                            <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                        }
+                                    </select>
+                                }
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <label>Start Date:</label>
+                                <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <label>End Date:</label>
+                                <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+
+                            <div class="col-12">&nbsp;</div>
+                            <hr class="w-100" />
+                        </div>
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+                                <template x-if="dataNotFound">
+                                    <div class="alert alert-warning font-weight-bold w-100" style="background-color: #ffc400;font-size: 15px">
+                                        Data not found for current month! (Below chart uses one year data)
+                                    </div>
+                                </template>
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                        <div id="paymentGraph"></div>
+                                    </div>
+                                    <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                        <div class="ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+
+
+            //COLLECTION TREND
+            <div class="visitLog  shadow p-3 bg-white" x-data="visitLogGraph" style="border-radius:15px;">
+
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+
+                            <label>Emplyees:</label>
+
+                            <select id="userSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                <option value="0">All Employees</option>
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                }
+                            </select> }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 col-md-6 col-sm-12">
+                        <div x-show="isLoadingCollectionTrend" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingCollectionTrend">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Collection Trend</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredTrend" style="border-radius:15px;">
+
+                                        <div id="visitLogCollectionTrendGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div x-show="selectDateRequiredTrend">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <div x-show="isLoadingCollection" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingCollection">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class=" d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Collection</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredSR" style="border-radius:15px;">
+
+                                        <div id="visitLogCollectionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div x-show="selectDateRequiredSR">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+
+            //spinning production graph
+
+            <div class="spinningProduction  shadow p-3 bg-white" x-data="spinningProductionGraph" style="border-radius:15px;">
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+                            <label>Employees:</label>
+                            <select id="spinningProductionUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                <option value="0">All Employees</option>
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Spinning Production</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                        <div id="spinningProductionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="selectDateRequired" x-show="selectDateRequired" class="w-100 animated fadeIn" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoadingSR" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingSR">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Spinning Rejection</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredSR" style="border-radius:15px;">
+
+                                        <div id="spinningRejectionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="selectDateRequiredSR" x-show="selectDateRequiredSR" class="w-100 animated fadeIn" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="vehicleLog d-flex flex-wrap shadow p-3 bg-white" id="vehicleLog" x-data="vehicleLogData" style="border-radius:15px;">
+                <h3 class="text-center w-100  mb-3">Vehicle Distance Travelled</h3>
+                <div class="row w-100 justify-content-start" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>Vehicle No</label>
+                        @{
+                            List<VehicleNo> vehicleNoList = VehicleNo.RetrieveAll();
+                            <select id="vehicleLogUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                <option value="">All Vehicles</option>
+                                @for (int i = 0; i < vehicleNoList.Count; i++)
+                                {
+                                    <option value="@vehicleNoList[i].VehicleNum">@vehicleNoList[i].VehicleNum</option>
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+                <div x-show="isLoading" class="w-100">
+                    <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                        <div class="spinner-border text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100" x-show="!isLoading">
+                    <div class="d-flex flex-column w-100">
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <div x-show="selectDateRequired" class="w-100">
+                                <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                    <img src="~/Photo/notDataYet.png" />
+                                </div>
+                            </div>
+                            <div x-show="!selectDateRequired">
+                                <div id="vehicleLogGraph"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewContext.HttpContext.User.IsInRole("Executive Marketing"))
+        {
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4 mb-md-0">
+                    @*//SALES ORDER GRAPH*@
+                    <div class="salesOder d-flex flex-wrap shadow p-3 bg-white" id="salesOderGraph" x-data="salesOrderGraph" x-init="getuserList()" style="border-radius:15px;">
+                        <h3 class="text-center w-100" x-init="getTallyEntryPendingCount()">Sales Order</h3>
+                        <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <label>Start Date:</label>
+                                <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <label>End Date:</label>
+                                <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-12">&nbsp;</div>
+                            <hr class="w-100" />
+                        </div>
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <template x-for="(user,index) in userList">
+                                        <template x-if="user.StaffId==@userId">
+                                            <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+                                                <div :id="'salesOrderGrap_'+user.StaffId"></div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-md-6 mb-4 mb-md-0">
+                    <div class="orderStatus d-flex flex-wrap shadow p-3 bg-white" x-data="orderStatusGraph" style="border-radius:15px;">
+                        <h3 class="text-center w-100 mb-3">Order Status</h3>
+                        <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                @{
+                                    <label>Employees:</label>
+                                    <select id="orderStatusUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                        @for (int i = 0; i < usersList.Count; i++)
+                                        {
+                                            if (usersList[i].Id == userId)
+                                            {
+                                                <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                            }
+                                        }
+                                    </select>
+                                }
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <label>Start Date:</label>
+                                <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <label>End Date:</label>
+                                <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                            </div>
+
+                            <div class="col-12">&nbsp;</div>
+                            <hr class="w-100" />
+                        </div>
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                        <div id="orderStatusGraph">
+
+                                        </div>
+                                    </div>
+                                    <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                        <div class="ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            //SALES
+
+
+            //SALES GRAPH
+            <div class="sales d-flex flex-wrap shadow p-3 bg-white" x-data="salesGraphData" style="border-radius:15px;">
+                <h3 class="text-center w-100 mb-3">Sales</h3>
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        @{
+                            <label>Employees:</label>
+                            <select id="salesUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    if (usersList[i].Id == userId)
+                                    {
+                                        <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                    }
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+                <div x-show="isLoading" class="w-100">
+                    <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                        <div class="spinner-border text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100" x-show="!isLoading">
+                    <div class="d-flex flex-column w-100">
+                        <template x-if="dataNotFound">
+                            <div class="alert alert-warning font-weight-bold w-100" style="background-color: #ffc400;font-size: 15px">
+                                Data not found for current month! (Below chart uses one year data)
+                            </div>
+                        </template>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                <div id="salesGraph"></div>
+                            </div>
+                            <div x-show="selectDateRequired" class="w-100" style="display:none">
+                                <div class="ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                    <img src="~/Photo/notDataYet.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            //SALES trend graphs pending
+
+            <div class="salesTrend shadow p-3 bg-white" x-data="salesTrendGraph" style="border-radius:15px;">
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+                            <label>Employees:</label>
+                            <select id="salesTrendUserSelect" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR()}" class="form-control">
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    if (usersList[i].Id == userId)
+                                    {
+                                        <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                    }
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="()=>{getGraphDataForAllUsers();getGraphDataForAllUsersSR()}" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Sales Trend</h3>
+                                    <div x-show="!selectDateRequiredSalesTrend" style="width:100%">
+                                        <div class="bg-white mr-2 mb-2 py-2" style="border-radius:15px;">
+                                            <div id="salesTrendGraph"></div>
+                                        </div>
+                                    </div>
+                                    <div x-show="selectDateRequiredSalesTrend" style="width:100%">
+                                        <div class="w-100">
+                                            <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                                <img src="~/Photo/notDataYet.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoadingSR" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingSR">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Sales Return Trend</h3>
+                                    <div x-show="!selectDateRequiredSalesTrendReturn" style="width:100%">
+                                        <div class="bg-white mr-2 mb-2 py-2" style="border-radius:15px;">
+                                            <div id="salesReturnTrendGraph"></div>
+                                        </div>
+                                    </div>
+                                    <div x-show="selectDateRequiredSalesTrendReturn" style="width:100%">
+                                        <div class="w-100">
+                                            <div class="bg-white ml-3 w-100 mb-2 py-5  d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                                <img src="~/Photo/notDataYet.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            //COLLECTION TREND
+            <div class="visitLog  shadow p-3 bg-white" x-data="visitLogGraph" style="border-radius:15px;">
+
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+
+                            <label>Emplyees:</label>
+
+                            <select id="userSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    if (usersList[i].Id == userId)
+                                    {
+                                        <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                    }
+                                }
+                            </select> }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 col-md-6 col-sm-12">
+                        <div x-show="isLoadingCollectionTrend" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingCollectionTrend">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Collection Trend</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredTrend" style="border-radius:15px;">
+
+                                        <div id="visitLogCollectionTrendGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div x-show="selectDateRequiredTrend">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 shadow d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                        <div x-show="isLoadingCollection" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingCollection">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class=" d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100" x-show="!selectDateRequiredSR">Collection</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredSR" style="border-radius:15px;">
+
+                                        <div id="visitLogCollectionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div x-show="selectDateRequiredSR">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+        else if (ViewContext.HttpContext.User.IsInRole("Executive Operations"))
+        {
+            //spinning production graph
+
+            <div class="spinningProduction  shadow p-3 bg-white" x-data="spinningProductionGraph" style="border-radius:15px;">
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+                            <label>Employees:</label>
+                            <select id="spinningProductionUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                <option value="0">All Employees</option>
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Spinning Production</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                        <div id="spinningProductionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="selectDateRequired" x-show="selectDateRequired" class="w-100 animated fadeIn" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoadingSR" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingSR">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Spinning Rejection</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredSR" style="border-radius:15px;">
+
+                                        <div id="spinningRejectionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="selectDateRequiredSR" x-show="selectDateRequiredSR" class="w-100 animated fadeIn" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (ViewContext.HttpContext.User.IsInRole("Associate Operations"))
+        {
+            //spinning production graph
+
+            <div class="spinningProduction  shadow p-3 bg-white" x-data="spinningProductionGraph" style="border-radius:15px;">
+                <div class="row w-100 justify-content-start m-0" style="font-size:14px">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        @{
+                            <label>Employees:</label>
+                            <select id="spinningProductionUserSelect" x-on:change="getGraphDataForAllUsers()" class="form-control">
+                                <option value="0">All Employees</option>
+                                @for (int i = 0; i < usersList.Count; i++)
+                                {
+                                    if (usersList[i].Id == userId)
+                                    {
+                                        <option value="@usersList[i].Id">@usersList[i].Name</option>
+                                    }
+                                }
+                            </select>
+                        }
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@startDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" x-ref="endDate" class="form-control shadow-sm" x-on:change="getGraphDataForAllUsers()" style="border-radius:7px" value="@lastDayOfMonth.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="col-12">&nbsp;</div>
+                    <hr class="w-100" />
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoading" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoading">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Spinning Production</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequired" style="border-radius:15px;">
+
+                                        <div id="spinningProductionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="selectDateRequired" x-show="selectDateRequired" class="w-100 animated fadeIn" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div x-show="isLoadingSR" class="w-100">
+                            <div class="d-flex w-100 justify-content-center align-items-center" style="min-height: 50vh;">
+                                <div class="spinner-border text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100" x-show="!isLoadingSR">
+                            <div class="d-flex flex-column w-100">
+
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <h3 class="text-center w-100">Spinning Rejection</h3>
+                                    <div class="bg-white mr-2 mb-2 py-2" x-show="!selectDateRequiredSR" style="border-radius:15px;">
+
+                                        <div id="spinningRejectionGraph">
+
+                                        </div>
+                                    </div>
+
+                                    <div id="selectDateRequiredSR" x-show="selectDateRequiredSR" class="w-100 animated fadeIn" style="display:none">
+                                        <div class="bg-white ml-3 w-100 mb-2 py-5 d-flex justify-content-center align-items-center" style="border-radius:15px;">
+                                            <img src="~/Photo/notDataYet.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+

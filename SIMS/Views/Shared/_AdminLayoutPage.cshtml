@@ -1,0 +1,796 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shlokaa Enterprises</title>
+    <link rel="icon" href="~/Photo/Shlokaa Jet Black.JPG" type="image/x-icon" class="rounded-circle" />
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+
+
+    <style>
+
+        body {
+            scrollbar-width: thin;
+        }
+
+        .btn-export-all {
+            position: absolute;
+            right: 100px;
+            margin-top: -15px;
+        }
+
+        #table {
+            width: 100% !important;
+        }
+
+        .dataTables_filter, .dataTables_info, .dataTables_paginate {
+            display: none;
+        }
+        .select2.select2-container {
+            width: 100% !important;
+        }
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #ced4da !important;
+            padding-top: 4px;
+            font-size: 17px;
+            padding-left: 9px;
+            color: #495057de !important;
+        }
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                color: #495057de !important;
+            }
+    </style>
+
+    @Styles.Render("~/Content/admincss")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body style="overflow-x:hidden">
+    <div id="app">
+        <div id="sidebar" class='active'>
+            <div class="sidebar-wrapper active" style="overflow-y:scroll;overflow-x:hidden;">
+                <div class="sidebar-header text-center" style="margin-top: -25px;">
+                    <img src="~/Photo/Shlokaa White png.png" alt="" srcset="" class="img-fluid adminlogo" style="height:80px;">      <hr />
+                </div>
+
+                <div class="sidebar-menu" style="margin-top:-75px;">
+                    <ul class="menu">
+
+                        @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                        {
+                            <li class="item-master">
+                                <a href="~/Staff/Index" class='sidebar-link'>
+                                    <i data-feather="home" width="20"></i>
+                                    <br />
+
+                                    DASHBOARD
+                                </a>
+                            </li>
+
+
+                            if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                            {
+
+                                <li class="item-master">MASTER DATA</li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <span>Employee List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/Users/Index" class='sidebar-link'> <span>Employee </span></a>
+                                        <a href="~/Department/Index" class='sidebar-link'> <span>Department </span></a>
+                                        <a class='sidebar-link' href="~/Users/ActivateUsers">Activate Employee</a>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample100" role="button" aria-expanded="false" aria-controls="collapseExample100">
+                                        <span>Customer List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample100" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/Customer/Index" class='sidebar-link'> <span>Customer </span></a>
+                                        <a href="~/Place/Index" class='sidebar-link'> <span>Place </span></a>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <span>Item List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample4" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/Item/Index" class='sidebar-link' style="padding:2px 0px 2px 35px">Item</a>
+                                        <a href="~/Category/Index" class='sidebar-link' style="padding:2px 0px 2px 35px">Category</a>
+                                        <a href="~/SubCategory/Index" class='sidebar-link' style="padding:0px 0px 0px 35px">Sub Category</a>
+                                        <a href="~/ItemSize/Index" class='sidebar-link' style="padding:0px 0px 0px 35px">Size</a>
+
+                                        <a href="~/UnitOfMeasurement/Index" class='sidebar-link' style="padding:0px 0px 0px 35px">Unit</a>
+                                    </div>
+                                </li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample104" role="button" aria-expanded="false" aria-controls="collapseExample104">
+                                        <span>Vehicle List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample104" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/VehicleNo/Index" class='sidebar-link'> <span>Vehicle No</span></a>
+                                    </div>
+                                </li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample140" role="button" aria-expanded="false" aria-controls="collapseExample140">
+                                        <span>Expense List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample140" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/PaymentExpenseAdd/Index" class='sidebar-link'> <span>Expense</span></a>
+                                    </div>
+                                </li>
+
+
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/VisitLog/Index" class='sidebar-link'><span>Visit Log</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/VehicleLog/Index" class='sidebar-link'> <span>Vehicle Log</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+
+
+
+                                <li class="item-master">OPERATIONS</li>
+                                <li class="sidebar-item">
+                                    <a href="~/MaterialMovement/Index" class='sidebar-link'><span>Material Movement</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/SpinningProduction/Index" class='sidebar-link'><span>Spinning Production</span></a>
+                                </li>
+
+
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/AccessMatrix/Index" class='sidebar-link'><span>Modules</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/AccessMatrixDetails/Index" class='sidebar-link'><span>Permissions</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index" class='sidebar-link'><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index" class='sidebar-link'><span>Expense Report</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Payment/Index" class='sidebar-link'><span>Payment</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Cheque/Index" class='sidebar-link'><span>Cheque</span></a>
+                                </li>
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Group Head"))
+                            {
+                                <li class="item-master">MASTER DATA</li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <span>Employee List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample3" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/Users/Index" class='sidebar-link'> <span>Employee </span></a>
+                                        <a href="~/Department/Index" class='sidebar-link'> <span>Department </span></a>
+                                        <a class='sidebar-link' href="~/Users/ActivateUsers">Activate Employee</a>
+                                    </div>
+                                </li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample101" role="button" aria-expanded="false" aria-controls="collapseExample101">
+                                        <span>Customer List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample101" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/Customer/Index" class='sidebar-link'> <span>Customer </span></a>
+                                        <a href="~/Place/Index" class='sidebar-link'> <span>Place </span></a>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+                                        <span>Item List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample1" style="margin-left:10px;margin-right:10px;outline:solid #e9d9d9 0.5px">
+                                        <a href="~/Item/Index" class='sidebar-link' style="padding:2px 0px 2px 35px">Item</a>
+                                        <a href="~/Category/Index" class='sidebar-link' style="padding:2px 0px 2px 35px">Category</a>
+                                        <a href="~/SubCategory/Index" class='sidebar-link' style="padding:0px 0px 0px 35px">Sub Category</a>
+                                        <a href="~/ItemSize/Index" class='sidebar-link' style="padding:0px 0px 0px 35px">Size</a>
+
+                                        <a href="~/UnitOfMeasurement/Index" class='sidebar-link' style="padding:0px 0px 0px 35px">Unit</a>
+                                    </div>
+                                </li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample103" role="button" aria-expanded="false" aria-controls="collapseExample103">
+                                        <span>Vehicle List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample103" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/VehicleNo/Index" class='sidebar-link'> <span>Vehicle No</span></a>
+                                    </div>
+                                </li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample143" role="button" aria-expanded="false" aria-controls="collapseExample143">
+                                        <span>Expense List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample143" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/PaymentExpenseAdd/Index" class='sidebar-link'> <span>Expense</span></a>
+                                    </div>
+                                </li>
+
+
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/VisitLog/Index" class='sidebar-link'><span>Visit Log</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/VehicleLog/Index" class='sidebar-link'> <span>Vehicle Log</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+
+
+                                <li class="item-master">OPERATIONS</li>
+                                <li class="sidebar-item">
+                                    <a href="~/MaterialMovement/Index" class='sidebar-link'><span>Material Movement</span></a>
+                                </li>
+
+
+                                <li class="sidebar-item">
+                                    <a href="~/SpinningProduction/Index" class='sidebar-link'><span>Spinning Production</span></a>
+                                </li>
+
+
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index" class='sidebar-link'><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index" class='sidebar-link'><span>Expense Report</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Payment/Index" class='sidebar-link'><span>Payment</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Cheque/Index" class='sidebar-link'><span>Cheque</span></a>
+                                </li>
+
+
+
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Executive Operations"))
+                            {
+                                <li class="item-master">OPERATIONS</li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/MaterialMovement/Index">   <span> Material Movement</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/SpinningProduction/Index" class='sidebar-link'><span>Spinning Production</span></a>
+                                </li>
+
+
+
+                                <li class="item-master">SALES & MARKETING</li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/VehicleLog/Index"><span>Vehicle Log</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+
+
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index"><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index">   <span> Expense Report</span></a>
+                                </li>
+
+
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Executive Marketing"))
+                            {
+
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/VisitLog/Index"><span>Visit Log</span> </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/VehicleLog/Index"><span>Vehicle Log</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index"><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index">Expense Report</a>
+
+                                </li>
+
+
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Executive Accounts") || ViewContext.HttpContext.User.IsInRole("Executive Admin"))
+                            {
+                                <li class="item-master">MASTER DATA</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Users/Index"><span>Employee List</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Customer/Index"><span>Customer List</span></a>
+                                </li>
+                                <li class="sidebar-item ">
+                                    <a data-toggle="collapse" href="#collapseExample104" role="button" aria-expanded="false" aria-controls="collapseExample104">
+                                        <span>Vehicle List</span>
+                                    </a>
+                                    <div class="collapse shadow" id="collapseExample104" style="margin-left: 10px;margin-right: 10px;outline: solid #e9d9d9 0.5px">
+                                        <a href="~/VehicleNo/Index" class='sidebar-link'> <span>Vehicle No</span></a>
+                                    </div>
+                                </li>
+
+
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/VisitLog/Index"><span>Visit Log</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/VehicleLog/Index"><span>Vehicle Log</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+
+
+                                <li class="item-master">OPERATIONS</li>
+                                <li class="sidebar-item">
+                                    <a href="~/MaterialMovement/Index"><span>Material Movement</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/SpinningProduction/Index" class='sidebar-link'><span>Spinning Production</span></a>
+                                </li>
+
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index"><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Cheque/Index" class='sidebar-link'><span>Cheque</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index"><span>Expense Report</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Payment/Index" class='sidebar-link'><span>Payment</span></a>
+                                </li>
+
+
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Associate Admin") || ViewContext.HttpContext.User.IsInRole("Associate Accounts"))
+                            {
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/VisitLog/Index"><span>Visit Log</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/VehicleLog/Index"><span>Vehicle Log</span></a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+                                <li class="item-master">OPERATIONS</li>
+
+                                <li class="sidebar-item">
+                                    <a href="~/MaterialMovement/Index"><span>Material Movement</span></a>
+                                </li>
+
+
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index" class='sidebar-link'><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index"><span>Expense Report</span></a>
+                                </li>
+
+
+
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Associate Operations"))
+                            {
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+                                <li class="item-master">OPERATIONS</li>
+                                <li class="sidebar-item">
+                                    <a href="~/MaterialMovement/Index"><span>Material Movement</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/SpinningProduction/Index" class='sidebar-link'><span>Spinning Production</span></a>
+                                </li>
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index" class='sidebar-link'><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index"><span>Expense Report</span></a>
+                                </li>
+
+                            }
+                            if (ViewContext.HttpContext.User.IsInRole("Associate Marketing"))
+                            {
+                                <li class="item-master">SALES & MARKETING</li>
+                                <li class="sidebar-item">
+                                    <a href="~/VisitLog/Index"><span>Visit Log</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/SalesOrder/Index"><span>SalesOrder</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/Sales/Index" class='sidebar-link'><span>Sales</span></a>
+                                </li>
+                                <li class="item-master">PERSONNEL ADMIN</li>
+                                <li class="sidebar-item">
+                                    <a href="~/Attendance/Index" class='sidebar-link'><span>Attendance</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="dropdown-item" href="~/LeaveApply/Index"><span>Leave Apply</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="~/ExpenseReport/Index"><span>Expense Report</span></a>
+                                </li>
+
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x" id="btnclose" style="font-weight:600">X</button>
+            </div>
+        </div>
+
+        <div id="main">
+            <nav class="navbar navbar-header navbar-expand" style="background:rgba(255, 137, 0, 0.5 );height:50px">
+                <a class="sidebar-toggler" href="#" style="color:orangered"><i class="fa fa-bars" style="font-size:25px;"></i></a>
+                <button class="btn navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
+
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle " style="color:white;font-size:20px;">
+                                <i class="fa fa-cog"><i class="fa fa-caret-down" style="margin-left:10px;"></i></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right card-body" style="line-height:30px;">
+
+                                @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
+                                {
+                                    if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Group Head"))
+                                    {
+                                        <a class="dropdown-item" href="~/Staff/ChangePassword">Change Password</a>
+                                        <a class="dropdown-item" href="~/Gallery/Index">Gallery</a>
+                                        @*<a class="dropdown-item" href="~/AccessMatrix/Index">Access Matrix</a>*@
+                                        @*<a class="dropdown-item" href="~/AccessMatrixDetails/Index">Assign Access</a>*@
+                                        <div class="dropdown-divider"></div>
+
+                                        @Html.ActionLink("Logout", "LogOff", "Account", null, new { @class = "dropdown-item logout-btn", style = "font-weight:400;color:black;" })
+
+                                    }
+                                    else
+                                    {
+
+                                        @Html.ActionLink("Logout", "LogOff", "Account", null, new { @class = "dropdown-item logout-btn", style = "font-weight:400;color:black;" })
+
+
+                                    }
+                                }
+
+                            </div>
+
+                        </li>
+                        <li>
+                            @{
+                                Html.RenderAction("GetUserName", "Home");
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div>
+
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/adminjquery")
+
+    @*<script src="https://code.jquery.com/jquery-1.10.2.js"></script>*@
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <script src=" https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    @*<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>*@
+    <script>
+
+        $('.logout-btn').click(function () {
+            localStorage.clear();
+        });
+
+        window.onload(function () {
+            $('#btnclose').click();
+
+        });
+  $(function(){
+
+     var msg = "@(TempData["ErrorMsg"] as string)";
+      if (msg !== "") {
+          toastr.error(msg);
+     }
+  });
+    </script>
+    <script>
+  $(function(){
+     var msg = "@(TempData["SuccessMsg"] as string)";
+      if (msg !== "") {
+          toastr.success(msg);
+     }
+  });
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#table').dataTable({
+                paging: false
+            });
+            $('#dataTable').dataTable({
+                paging: false,
+                "aaSorting": [[1, "asc"]]
+            });
+
+            $('button').addClass('btn-sm')
+            $('.btn').addClass('btn-sm')
+            $('#dataTable_length').remove()
+            $('#table_length').remove()
+            $('#dataTable').css('width', 'auto')
+            //$('.buttons-excel').addClass('btn btn-sm btn-dark');
+
+        });
+
+        $('#btnReadAll').click(function () {
+
+            $('.search').val('');
+        });
+
+
+        $('#sdatepicker').datepicker({
+            dateFormat: 'dd-mm-yy',
+        });
+        $('#edatepicker').datepicker({
+            dateFormat: 'dd-mm-yy',
+        });
+        $(document).ready(function () {
+            $('#sdatepicker').attr("readonly", "readonly");
+            $('#edatepicker').attr("readonly", "readonly");
+        })
+
+        $(function () {
+            var href = window.location.href;
+            $('.sidebar-menu li a').each(function (e, i) {
+                if (href.indexOf($(this).attr('href')) >= 0) {
+                    $(this).addClass('active');
+
+                }
+            });
+        });
+
+
+        $('#CatagoryId').change(function LoadSubCategory() {
+
+            $.ajax({
+                type: "GET",
+                url: "/Item/GetSubCategories",
+                data: { 'CategoryID': $('#CatagoryId').val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderSubCategory('#SubCatagoryId', data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        });
+
+        function renderSubCategory(element, data) {
+
+            //render product
+            var $ele = $(element);
+            $ele.empty();
+            $ele.append($('<option/>').val('0').text('Select'));
+
+            $.each(data, function (i, val) {
+
+                $($ele).append($('<option>', {
+                    value: val.Id,
+                    text: val.Name
+                }));
+            })
+
+        }
+
+        $('#Itemid').change(function LoadSize() {
+
+            $.ajax({
+                type: "GET",
+
+                url: "/MaterialMovement/GetItemSize",
+                data: { 'Itemid': $('#Itemid').val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderSizeForMaterialMovement('.checkboxes', data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        });
+
+        $('#UnitOfMeasurementId').change(function LoadSize() {
+
+            $.ajax({
+                type: "GET",
+
+                url: "/Item/GetItemSize",
+                data: { 'UnitOfMeasurementId': $('#UnitOfMeasurementId').val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderSize('.checkboxes', data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        });
+
+        function renderSize(element, data) {
+
+            //render product
+            var $ele = $(element);
+            $ele.empty();
+            $.each(data, function (i, val) {
+
+                $($ele).append($(' <input type="checkbox" class="checkbox" name="SizeId" value="' + val.Id + '"/>' + '<label class="lable">&nbsp;' + val.Size + '</label><br/>', {
+
+                }));
+            })
+
+        }
+
+        function renderSizeForMaterialMovement(element, data) {
+
+            //render product
+            var $ele = $(element);
+            $ele.empty();
+            $.each(data, function (i, val) {
+                $($ele).append($(' <input type="checkbox" class="checkbox d-none materialMovementSize" name="Size" onchange="getSingleSize(this)" id="' + val.Size + '" value="' + val.Size + '"/>' + '<label for="' + val.Size + '" class="lable" style="cursor:pointer">&nbsp;' + val.Size + '</label><br/>', {
+
+                }));
+            })
+        }
+
+        function myFunction() {
+            $("#Size").addClass("show");
+        }
+
+        function call() {
+            myFunction();
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        $(".multiselect").click(function (e) {
+            $(".checkboxes").addClass('show');
+            e.stopPropagation();
+        });
+
+        $(".checkboxes").click(function (e) {
+            e.stopPropagation();
+        });
+
+        $(document).click(function () {
+            $(".checkboxes").removeClass('show');
+        });
+
+    </script>
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Customerid").select2();
+            $("#CatagoryId").select2();
+            $("#SubCatagoryId").select2();
+            $("#UnitOfMeasurementId").select2();
+
+        });</script>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

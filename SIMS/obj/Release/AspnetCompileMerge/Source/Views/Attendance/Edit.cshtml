@@ -1,0 +1,178 @@
+@*@model SIMS.Models.AttendanceModel
+
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="col-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Edit Attendance
+                </div>
+                <div class="card-body">
+
+
+                    <div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Id)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.DisplayFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Id)
+                        </div>
+                    </div>
+                    <div class="row d-none">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Staffid)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Staffid)
+                            @Html.ValidationMessageFor(model => model.Staffid)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Date)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Date)
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Enteringtime)
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="text-box single-line" data-val="true"  data-val-required="The Entering Time field is required." id="Enteringtime" name="Enteringtime" type="time">
+                            @Html.ValidationMessageFor(model => model.Enteringtime)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Leavingtime)
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="text-box single-line" data-val="true"  data-val-required="The Leaving Time field is required." id="Leavingtime" name="Leavingtime" type="time">
+                            @Html.ValidationMessageFor(model => model.Leavingtime)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Ishalfdayleave)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Ishalfdayleave)
+                            @Html.ValidationMessageFor(model => model.Ishalfdayleave)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Department)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Department)
+                            @Html.ValidationMessageFor(model => model.Department)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Ispresent)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Ispresent)
+                            @Html.ValidationMessageFor(model => model.Ispresent)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Reason)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.EditorFor(model => model.Reason)
+                            @Html.ValidationMessageFor(model => model.Reason)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <input type="submit" value="Save" class="btn btn-sm btn-info btn-block" />
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-info btn-block" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+
+

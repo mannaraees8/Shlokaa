@@ -1,0 +1,250 @@
+@model SIMS.ViewModels.MaterialMovementModel.MaterialMovementModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Material Movement</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+
+                    <div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Id)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.DisplayFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Id)
+                        </div>
+                    </div>
+                    <div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Staffid)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.DisplayFor(model => model.Staffid)
+                            @Html.HiddenFor(model => model.Staffid)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Timestamp)
+                            @Html.EditorFor(model => model.Timestamp, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Timestamp, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Party Name</label>
+                            @Html.DropDownListFor(model => model.Customerid, new SelectList(Model.CustomerList, "ID", "Name"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Customerid, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Movementtype)
+                            @Html.DropDownListFor(model => model.Movementtype, new SelectListItem[] {
+                           new SelectListItem() {Text = "Select", Value="Select"},
+                             new SelectListItem() {Text = "Inward", Value="Inward"},
+                               new SelectListItem() {Text = "Outward", Value="Outward"}
+                       }, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Movementtype, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Invoiceno)
+                            @Html.EditorFor(model => model.Invoiceno, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Invoiceno, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Invoicedate)
+                            @Html.EditorFor(model => model.Invoicedate, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Invoicedate, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Invoiceamount)
+                            @Html.EditorFor(model => model.Invoiceamount, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Invoiceamount, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Item Name</label>
+                            @Html.DropDownListFor(model => model.Itemid, new SelectList(Model.ItemList, "ID", "Name"), new { @class = "form-control col-12" })
+                            @Html.ValidationMessageFor(model => model.Itemid, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Item Sizes</label>
+
+                            @*<div class="multiselect">
+                                    <select onclick="myFunction()" class="dropbtns form-control"><option hidden>Size</option></select>
+                                    <div id="Size" class="checkboxes" style="max-height:150px">
+
+                                    </div>
+                                </div>*@
+
+                            <div class="multiselect">
+                                <div onclick="myFunction()" class="dropbtns form-control text-left" style="cursor:pointer">
+                                    <div class="selected_size d-inline" style="padding:0 14px 0 2px;font-size:16px;margin-right:2px;">Select Size</div><i class="fa fa-caret-down float-right" style="position: relative; top: 5px; color: #808080c2;"></i>
+                                </div>
+                                <div id="Size" class="checkboxes" style="max-height:150px">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.UnitName)
+                            @Html.DropDownListFor(model => model.UnitId, new SelectList(Model.UnitOfMeasurementList, "ID", "UnitOfMeasurementName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Quantity)
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Remarks)
+                            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3 col-6">
+                            <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+
+                url: "/MaterialMovement/GetItemSize",
+                data: { 'Itemid': $('#Itemid').val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderSizeForMaterialMovement('.checkboxes', data);
+                    loadsizes();
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+
+
+            var Sizes = []
+
+            //fetch categories from database
+            function loadsizes() {
+                if (Sizes.length == 0) {
+                    //ajax function for fetch data
+                    $.ajax({
+                        type: "GET",
+                        url: '/MaterialMovement/getProductSizeList',
+                        data: { 'Id': $('#Id').val() },
+                        success: function (data) {
+
+                            $.each(data, function (i, Val) {
+
+                                Sizes.push(Val.Size);
+                                $('input[type=checkbox]').each(function () {
+                                    if ($(this).val() == Val.Size) {
+                                        this.checked = true;
+                                        $('.selected_size').html(Val.Size)
+                                    }
+                                })
+                            })
+                        }
+
+                    });
+                    //render catagory
+
+                }
+            };
+
+
+        })
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">$(document).ready(function () { $("#Customerid").select2(); });</script>
+    <script type="text/javascript">$(document).ready(function () { $("#Itemid").select2(); });</script>
+}
+<script>
+    function getSingleSize(ele) {
+        $('.materialMovementSize').prop('checked', false)
+        $(ele).prop('checked', true)
+        $('.selected_size').removeClass('d-none')
+        $('.selected_size').addClass(' d-inline')
+        $('.selected_size').html($(ele).val())
+    }
+
+</script>
+
+

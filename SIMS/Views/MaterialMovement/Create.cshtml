@@ -1,0 +1,386 @@
+@model SIMS.ViewModels.MaterialMovementModel.MaterialMovementModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+@Html.ValidationSummary(true)
+<div class="card-body admin-outer-form" x-data="materialMovementData">
+    <div class="card-body admin-form">
+        <h3>Create Material Movement</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+
+        <form @@submit.prevent="handleSubmit($el)" class="row">
+            <div class="col-md-1"></div>
+            <div class="col-12 col-md-10">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Timestamp)
+                        <input type="date" class="form-control" x-model="date" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Party Name</label>
+                        <select x-model="Customerid" id="Customerid" class="form-control">
+
+                            @foreach (var item in Model.CustomerList)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Movementtype)
+                        <select x-model="Movementtype" class="form-control">
+                            <option value="0">Select</option>
+                            <option value="Inward">Inward</option>
+                            <option value="Outward">Outward</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Movementtype, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Invoiceno)
+                        <input type="text" class="form-control" x-model="Invoiceno" />
+                        @Html.ValidationMessageFor(model => model.Invoiceno, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Invoicedate)
+                        <input type="date" class="form-control" x-model="Invoicedate" />
+                        @Html.ValidationMessageFor(model => model.Invoicedate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Invoiceamount)
+                        <input type="text" class="form-control" x-model="Invoiceamount" onkeyup="this.value=this.value.replace(/[^\d]/,'')" />
+                        @Html.ValidationMessageFor(model => model.Invoiceamount, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Item Name</label>
+                        <select x-model="Itemid" id="Itemid" class="form-control">
+                            @foreach (var item in Model.ItemList)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Itemid, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Item Sizes</label>
+                        <div class="multiselect">
+                            <div onclick="myFunction()" class="dropbtns form-control text-left" style="cursor:pointer">
+                                <div class="selected_size d-inline" style="padding:0 14px 0 2px;font-size:16px;margin-right:2px;">Select Size</div><i class="fa fa-caret-down float-right" style="position: relative; top: 5px; color: #808080c2;"></i>
+                            </div>
+                            <div id="Size" class="checkboxes" style="max-height:150px">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.UnitName)
+                        <select id="UnitId" class="form-control">
+                            @foreach (var item in Model.UnitOfMeasurementList)
+                            {
+                                <option value="@item.Id">@item.UnitOfMeasurementName</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Quantity)
+                        <input type="text" x-model="Quantity" id="Quantity" class="form-control" x-on:keyup="validateNumber($el)" />
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.Remarks)
+                        <textarea type="text" class="form-control" x-model="Remarks" rows="2"></textarea>
+                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-4 col-6">
+                        <input type="submit" value="Create" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                    </div>
+                    <div class="col-sm-4 col-6">
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+            </div>
+        </form>
+        <template x-for="(item,index) in materialMovementData">
+            <div class="d-flex my-3" style="gap:5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none">
+                <div class="d-flex align-items-center position-relative" style="font-size:30px;top:5px">
+                    <i class="fa fa-trash-o" aria-hidden="true" style="cursor:pointer;color:red" x-on:click="removeItem(index)"></i>
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Timestamp</label>
+                    <input readonly class="form-control" :value="item.Timestamp" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Customer Name</label>
+                    <input readonly class="form-control" :value="item.CustomerName" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Movement Type</label>
+                    <input readonly class="form-control" :value="item.Movementtype" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Invoice No</label>
+                    <input readonly class="form-control" :value="item.Invoiceno" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Invoice Date</label>
+                    <input readonly class="form-control" :value="item.Invoicedate" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Invoice Amount</label>
+                    <input readonly class="form-control" :value="item.Invoiceamount" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Item Name</label>
+                    <input readonly class="form-control" :value="item.ItemName" style="width:150px" />
+                </div>
+
+                <div>
+                    <label style="font-size: 14px;">Item Size</label>
+                    <input readonly class="form-control" :value="item.ItemSize" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Unit</label>
+                    <input readonly class="form-control" :value="item.UnitName" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Quantity</label>
+                    <input readonly class="form-control" :value="item.Quantity" style="width:150px" />
+                </div>
+                <div>
+                    <label style="font-size: 14px;">Remarks</label>
+                    <input readonly class="form-control" :value="item.Remarks" style="width:150px" />
+                </div>
+            </div>
+        </template>
+        <template x-if="materialMovementData.length>0">
+            <div class="row justify-content-center">
+                <div class="col-6 col-lg-4">
+                    <button id="submit" class="btn btn-dark btn-sm btn-block" x-on:click="saveMaterialMovement($el)">Save</button>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">$(document).ready(function () { $("#Customerid").select2(); });</script>
+    <script type="text/javascript">$(document).ready(function () { $("#Itemid").select2(); });</script>
+    <script>
+        function getSingleSize(ele) {
+            $('.materialMovementSize').prop('checked', false)
+            $(ele).prop('checked', true)
+            $('.selected_size').removeClass('d-none')
+            $('.selected_size').addClass(' d-inline')
+            $('.selected_size').html($(ele).val())
+        }
+    </script>
+    <script>
+        let materialMovementData = () => {
+            var validNumber = new RegExp(/^\d*\.?\d*$/);
+            var lastValid = document.getElementById("Quantity").value;
+
+            Array.prototype.remove = function (from, to) {
+                var rest = this.slice((to || from) + 1 || this.length);
+                this.length = from < 0 ? this.length + from : from;
+                return this.push.apply(this, rest);
+            }
+            return {
+                materialMovementData: [],
+                date: new Date().toISOString().slice(0, 10),
+                Movementtype: 0,
+                Invoiceno: 0,
+                Invoicedate: '',
+                Invoiceamount: 0,
+                Customerid: 0,
+                CustomerName: '',
+                Itemid: 0,
+                UnitId: 0,
+                UnitName: '',
+                Quantity: 0,
+                ItemSize: 0,
+                Remarks: '',
+
+                init() {
+                    $('#Customerid').change(() => {
+                        this.Customerid = $('#Customerid').val()
+                        this.CustomerName = $("#Customerid option:selected").html();
+
+                    })
+                    $('#Itemid').change(() => {
+                        this.Itemid = $('#Itemid').val()
+                        this.ItemName = $("#Itemid option:selected").html();
+                    })
+                    $('#UnitId').change(() => {
+                        this.UnitId = $('#UnitId').val()
+                        this.UnitName = $("#UnitId option:selected").html();
+                    })
+                    setSize = (val) => {
+                        this.ItemSize = val
+                    }
+                    $(document).on('change', '.materialMovementSize', function () {
+                        setSize($(this).val())
+                    })
+                },
+
+                handleSubmit() {
+
+                    if (this.date == '') {
+                        toastr.error('Please enter date');
+                        return
+                    }
+                    else if (this.Movementtype == '' || this.Movementtype == 0) {
+                        toastr.error('Please select movement type');
+                        return
+                    }
+                    else if (this.Invoiceno == '' || this.Invoiceno == 0) {
+                        toastr.error('Please enter invoice no');
+                        return
+                    }
+                    else if (this.Invoicedate == '' || this.Invoicedate == 0) {
+                        toastr.error('Please enter invoice date');
+                        return
+                    }
+                    else if (this.Invoiceamount == '' || this.Invoiceamount == 0) {
+                        toastr.error('Please enter invoice amount');
+                        return
+                    }
+                    else if (this.Customerid == '' || this.Customerid == 0) {
+                        toastr.error('Please select party name');
+                        return
+                    }
+                    else if (this.Itemid == '' || this.Itemid == 0) {
+                        toastr.error('Please select item name');
+                        return
+                    }
+                    else if (this.UnitId == '' || this.UnitId == 0) {
+                        toastr.error('Please select unit');
+                        return
+                    }
+                    else if (this.Quantity == '' || this.Quantity == 0) {
+                        toastr.error('Please select quantity');
+                        return
+                    }
+                    else if (this.ItemSize == '' || this.ItemSize == 0) {
+                        toastr.error('Please select item sizes');
+                        return
+                    }
+                    else {
+
+                        this.materialMovementData.push({
+                            "Timestamp": this.date,
+                            "Movementtype": this.Movementtype,
+                            "Invoiceno": this.Invoiceno,
+                            "Invoicedate": this.Invoicedate,
+                            "Invoiceamount": this.Invoiceamount,
+                            "Customerid": this.Customerid,
+                            "CustomerName": this.CustomerName,
+                            "Itemid": this.Itemid,
+                            "ItemName": this.ItemName,
+                            "UnitId": this.UnitId,
+                            "UnitName": this.UnitName,
+                            "Quantity": this.Quantity,
+                            "ItemSize": this.ItemSize,
+                            "Remarks": this.Remarks,
+
+                        })
+
+                    }
+                },
+
+                saveMaterialMovement(ele) {
+                    $(ele).attr('disabled', true)
+                    $.ajax({
+                        type: "POST",
+                        url: "/MaterialMovement/Save",
+                        data: { "materialMovementModel": this.materialMovementData },
+                        success: function (data) {
+                            window.location.href = "/MaterialMovement/Index";
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                },
+                removeItem(val) {
+                    this.materialMovementData.remove(val)
+                },
+
+                validateNumber(elem) {
+                    if (validNumber.test(elem.value)) {
+                        lastValid = elem.value;
+                    } else {
+                        elem.value = lastValid;
+                    }
+                }
+
+            }
+        }
+    </script>
+}

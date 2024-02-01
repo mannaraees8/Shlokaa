@@ -1,0 +1,67 @@
+﻿@model SIMS.Models.UnitOfMeasurementModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm("Edit", "UnitOfMeasurement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3> Edit Unit Of Measurement</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            @Html.LabelFor(model => model.UnitOfMeasurementName)
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            @Html.EditorFor(model => model.UnitOfMeasurementName, "", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UnitOfMeasurementName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-3">
+                            <input type="submit" value="Edit" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

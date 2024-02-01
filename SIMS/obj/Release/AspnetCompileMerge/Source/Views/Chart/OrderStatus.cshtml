@@ -1,0 +1,55 @@
+﻿
+
+@{
+    ViewBag.Title = "TallyChart";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    #main {
+        background: white;
+    }
+
+    .SIMS-Card {
+        background: url('/Photo/sims.jpg.jpeg') no-repeat;
+        background-size: contain;
+        background-position: center center;
+        margin-top: 150px;
+        height: 300px;
+    }
+
+    h1 {
+        font-weight: 600;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js" integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<div class="container">
+    <div class="row">
+
+        @*@{
+
+
+            var db = Database.Open("SIMSDbConnection");
+            //List<SalesOrder> SalesOrderList = SalesOrder.RetrieveAllChartStaffId();
+
+            //for (int i = 0; i < SalesOrderList.Count; i++)
+            //{
+
+            var data = db.Query("select V.OrderStatus,count(V.OrderStatus) as OrderStatusCount from VisitLog V,Users U where V.StaffID=U.ID and V.IsDeleted=0 and V.StaffID='" + Model.Id+"' group by V.OrderStatus,U.Name");
+
+            var myChart= new Chart(width: 200, height: 200)
+            //.AddTitle("Tally")
+
+            //.DataBindTable(dataSource: data, xField: "Name")
+            .AddSeries("Default", chartType: "Pie",
+            xValue: data, xField: "OrderStatus",
+            yValues: data, yFields: "OrderStatusCount")
+            .Write();
+
+        }*@
+
+
+    </div>
+</div>
+

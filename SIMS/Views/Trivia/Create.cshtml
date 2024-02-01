@@ -1,0 +1,170 @@
+﻿@model SIMS.Models.TriviaModel
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    input[type=text], textarea {
+        background: rgba(128, 128, 128, 0.15);
+    }
+</style>
+
+@using (Html.BeginForm("Create", "Trivia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Add Trivia</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+        
+
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+
+                <div class="col-12 col-md-12 col-lg-3">
+
+                    @Html.LabelFor(model => model.TabName)
+                    @Html.EditorFor(model => model.TabName, new { htmlAttributes = new { @class = "form-control col-12" } })
+                    @Html.ValidationMessageFor(model => model.TabName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12 col-md-12 col-lg-6">
+                    @Html.LabelFor(model => model.Contents)
+                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control col-12", style = "height:300px; background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-lg-2 col-12 col-md-12">
+                    @Html.LabelFor(model => model.Image)
+                    <input type="file" value="Photo" name="Photo" />
+                </div>
+            </div>
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-12 col-md-12 col-lg-8">
+
+                    @Html.LabelFor(model => model.Title)
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control col-6" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    <label>Content Type</label>
+                    @Html.DropDownListFor(model => model.Type, new SelectListItem[]{
+                                                         new SelectListItem() {Text = "Select", Value="Select"},
+                              new SelectListItem() {Text = "Paragraph", Value="Paragraph"},
+                             new SelectListItem() {Text = "Point", Value="Point"},
+                                     new SelectListItem() {Text = "Paragraph and Point", Value="Paragraph and Point"}}, new { @class = "form-control col-6", @onchange = "contentType()" }
+                           )
+
+
+                </div>
+
+
+            </div>
+
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-12 col-md-12 col-lg-8">
+
+                    <label id="LPoint1">Point1</label>
+                    @Html.EditorFor(model => model.Point1, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point1, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint2">Point2</label>
+                    @Html.EditorFor(model => model.Point2, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point2, "", new { @class = "text-danger" })
+
+                    <label id="LPoint3">Point3</label>
+                    @Html.EditorFor(model => model.Point3, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point3, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint4">Point4</label>
+                    @Html.EditorFor(model => model.Point4, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point4, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint5">Point5</label>
+                    @Html.EditorFor(model => model.Point5, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point5, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint6">Point6</label>
+                    @Html.EditorFor(model => model.Point6, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point6, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint7">Point7</label>
+                    @Html.EditorFor(model => model.Point7, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px; background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point7, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint8">Point8</label>
+                    @Html.EditorFor(model => model.Point8, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px; background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point8, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint9">Point9</label>
+                    @Html.EditorFor(model => model.Point9, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px; background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point9, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint10">Point10</label>
+                    @Html.EditorFor(model => model.Point10, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px; background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.Point10, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-12 col-md-12 col-lg-8">
+                    <label id="SubContents1">SubContents</label>
+                    @Html.EditorFor(model => model.SubContents, new { htmlAttributes = new { @class = "form-control col-12", style = "height:300px; background: rgba(128, 128, 128, 0.15);" } })
+                    @Html.ValidationMessageFor(model => model.SubContents, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row" style="margin-right:0px;">
+                <div class="col-12">&nbsp;</div>
+            </div> <div class="row" style="margin-right:0px;">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row" style="margin-right:0px;">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <input type="submit" value="Create" class="btn btn-sm btn-dark btn-block col-12" style="margin-bottom:20px;" />
+                </div>
+                <div class="col-sm-3">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block col-12" })
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@section Scripts {
+
+    <script src="~/Scripts/Trivia.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+

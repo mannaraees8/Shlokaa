@@ -1,0 +1,523 @@
+@model  IEnumerable<SIMS.Models.AttendanceModel>
+
+@{
+    ViewBag.Title = "Attendance";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    input::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+
+    input[type="time"]::-webkit-input-placeholder {
+        visibility: hidden !important;
+    }
+</style>
+
+
+
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Attendance List</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body">
+
+             
+
+                        <!-- table-striped -->
+                        <table class="table table-responsive-lg  table-sm w3-table w3-striped w3-border">
+                            <thead>
+                                <tr>
+                                    <th class="d-none">
+                                        @Html.DisplayNameFor(model => model.Id)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Date)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Staffid)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Department)
+                                    </th>
+                                    <th>
+                                        IN Time
+                                    </th>
+                                    <th>
+                                        OUT Time
+                                    </th>
+                                    <th class="d-none">
+                                        Default  IN Time
+                                    </th>
+                                    <th class="d-none">
+                                        Default OUT Time
+                                    </th>
+
+                                    <th>
+                                        Attendance
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Reason)
+                                    </th>
+                                    <th data-field="Edit" data-tableexport-display="none"></th>
+
+                                </tr>
+                            </thead>
+
+                            @if (Model.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="9">No rows matching search criteria </td>
+                                </tr>
+                            }
+                            else
+                            {
+
+
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="ID d-none">
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date)
+                                        </td>
+                                        <td class="Name">
+                                            @Html.DisplayFor(modelItem => item.StaffName)
+                                        </td>
+                                        <td class="Department">
+                                            @Html.DisplayFor(modelItem => item.Department)
+                                        </td>
+                                        <td class="Enteringtime">
+                                            @Html.DisplayFor(modelItem => item.Enteringtime)
+                                        </td>
+                                        <td class="Leavingtime">
+                                            @Html.DisplayFor(modelItem => item.Leavingtime)
+                                        </td>
+                                        <td class="InTime d-none">
+                                            @Html.ValueFor(modelItem => item.InTime, "{0:HH:mm:ss }")
+                                        </td>
+                                        <td class="OutTime d-none">
+                                            @Html.ValueFor(modelItem => item.OutTime, "{0:HH:mm:ss }")
+                                        </td>
+
+                                        <td class="Status">
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td class="Reason">
+                                            @if (item.Reason == "")
+                                            {
+                                                <label>----</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Reason)
+                                            }
+                                        </td>
+                                        <td data-field="Edit" data-tableexport-display="none">
+                                            <button type="button" class="GetId btn btn-sm btn-dark btn-block">Edit</button>
+
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            }
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="card-footer text-muted">
+                        @Html.Partial("_PagingFooter")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="staticBackdropLabel">Attendance</h3>
+                <label>Date :  <span class="date"></span></label>
+            </div>
+            <div class="cards" style="padding-left:12px;">
+                <div class="row">
+                    <div class="col-4">
+                        <label>Employee Name </label>
+                    </div>
+                    <div class="col-7">
+                        <label id="staffName"></label>
+                    </div>
+                </div>
+                <br />
+
+
+                <div class="row">
+                    <div class="col-4">
+                        <label>Department</label>
+                    </div>
+                    <div class="col-7">
+                        <label id="department"></label>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-4">
+                        <label>Status</label>
+                    </div>
+                    <div class="col-6">
+                        <select id="status" class="form-control">
+                            <option>Select</option>
+                            <option>Present</option>
+                            <option>Absent</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="timestamp">
+                    <hr />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>IN Time</label>
+                        </div>
+                        <div class="col-4" style="padding-left:0">
+                            <input id="enteringTime" name="enteringTime" type="time" style="border-radius:2px" />
+
+                        </div>
+                        <div class="col-3">
+                            <small style="font-size:11px;color:green">Default In time</small>   <sapn id="intime" style="font-size:14px"></sapn>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <label>OUT Time</label>
+                        </div>
+                        <div class="col-4" style="padding-left:0">
+                            <input type="time" id="leavingTime" required="" pattern="hh:mm:ss" style="border-radius:2px;" />
+                        </div>
+                        <div class="col-3">
+                            <small style="font-size:11px;color:green">Default out time</small>  <sapn id="outtime" style="font-size:14px"></sapn>
+                        </div>
+                    </div>
+
+
+                </div>
+                <br />
+                <div id="divreason" style="display:none">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Reason</label>
+                        </div>
+                        <div class="col-6">
+                            <select id="reason" class="form-control">
+                                <option>Select</option>
+                                <option>Health Issue</option>
+                                <option>Family Function</option>
+                                <option>Personal work</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+            </div><br />
+            <div class="row">
+                <div class="col-2 col-md-3"></div>
+                <div class="col-8 col-md-6">
+                    <button type="submit" class="btn btn-block btn-dark" id="submit">Save</button><br />
+                </div>
+                <div class="col-2 col-md-3"></div>
+            </div>
+
+            <div class="modal-footer">
+                <span id="errormsg" style="color:red"></span>
+                <span id="successmsg" style="color:green"></span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <script>
+        $('#sdatepicker').datepicker();
+        $("#sdatepicker").datepicker("show");
+        $('#edatepicker').datepicker();
+        $("#edatepicker").datepicker("show");
+
+
+        var Id;
+        var date;
+        var Department;
+        var intime;
+        var outtime;
+        var oldintime
+        var oldouttime
+        $('.date').text(new Date().toISOString().slice(0, 10));
+        var status = "Present";
+        var reason = "";
+
+
+        $(".GetId").click(function () {
+
+            $('#status').val('Select');
+            $('#reason').val('Select')
+
+            $('#divreason').css('display', 'none');
+
+            var $row = $(this).closest("tr");    // Find the row
+            Id = $row.find(".ID").text(); // Find the text
+            var $Name = $row.find(".Name").text();
+            date = $row.find(".Date").text();
+            Department = $row.find(".Department").text().trim();
+            intime = $row.find(".InTime").text().trim();
+            outtime = $row.find(".OutTime").text().trim();
+            oldintime = $row.find(".Enteringtime").text().trim();
+            oldouttime = $row.find(".Leavingtime").text().trim();
+            $('#staffName').text($Name);
+            $('#department').text(Department);
+
+
+
+
+            var dt = "2020-12-20 ";
+
+            var defaultintime = dt.concat(intime);
+            var defaultouttime = dt.concat(outtime);
+
+            var oldintime = dt.concat(oldintime);
+            var oldouttime = dt.concat(oldouttime);
+
+
+            var DefaultInTime = new Date(defaultintime);
+            var DefaultOutTime = new Date(defaultouttime);
+
+            var oldintime = new Date(oldintime);
+            var oldouttime = new Date(oldouttime);
+
+            oldintime = (oldintime).toString();
+            oldintime = oldintime.slice(16, 24);
+            oldouttime = (oldouttime).toString();
+            oldouttime = oldouttime.slice(16, 24);
+
+            defaultintime = formatAMPM(DefaultInTime);
+            defaultouttime = formatAMPM(DefaultOutTime);
+
+            $('#intime').text(defaultintime);
+            $('#outtime').text(defaultouttime);
+            $('#enteringTime').val(oldintime);
+            $('#leavingTime').val(oldouttime);
+
+
+            DefaultInTime.setHours(DefaultInTime.getHours() + 1);
+            DefaultOutTime.setHours(DefaultOutTime.getHours() - 1);
+            DefaultOutTime.setMinutes(DefaultOutTime.getMinutes() - 1);
+            DefaultInTime = (DefaultInTime).toString();
+            DefaultInTime = DefaultInTime.slice(16, 24);
+            DefaultOutTime = (DefaultOutTime).toString();
+            DefaultOutTime = DefaultOutTime.slice(16, 24);
+
+            // Let's test it out
+            $('#staticBackdrop').modal('show')
+
+            $('#enteringTime').change(function () {
+
+                if ($('#enteringTime').val() > DefaultInTime || $('#leavingTime').val() < DefaultOutTime) {
+
+                    $('#divreason').css('display', 'block');
+                    status = "Half Day";
+                    reason = $('#reason').val();
+                }
+                else {
+                    $('#divreason').css('display', 'none');
+                    status = $('#status').val();
+                }
+            });
+
+            $('#leavingTime').change(function () {
+                if ($('#leavingTime').val() < DefaultOutTime || $('#enteringTime').val() > DefaultInTime) {
+                    $('#divreason').css('display', 'block');
+                    status = "Half Day";
+                    reason = $('#reason').val();
+                }
+                else {
+                    $('#divreason').css('display', 'none');
+                    status = $('#status').val();
+                }
+            });
+
+            $('#status').change(function () {
+                if ($('#status').val() == 'Absent') {
+                    $('#divreason').css('display', 'block');
+                    $('.timestamp').css('display', 'none');
+                }
+                else if ($('#status').val() == 'Present' && $('#leavingTime').val() < DefaultOutTime) {
+                    $('#divreason').css('display', 'block');
+                    $('.timestamp').css('display', 'block');
+                    status = "Half Day";
+                }
+                else if ($('#status').val() == 'Present' && $('#enteringTime').val() > DefaultInTime) {
+                    $('#divreason').css('display', 'block');
+                    $('.timestamp').css('display', 'block');
+                    status = "Half Day";
+                }
+                else {
+                    $('#divreason').css('display', 'none');
+                    $('.timestamp').css('display', 'block');
+                    status = $('#status').val();
+                }
+            });
+
+        });
+
+
+
+        $("#submit").click(function () {
+
+            var isValid = true;
+            if ($('#status').val() == 'Select') {
+                $('#errormsg').text('Please select status');
+                isValid = false;
+            }
+            else if ($('#divreason').css('display') == 'block') {
+
+                if ($('#reason').val() == 'Select') {
+                    $('#errormsg').text('Please select reason');
+                    isValid = false;
+                }
+            }
+            else if ($('#divreason').css('display') == 'none') {
+                $('#reason').val('');
+            }
+            if ($('#status').val() == 'Absent') {
+
+                if ($('#reason').val() == 'Select') {
+                    $('#errormsg').text('Please select reason');
+                    isValid = false;
+                }
+                else {
+
+                    reason = $('#reason').val();
+
+                }
+            }
+            if (isValid == true) {
+
+                if ($('#status').val() == 'Absent') {
+
+
+                    var Attendance = {
+                        Id: Id,
+                        Status: $('#status').val(),
+                        Date: date,
+                        EnteringTime: $('#intime').text().trim(),
+                        LeavingTime: $('#outtime').text().trim(),
+                        Department: $('#department').text().trim(),
+                        Reason: $('#reason').val(),
+                        InTime: $('#intime').text().trim(),
+                        OutTime: $('#outtime').text().trim(),
+
+                    }
+                }
+                else {
+
+                    var Attendance = {
+                        Id: Id,
+                        status: status,
+                        Date: date,
+                        EnteringTime: $('#enteringTime').val().trim(),
+                        LeavingTime: $('#leavingTime').val().trim(),
+                        Department: $('#department').text().trim(),
+                        Reason: $('#reason').val(),
+                        InTime: $('#intime').text().trim(),
+                        OutTime: $('#outtime').text().trim(),
+                    }
+                }
+
+
+
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: '/Attendance/Save',
+
+                    data: JSON.stringify(Attendance),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.status) {
+
+                            $('#department').val('');
+                            $('#reason').val('');
+                            $('#successmsg').val('New attendance created.');
+                            $('#staticBackdrop').modal('hide');
+                            location.reload();
+                        }
+                        else {
+                            $('#errormsg').text('Please select proper details.');
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $('#submit').text('Save');
+                    }
+                });
+
+            }
+            else {
+                $('#errormsg').text('Please select proper details.');
+            }
+
+
+        });
+
+        function formatAMPM(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            return strTime;
+        }
+
+
+
+    </script>
+}
+
+

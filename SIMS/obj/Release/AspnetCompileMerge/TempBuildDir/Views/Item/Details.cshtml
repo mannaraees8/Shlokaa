@@ -1,0 +1,170 @@
+@model SIMS.ViewModels.ItemModel.ItemModel
+
+@{
+    ViewBag.Title = "Item Details";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Item Details</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-12 col-md-10">
+
+                <div class="row">
+                    <div class="col-4 d-md-none"></div>
+                    <div class="col-4 col-md-3 text-center">
+                        @if (Model.Photo != null && Model.Photo != "")
+                        {
+
+                            <img src="@Url.Content(Model.Photo)" class="img-fluid" />
+                        }
+                        else
+                        {
+                            <img src="" alt="No image" />
+                        }
+
+                    </div>
+                    <div class="col-4 d-md-none"></div>
+                    <div class="col-12 col-md-9">
+                        <div class="row d-none">
+                            <div class="col-md-1"></div>
+                            <div class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Id)
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.DisplayFor(model => model.Id)
+                            </div>
+                        </div>
+
+
+                        <div class="row ">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-6 col-md-4">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </div>
+                            <div class=" col-6 col-sm-6">
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+                        @*<div class="row">
+            <div class="col-sm-1"></div>
+            <div class=" col-6 col-sm-4">
+                @Html.DisplayNameFor(model => model.Size)
+            </div>
+            <div class="col-6 col-sm-6">
+                @Html.DisplayFor(model => model.Size)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>*@
+
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-6 col-sm-4">
+                                @Html.DisplayNameFor(model => model.Category)
+                            </div>
+                            <div class=" col-6 col-sm-6">
+                                @Html.DisplayFor(model => model.Category)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-6 col-sm-4">
+                                @Html.DisplayNameFor(model => model.SubCategory)
+                            </div>
+                            <div class="col-6 col-sm-6">
+                                @Html.DisplayFor(model => model.SubCategory)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-6 col-sm-4">
+                                @Html.DisplayNameFor(model => model.UnitOfMeasurement)
+                            </div>
+                            <div class="col-6 col-sm-6">
+                                @Html.DisplayFor(model => model.UnitOfMeasurement)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+                        <div class="row d-none">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Isdeleted)
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.DisplayFor(model => model.Isdeleted)
+                            </div>
+                        </div>
+                        <div class="row d-none">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+                        <div>
+                            @{
+                                Html.RenderAction("RenderItemISize", "Item");
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        @if (ViewContext.HttpContext.User.IsInRole("Group Head") || ViewContext.HttpContext.User.IsInRole("Admin"))
+        {
+            <div class="row" style="padding:0 10px;">
+                <div class="col-sm-2"></div>
+                <div class="col-6 col-sm-4">
+                    @Html.ActionLink("Edit", "Edit", "Item", new { id = Model.Id }, new { @class = "btn btn-sm btn-dark btn-block", style = "margin-bottom:20px" })
+                </div>
+                <div class=" col-6 col-sm-4">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                </div>
+            </div>
+            }
+
+        </div>
+</div>
+

@@ -1,0 +1,33 @@
+﻿    body{
+        overflow:hidden;
+    }
+    .row{
+       margin-right:0;
+    }
+.form-control::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+input[type=text], input[type=password] {
+    padding-left: 20px;
+    outline: none;
+    border: none;
+    color: white;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    outline: none;
+    border: 2px solid orange;
+    color: white;
+}
+@media (min-width: 1200px) {
+
+    /* Pull out the header and footer */
+    .footer {
+        position:fixed;
+        bottom: 0;
+        width:100%;
+    }
+}

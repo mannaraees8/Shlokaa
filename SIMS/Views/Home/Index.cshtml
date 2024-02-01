@@ -1,0 +1,412 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+    }
+
+
+    #hero .carousel-item::before {
+        background-color: rgba(12, 11, 10, 0)
+    }
+
+    #hero .carousel-container {
+        margin-top: 100px;
+    }
+
+    #hero {
+        padding-top: 60px;
+    }
+
+    h4 {
+        color: orange;
+        /*#012060;*/
+    }
+
+    .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+        background-color: transparent;
+        color: orange;
+    }
+
+    .about-us {
+        border-radius: 5px;
+        box-shadow: 0px 3px 16px rgba(255, 165, 0, 0.93);
+        border-radius: 50px 0;
+        padding-left: 35px;
+        background: white;
+    }
+
+
+    @@media (min-width:992px) {
+        .largeDeviceTitle {
+            margin-top: 450px;
+        }
+
+        .title {
+            float: right;
+            padding-right: 23px;
+        }
+    }
+
+    @@media (max-width:992px) {
+        .largeDeviceTitle {
+            margin-top: 45px;
+        }
+    }
+
+    @@media (min-width:500px) {
+        .title {
+            font-size: 43px;
+        }
+    }
+</style>
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" style="margin-top:-30px">
+    <div class="hero-container">
+        <div class="carousel slide carousel-fade" data-ride="carousel" style="background-color: black;">
+
+
+            <div class="carousel-inner" role="listbox">
+
+                <!-- Slide 1 -->
+                <div class="carousel-item active" style="background: url('/Photo/BG Fork Knife.jpg'); background-size: cover; background-position: center center">
+                    <div class="row largeDeviceTitle" style="margin-left:50px;">
+                        <div class="col-lg-6 col-md-1 col-12">
+                        </div>
+                        <div class="col-lg-6 col-md-10 col-12">
+                            <h2 class="animate__animated animate__fadeInDown"><span class="title" style="font-family:sans-serif; color: darkorange; text-shadow: 2px 2px gray;"><i>Cooking is love made visible</i></span></h2>
+
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left:20px;margin-top:10px;">
+                        <div class="col-lg-7 col-12">
+                        </div>
+                        <div class="col-lg-5 col-12">
+                            <p class="animate__animated animate__fadeInUp" style="padding:0 20px;color:black;text-align:justify">
+                                To cook a sumptuous meal, you not only require the best ingredients and recipes, but also a
+                                great cookware. Shlokaa offers you the best-in-class kitchenware with an exciting range  of products to make
+                                your cooking experience enjoyable, thereby creating happy kitchens and happy meal times.
+
+                            </p>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+
+    <!-- ======= Whu Us Section ======= -->
+    <section id="why-us" class="why-us">
+        <div class="container" style="margin-top:40px">
+
+            <div class="section-title">
+                <h4 style="font-family: sans-serif">Why buy from <span>Shlokaa</span></h4>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="box">
+                        <div class="text-center">
+                            <span>
+                                <img src="~/Photo/OnTImeDelivery.jpg" class="img-fluid" style="border-radius:50px;height:90px;width:90px;background-color:#e10886;padding:0 3px;" />
+                            </span>
+                            <h4>On Time Delivery</h4>
+                            <p>As per scheduled route plan</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="box">
+                        <div class="text-center">
+
+                            <img src="~/Photo/QualityAssuredpng.jpg" class="img-fluid" style="border-radius:50px;height:92px;width:90px;background-color: #3c2b99;padding-bottom:5px;padding-top:1px;padding-right:2px" />
+                            <h4>Quality Assured</h4>
+                            <p>Through stringent checks</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="box">
+                        <div class="text-center">
+                            <span>
+                                <img src="~/Photo/WideRange.jpg" class="img-fluid" style="border-radius:50px;height:90px;width:90px;background-color: #686868;padding-top:5px;padding-right:2px" />
+                            </span>
+                            <h4>Wide Product Range</h4>
+                            <p>Of kitchenware and appliances</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-4">
+                    <div class="box">
+                        <div class="text-center">
+                            <span>
+                                <img src="~/Photo/Ideas.jpg" class="img-fluid" style="border-radius:50px;height:90px;width:90px;background-color: #dd2b1c;" />
+                            </span>
+                            <h4>Innovative Product</h4>
+                            <p>To cater to ever changing needs</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="box">
+                        <div class="text-center">
+                            <span>
+                                <img src="~/Photo/Pricing.jpg" class="img-fluid" style="border-radius:50px;height:90px;width:90px;background-color: #0093cb" />
+                            </span>
+                            <h4>Competitive Pricing</h4>
+                            <p>Ensuring value for money</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                </div>
+            </div>
+
+        </div>
+
+    </section><!-- End Whu Us Section -->
+    <!-- ======= Events Section ======= -->
+    <section id="About" style="background-color:rgba(255, 165, 0, 0.09)">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-7">
+                    <div class="card-body about-us">
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+                        <h5>
+                            To enhance your cooking experience, Shlokaa introduces “Nirvaan” series of finest kitchenware
+                            that:
+                        </h5>
+                        <ul>
+                            <li>Saves fuel</li>
+                            <li>Preserves nutrients</li>
+                            <li>Reduces cooking time</li>
+                            <li>Heats food more evenly</li>
+                            <li>Is safe to use for all your cooking needs</li>
+                        </ul>
+
+                        <p>
+                            Enriched with 25 years of hands-on engineering experience with 10+ years in kitchenware
+                            business, the promoter conceived Shlokaa in 2017 as an independent entity to create happy
+                            kitchens.
+                            Shlokaa has embarked on a journey to make even dull household chores in the kitchen a
+                            pleasurable experience. With unique market strategies, we offer premium kitchen solutions
+                            through our wide range of products viz. Aluminium Kitchenware, Stainless Steel Kitchenware,
+                            Thermal Pot, Pressure Cooker, Non-stick Cookware, Anodized Cookware and Kitchen
+                            Accessories.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <img src="~/Photo/NirvaanLogo.jpg" class="img-fluid" style="border-radius:100px 0" />
+
+                    </div>
+                </div>
+
+
+            </div>
+            <section id="specials" class="specials">
+                <div class="row">
+                    <div class="col-lg-1">
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <ul class="nav nav-tabs flex-column">
+                            <li class="nav-item">
+                                <a style="font-size:18px;" class="nav-link active show" data-toggle="tab" href="#tab-1">Your partner in kitchen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size:18px;" class="nav-link" data-toggle="tab" href="#tab-2">Your needs are our driving force</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size:18px;" class="nav-link" data-toggle="tab" href="#tab-3">Quality and durability</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="tab-1">
+                                <div class="row">
+                                    <div class="col-12 col-lg-9 col-md-8 details order-2 order-lg-1">
+                                        <h4>We create happy kitchens with Nirvaan</h4>
+                                        <p>
+                                            We provide you with a variety of kitchenware and accessories that will make your
+                                            cooking a happy experience.
+                                        </p>
+                                    </div>
+                                    <div class="col-3 details order-1 order-md-3"></div>
+                                    <div class="col-6 col-lg-3 col-md-4 details order-1 order-md-2">
+                                        <div class="card-body text-center" style="margin-top:20px">
+                                            <img src="~/Photo/imagesforyourpartnerinkitchen/Image 1.jpg" class="img-fluid" style="border-radius:100px;box-shadow: 0px 3px 16px rgba(255, 165, 0, 0.93);margin-top:-30px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab-2">
+                                <div class="row">
+                                    <div class="col-12 col-lg-9 col-md-8 details order-2 order-lg-1">
+                                        <h4> Your needs are our driving force</h4>
+                                        <p>
+                                            We cater to the ever-changing market needs. Our innovative designs are user-friendly
+                                            and are task-specific.
+                                        </p>
+                                    </div>
+                                    <div class="col-3 details order-1 order-md-3"></div>
+                                    <div class="col-6 col-lg-3 col-md-4 details order-1 order-md-2">
+                                        <div class="card-body text-center" style="margin-top:20px">
+                                            <img src="~/Photo/imagesforyourpartnerinkitchen/Image 2.jpg" class="img-fluid" style="border-radius:100px;padding:10px;background:white; box-shadow: 0px 3px 16px rgba(255, 165, 0, 0.93);margin-top:-30px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-3">
+                                <div class="row">
+                                    <div class="col-12 col-lg-9 col-md-8 details order-2 order-lg-1">
+                                        <h4>Quality and durability are our overriding priorities</h4>
+                                        <p>
+                                            We aim to provide you long lasting, durable and best quality kitchenware.
+                                        </p>
+                                    </div>
+                                    <div class="col-3 details order-1 order-md-3"></div>
+                                    <div class="col-6 col-lg-3 col-md-4 details order-1 order-md-2">
+                                        <div class="card-body text-center" style="margin-top:20px">
+                                            <img src="~/Photo/imagesforyourpartnerinkitchen/Image 3.jpg" class="img-fluid" style="margin-top:-30px;border-radius:100px;box-shadow: 0px 3px 16px rgba(255, 165, 0, 0.93);" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+
+</main><!-- End #main -->
+@section Scripts{
+
+    <script type="text/javascript">
+
+
+
+        $(document).scroll(function () {
+            highlightSection();
+        });
+        function highlightSection() {
+
+
+            // where's the scroll at?
+            var currentPosition = $(this).scrollTop();
+
+            // remove highlights from all
+
+            //$('#aboutmnu').removeclass('active');
+            //$("#Home").removeClass('active');
+
+            //$('#Home').addClass('active');
+
+            // loop over each section
+            $('#About').each(function () {
+                // calculate the start and end position of the section
+                var sectionstart = $(this).offset().top - 80;
+                var sectionend = sectionstart + $(this).height() / 3.6;
+
+
+                // if the current scroll lies between the start and the end of this section
+                if (currentPosition >= sectionstart && currentPosition < sectionend) {
+                    if ($(this).attr('id') == "About") {
+
+                        $('#AboutMnu').addClass('active');
+                        $('#Home').removeClass('active');
+                    }
+                    else {
+                        //$('#Home').addClass('active');
+                    }
+                    // highlight the corresponding anchors
+                    //$("a[href='#" + $(this).attr('id') + "']").addclass('active');
+                }
+                else {
+                    $('#AboutMnu').removeClass('active');
+                    $('#Home').addClass('active');
+                }
+
+            });
+        };
+
+
+        //$(function () {
+        //    $('#AboutMnu').on("click", function () {
+        //        $('#AboutMnu').addClass('active');
+        //        $('#Home').removeClass('active');
+        //    });
+        //});
+
+
+
+        $(function () {
+            var href = window.location.href;
+            $('nav a').each(function (e, i) {
+                if (href.indexOf($(this).attr('href')) >= 0) {
+                    $(this).addClass('active');
+
+                }
+            });
+            if (href.indexOf('About') > 0) {
+                $('#AboutMnu').addClass('active');
+                $('#Home').removeClass('active');
+            }
+        });
+
+
+
+
+    </script>
+}
+

@@ -1,0 +1,91 @@
+@model IEnumerable<SIMS.ViewModels.SalesOrderModel.SalesOrderModel>
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Sales Order Details</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+      
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body">
+                       
+                            <div class="row">
+                                <div class="col-xs-12">&nbsp;</div>
+                            </div>
+                            <!-- table-striped -->
+                            <table class="table table-responsive-md table-bordered table-hover table-sm">
+                                <tr class="table-primary">
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ItemName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CategoryName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UnitOfMeasurement)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SizeName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Quantity)
+                                    </th>
+
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ItemName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CategoryName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UnitOfMeasurement)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+
+
+                                    </tr>
+                                }
+
+                            </table>
+
+                        </div>
+                </div>
+
+                <div class="card-footer text-muted">
+                    @Html.Partial("_PagingFooter")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

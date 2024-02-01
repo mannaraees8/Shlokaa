@@ -1,0 +1,368 @@
+﻿@model SIMS.Models.TriviaModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+
+    <div class="card-body admin-outer-form" >
+        <div class="card-body admin-form">
+            <h3>Edit Content</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+
+                <div class="col-12 col-md-12 col-lg-3">
+
+                    @Html.LabelFor(model => model.TabName)
+                    @Html.EditorFor(model => model.TabName, new { htmlAttributes = new { @class = "form-control col-12" } })
+                    @Html.ValidationMessageFor(model => model.TabName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12 col-md-12 col-lg-6 mt-4 mt-lg-0">
+                    @Html.LabelFor(model => model.Contents)
+                    @Html.EditorFor(model => model.Contents, new { htmlAttributes = new { @class = "form-control col-12", style = "height:400px;" } })
+                    @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-lg-2 col-12 col-md-12">
+                    @Html.LabelFor(model => model.Image)
+                    <input type="file" value="Photo" name="Photo" />
+                </div>
+            </div>
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-12 col-md-12 col-lg-8">
+
+                    @Html.LabelFor(model => model.Title)
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control col-6" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    <label>Content Type</label>
+                    @Html.DropDownListFor(model => model.Type, new SelectListItem[]{
+                                                        new SelectListItem() {Text = "Select", Value="Select"},
+                             new SelectListItem() {Text = "Paragraph", Value="Paragraph"},
+                            new SelectListItem() {Text = "Point", Value="Point"},
+                                    new SelectListItem() {Text = "Paragraph and Point", Value="Paragraph and Point"}}, new { @class = "form-control col-6", @onload = "contentTypeLoad()", @onchange = "contentType()" }
+                          )
+
+                </div>
+
+
+            </div>
+
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-12 col-md-12 col-lg-8">
+
+                    <label id="LPoint1">Point1</label>
+                    @Html.EditorFor(model => model.Point1, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point1, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint2">Point2</label>
+                    @Html.EditorFor(model => model.Point2, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point2, "", new { @class = "text-danger" })
+
+                    <label id="LPoint3">Point3</label>
+                    @Html.EditorFor(model => model.Point3, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point3, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint4">Point4</label>
+                    @Html.EditorFor(model => model.Point4, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point4, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint5">Point5</label>
+                    @Html.EditorFor(model => model.Point5, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point5, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint6">Point6</label>
+                    @Html.EditorFor(model => model.Point6, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point6, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint7">Point7</label>
+                    @Html.EditorFor(model => model.Point7, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point7, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint8">Point8</label>
+                    @Html.EditorFor(model => model.Point8, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point8, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint9">Point9</label>
+                    @Html.EditorFor(model => model.Point9, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point9, "", new { @class = "text-danger" })
+
+
+                    <label id="LPoint10">Point10</label>
+                    @Html.EditorFor(model => model.Point10, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;" } })
+                    @Html.ValidationMessageFor(model => model.Point10, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="row" style="padding-left:30px;padding-top:20px;margin-right:0px;">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-12 col-md-12 col-lg-8">
+                    <label id="SubContents1">SubContents</label>
+                    @Html.EditorFor(model => model.SubContents, new { htmlAttributes = new { @class = "form-control col-12", style = "height:300px;" } })
+                    @Html.ValidationMessageFor(model => model.SubContents, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row" style="margin-right:0px;">
+                <div class="col-12">&nbsp;</div>
+            </div> <div class="row" style="margin-right:0px;">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+
+                <div class="col-sm-3">
+                    <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" style="margin-bottom:20px" />
+                </div>
+                <div class="col-sm-3">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    <script>
+        $('#SubContents').css('display', 'none');
+        $('#SubContents1').css('display', 'none');
+        $('#Point1').css('display', 'none');
+        $('#Point2').css('display', 'none');
+        $('#Point3').css('display', 'none');
+        $('#Point4').css('display', 'none');
+        $('#Point5').css('display', 'none');
+        $('#Point6').css('display', 'none');
+        $('#Point7').css('display', 'none');
+        $('#Point8').css('display', 'none');
+        $('#Point9').css('display', 'none');
+        $('#Point10').css('display', 'none');
+        $('#LPoint1').css('display', 'none');
+        $('#LPoint2').css('display', 'none');
+        $('#LPoint3').css('display', 'none');
+        $('#LPoint4').css('display', 'none');
+        $('#LPoint5').css('display', 'none');
+        $('#LPoint6').css('display', 'none');
+        $('#LPoint7').css('display', 'none');
+        $('#LPoint8').css('display', 'none');
+        $('#LPoint9').css('display', 'none');
+        $('#LPoint10').css('display', 'none');
+        $('#Type').ready(function contentTypeLoad() {
+            var a = document.getElementById('Type');
+            var type = a.options[a.selectedIndex].text;
+
+            //  paragraph = document.getElementById("SubContents");
+            //   point = document.getElementById("Point");
+            if (type == "Select") {
+                alert('Please select Correct Type');
+            }
+            else if (type == "Paragraph") {
+                $('#SubContents').css('display', 'block');
+                $('#SubContents1').css('display', 'block');
+                $('#Point1').css('display', 'none');
+                $('#Point2').css('display', 'none');
+                $('#Point3').css('display', 'none');
+                $('#Point4').css('display', 'none');
+                $('#Point5').css('display', 'none');
+                $('#Point6').css('display', 'none');
+                $('#Point7').css('display', 'none');
+                $('#Point8').css('display', 'none');
+                $('#Point9').css('display', 'none');
+                $('#Point10').css('display', 'none');
+
+                $('#LPoint1').css('display', 'none');
+                $('#LPoint2').css('display', 'none');
+                $('#LPoint3').css('display', 'none');
+                $('#LPoint4').css('display', 'none');
+                $('#LPoint5').css('display', 'none');
+                $('#LPoint6').css('display', 'none');
+                $('#LPoint7').css('display', 'none');
+                $('#LPoint8').css('display', 'none');
+                $('#LPoint9').css('display', 'none');
+                $('#LPoint10').css('display', 'none');
+                //paragraph.style.display="block;"
+            }
+            else if (type == "Point") {
+                // alert();
+                $('#SubContents').css('display', 'none');
+                $('#SubContents1').css('display', 'none');
+                $('#Point1').css('display', 'block');
+                $('#Point2').css('display', 'block');
+                $('#Point3').css('display', 'block');
+                $('#Point4').css('display', 'block');
+                $('#Point5').css('display', 'block');
+                $('#Point6').css('display', 'block');
+                $('#Point7').css('display', 'block');
+                $('#Point8').css('display', 'block');
+                $('#Point9').css('display', 'block');
+                $('#Point10').css('display', 'block');
+
+                $('#LPoint1').css('display', 'block');
+                $('#LPoint2').css('display', 'block');
+                $('#LPoint3').css('display', 'block');
+                $('#LPoint4').css('display', 'block');
+                $('#LPoint5').css('display', 'block');
+                $('#LPoint6').css('display', 'block');
+                $('#LPoint7').css('display', 'block');
+                $('#LPoint8').css('display', 'block');
+                $('#LPoint9').css('display', 'block');
+                $('#LPoint10').css('display', 'block');
+            }
+            else if (type == "Paragraph and Point") {
+                $('#SubContents').css('display', 'block');
+                $('#SubContents1').css('display', 'block');
+                $('#Point1').css('display', 'block');
+                $('#Point2').css('display', 'block');
+                $('#Point3').css('display', 'block');
+                $('#Point4').css('display', 'block');
+                $('#Point5').css('display', 'block');
+                $('#Point6').css('display', 'block');
+                $('#Point7').css('display', 'block');
+                $('#Point8').css('display', 'block');
+                $('#Point9').css('display', 'block');
+                $('#Point10').css('display', 'block');
+
+                $('#LPoint1').css('display', 'block');
+                $('#LPoint2').css('display', 'block');
+                $('#LPoint3').css('display', 'block');
+                $('#LPoint4').css('display', 'block');
+                $('#LPoint5').css('display', 'block');
+                $('#LPoint6').css('display', 'block');
+                $('#LPoint7').css('display', 'block');
+                $('#LPoint8').css('display', 'block');
+                $('#LPoint9').css('display', 'block');
+                $('#LPoint10').css('display', 'block');
+            }
+        });
+
+        $('#Type').change(function contentType() {
+
+            var a = document.getElementById('Type');
+            var type = a.options[a.selectedIndex].text;
+
+            //  paragraph = document.getElementById("SubContents");
+            //   point = document.getElementById("Point");
+            if (type == "Select") {
+                alert('Please select Correct Type');
+            }
+            else if (type == "Paragraph") {
+                $('#SubContents').css('display', 'block');
+                $('#SubContents1').css('display', 'block');
+                $('#Point1').css('display', 'none');
+                $('#Point2').css('display', 'none');
+                $('#Point3').css('display', 'none');
+                $('#Point4').css('display', 'none');
+                $('#Point5').css('display', 'none');
+                $('#Point6').css('display', 'none');
+                $('#Point7').css('display', 'none');
+                $('#Point8').css('display', 'none');
+                $('#Point9').css('display', 'none');
+                $('#Point10').css('display', 'none');
+
+                $('#LPoint1').css('display', 'none');
+                $('#LPoint2').css('display', 'none');
+                $('#LPoint3').css('display', 'none');
+                $('#LPoint4').css('display', 'none');
+                $('#LPoint5').css('display', 'none');
+                $('#LPoint6').css('display', 'none');
+                $('#LPoint7').css('display', 'none');
+                $('#LPoint8').css('display', 'none');
+                $('#LPoint9').css('display', 'none');
+                $('#LPoint10').css('display', 'none');
+                //paragraph.style.display="block;"
+            }
+            else if (type == "Point") {
+                // alert();
+                $('#SubContents').css('display', 'none');
+                $('#SubContents1').css('display', 'none');
+                $('#Point1').css('display', 'block');
+                $('#Point2').css('display', 'block');
+                $('#Point3').css('display', 'block');
+                $('#Point4').css('display', 'block');
+                $('#Point5').css('display', 'block');
+                $('#Point6').css('display', 'block');
+                $('#Point7').css('display', 'block');
+                $('#Point8').css('display', 'block');
+                $('#Point9').css('display', 'block');
+                $('#Point10').css('display', 'block');
+
+                $('#LPoint1').css('display', 'block');
+                $('#LPoint2').css('display', 'block');
+                $('#LPoint3').css('display', 'block');
+                $('#LPoint4').css('display', 'block');
+                $('#LPoint5').css('display', 'block');
+                $('#LPoint6').css('display', 'block');
+                $('#LPoint7').css('display', 'block');
+                $('#LPoint8').css('display', 'block');
+                $('#LPoint9').css('display', 'block');
+                $('#LPoint10').css('display', 'block');
+            }
+            else if (type == "Paragraph and Point") {
+                $('#SubContents').css('display', 'block');
+                $('#SubContents1').css('display', 'block');
+                $('#Point1').css('display', 'block');
+                $('#Point2').css('display', 'block');
+                $('#Point3').css('display', 'block');
+                $('#Point4').css('display', 'block');
+                $('#Point5').css('display', 'block');
+                $('#Point6').css('display', 'block');
+                $('#Point7').css('display', 'block');
+                $('#Point8').css('display', 'block');
+                $('#Point9').css('display', 'block');
+                $('#Point10').css('display', 'block');
+
+                $('#LPoint1').css('display', 'block');
+                $('#LPoint2').css('display', 'block');
+                $('#LPoint3').css('display', 'block');
+                $('#LPoint4').css('display', 'block');
+                $('#LPoint5').css('display', 'block');
+                $('#LPoint6').css('display', 'block');
+                $('#LPoint7').css('display', 'block');
+                $('#LPoint8').css('display', 'block');
+                $('#LPoint9').css('display', 'block');
+                $('#LPoint10').css('display', 'block');
+            }
+
+        });
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

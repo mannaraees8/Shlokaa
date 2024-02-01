@@ -1,0 +1,141 @@
+@model SIMS.ViewModels.PaymentModel
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+    label{
+        margin-bottom:0.5rem;
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Create Payment</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Expense, new { style = "margin-bottom:-10px" })
+
+                            @using SIMS.BL;
+                            @{
+                                List<PaymentExpenseAdd> paymentExpenseAddlist = PaymentExpenseAdd.RetrieveAll();
+                                <select id="expenseList" class="form-control " onchange="loadFrequency()" name="Expense">
+                                    <option>Select</option>
+                                    @for (int i = 0; i < paymentExpenseAddlist.Count; i++)
+                                    {
+                                        <option value="@paymentExpenseAddlist[i].Expense" id="@paymentExpenseAddlist[i].Id">@paymentExpenseAddlist[i].Expense</option>
+                                    }
+                                </select>
+                            }
+                            @*@Html.DropDownListFor(model => model.Expense, new SelectList(Model.PaymentExpenseAddList, "Expense", "Expense"), new { @class = "form-control col-12" })*@
+                            @Html.ValidationMessageFor(model => model.Expense)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Frequency, new { style = "margin-bottom:-10px" })
+                            @{
+                                <select id="frequencyList" class="form-control " readonly name="Frequency">
+                                    <option>Select</option>
+                                    @for (int i = 0; i < paymentExpenseAddlist.Count; i++)
+                                    {
+                                        <option value="@paymentExpenseAddlist[i].Frequency" id="@paymentExpenseAddlist[i].Id">@paymentExpenseAddlist[i].Frequency</option>
+                                    }
+                                </select>
+                            }
+                            @*@Html.DropDownListFor(model => model.Frequency, new SelectList(Model.PaymentFrequencyAddList, "Frequency", "Frequency"), new { @class = "form-control col-12" })*@
+                            @*@Html.DropDownListFor(model => model.Frequency, new SelectListItem[] {
+                                new SelectListItem() {Text = "Select", Value="Select"},
+                                new SelectListItem() {Text = "Weekly", Value="Weekly"},
+                                new SelectListItem() {Text = "Monthly", Value="Monthly"},
+                                new SelectListItem() {Text = "Monthly Provision", Value="Monthly Provision"},
+                                new SelectListItem() {Text = "Annually", Value="Annually"}
+                                                     }, new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(model => model.Frequency)
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Amount)
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.Amount)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Narration)
+                            @Html.EditorFor(model => model.Narration, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.Narration)
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.DueDate)
+                            @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.DueDate)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <input type="submit" value="Create" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function loadFrequency() {
+            var id = $('#expenseList').children(":selected").attr("id");
+            $('#frequencyList option#' + id).prop('selected', true);
+            //    document.getElementById("frequencyList").value = id;
+        }
+    </script>
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">$(document).ready(function () { $("#expenseList").select2(); });</script>
+    <script type="text/javascript">$(document).ready(function () { $("#Frequency").select2(); });</script>
+
+}
+
+

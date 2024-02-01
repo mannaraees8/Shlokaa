@@ -1,0 +1,174 @@
+﻿@model SIMS.ViewModels.ExpenseReportModel.ExpenseReportModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    .rowformat {
+        margin-top: 10px;
+    }
+    label {
+        margin-bottom: 10px;
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Expense Report</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+
+                    <div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(model => model.Id)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.DisplayFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Id)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.TimeStamp)
+                            @Html.EditorFor(model => model.TimeStamp, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.TimeStamp, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.TransportVehicle)
+                            @Html.DropDownListFor(model => model.TransportVehicle, new SelectListItem[] {
+                                                  new SelectListItem() {Text = "Select", Value="Select"},
+                                                    new SelectListItem() {Text = "Bus", Value="Bus"},
+                                                      new SelectListItem() {Text = "Bike", Value="Bike"},
+                                                      new SelectListItem() {Text = "Train", Value="Train"},
+                                                      new SelectListItem() {Text = "Auto", Value="Auto"}
+                                              }, new { @class = "form-control", style = "margin-top:-10px" })
+                            @Html.ValidationMessageFor(model => model.TransportVehicle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row rowformat">
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.StartingPoint,new { style = "margin-bottom:-10px" })
+                            @Html.DropDownListFor(model => model.StartingPoint, new SelectList(Model.CustomerLocationList, "Place", "Place"), new { @class = "form-control" })
+
+
+                            @Html.ValidationMessageFor(model => model.StartingPoint, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Destination, new { style = "margin-bottom:-10px" })
+                            @Html.DropDownListFor(model => model.Destination, new SelectList(Model.CustomerLocationList, "Place", "Place"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Destination)
+                        </div>
+                    </div>
+
+                    <div class="row rowformat">
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Distance)
+                            @Html.EditorFor(model => model.Distance, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.Distance, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Amount)
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="row rowformat">
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.FoodCharge)
+                            @Html.EditorFor(model => model.FoodCharge, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.FoodCharge, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.ParkingCharge)
+                            @Html.EditorFor(model => model.ParkingCharge, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.ParkingCharge, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row rowformat">
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.TollOrFineCharge)
+                            @Html.EditorFor(model => model.TollOrFineCharge, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.TollOrFineCharge, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.TollOrFineDetails)
+                            @Html.EditorFor(model => model.TollOrFineDetails, new { htmlAttributes = new { @class = "form-control ", style = "margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.TollOrFineDetails, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row rowformat">
+
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Remarks)
+                            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control col-12", style = "height:80px;margin-top:-10px" } })
+                            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4 col-6">
+                            <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px;" />
+                        </div>
+                        <div class="col-sm-4 col-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">$(document).ready(function () { $("#StartingPoint").select2(); });</script>
+    <script type="text/javascript">$(document).ready(function () { $("#Destination").select2(); });</script>
+
+}
+
+

@@ -1,0 +1,97 @@
+@model SIMS.ViewModels.AccessMatrixModel.AccessMatrixModel
+
+
+@{
+    ViewBag.Title = "AccessMatrix";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3> AccessMatrix Details</h3>
+        <hr />
+
+        <h6>
+            Are you sure to delete @Html.DisplayFor(model => model.ModuleName) access!<br />Deleting
+            @Html.DisplayFor(model => model.ModuleName) access will delete all the access details for different user types.
+        </h6>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12 col-md-10">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        <label>Id</label>
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.Id)
+                    </div>
+                </div>
+                <div class="row d-none">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.ModuleName)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.ModuleName)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row d-none">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.IsDeleted)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.IsDeleted)
+                    </div>
+                </div>
+                <div class="row d-none">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3 col-6">
+                            <input type="submit" value="Delete" class="btn  btn-dark btn-block" />
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-dark btn-block" })
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

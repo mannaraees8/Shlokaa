@@ -1,0 +1,251 @@
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #88888847;
+}
+
+@media (max-width:992px) {
+    .btnReadAll {
+        padding-top: 10px;
+    }
+}
+
+.table thead th {
+    border-bottom: 1px solid orange;
+    font-family: Arial;
+    font-weight: 600;
+    color: black;
+    font-size: 14px;
+    background: rgba(255, 165, 0, 0.14)
+}
+
+.table tr td {
+    font-family: Arial;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 14px;
+}
+
+label {
+    font-family: Arial;
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 18px;
+}
+
+h3 {
+    font-family: Arial;
+    color: rgba(0, 0, 0, 0.70);
+}
+/*
+.dropdown-item.active, .dropdown-item:active {
+    color: white;
+    background: #0d0d0d59;
+}
+
+
+/* Dropdown Content (Hidden by Default) */
+/* Dropdown Content (Hidden by Default) */
+.dropdown-item:hover {
+    color: black;
+}
+
+
+.Navdrp {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    /* Links inside the dropdown */
+    .Navdrp a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+
+/* Show the dropdown menu on hover */
+.NavDrpHeader:hover .Navdrp {
+    display: block;
+}
+
+.NavDrpHeader {
+    color: black;
+}
+
+.admin-form {
+    background: white;
+    box-shadow: 2px 0px 20px 5px rgba(128, 128, 128, 0.15);
+    min-height: 650px;
+}
+
+@media (max-width:670px) {
+    .admin-outer-form {
+        padding: 0;
+    }
+
+    .admin-form {
+        padding: 20px;
+    }
+}
+
+.row {
+    font-family: Arial;
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 18px;
+}
+
+button[type="submit"] {
+    font-family: Arial;
+    font-weight: 600;
+}
+
+.btn {
+    font-family: Arial;
+    font-weight: 500;
+}
+
+a {
+    font-family: Arial;
+    color: rgba(0, 0, 0, 0.70);
+}
+
+.item-master {
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 20px;
+    list-style: none;
+    margin-top: 20px;
+}
+
+
+
+
+
+.sidebar-wrapper .menu .sidebar-item a {
+    padding: .1rem 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #00000087;
+    font-family: Arial;
+    margin-left: 1rem;
+}
+
+.sidebar-wrapper .menu .sidebar-item .active {
+    color: orange;
+}
+
+.drop {
+    display: block;
+}
+
+.drop-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 9999;
+}
+
+.drop:hover .drop-content {
+    display: block;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.show {
+    display: block;
+}
+
+.checkboxes {
+    display: none;
+    position: absolute;
+    background-color: white;
+    width: 90%;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 7px;
+    z-index: 1;
+}
+
+    .checkboxes .checkbox {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+    }
+
+
+.show {
+    display: block;
+}
+
+label {
+    margin-bottom: 0;
+}
+/*.btn-outline-dark:hover {
+    color: #111;
+    background-color: #343a40;
+    border-color: #343a40;
+}*/
+
+.pagination-container .pagination {
+    justify-content: center;
+}
+
+    .pagination-container .pagination li {
+        width: 33px;
+        border: 0.5px solid gray;
+        text-align: center;
+        border-radius: 50%;
+        height: 33px;
+        line-height: 33px;
+        margin: 2px;
+    }
+
+        .pagination-container .pagination li.active {
+            background: orange;
+            color: white;
+            border: white;
+        }
+
+    .pagination-container .pagination .PagedList-skipToNext a,
+    .pagination-container .pagination .PagedList-skipToPrevious a {
+        position: relative;
+        top: -2px;
+    }
+
+.sidebar-wrapper {
+    scrollbar-width: thin;
+}
+
+    .sidebar-wrapper::-webkit-scrollbar {
+        width: 8px !important;
+        height: 8px;
+    }
+
+table {
+    width: 100% !important; 
+}

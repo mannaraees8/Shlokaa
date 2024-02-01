@@ -1,0 +1,375 @@
+﻿@model IEnumerable<SIMS.ViewModels.ItemHomeModel.ItemHomeModel>
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Admin/Product.css" rel="stylesheet" />
+<style>
+    @@media (max-width:375px) {
+        .card-body {
+            height: 225px;
+            object-fit: contain;
+            padding: 5px;
+            max-width: 165px
+        }
+    }
+
+    @@media (max-width:415px) {
+        .card-body {
+            height: 225px;
+            object-fit: contain;
+            padding: 5px;
+            max-width: 165px
+        }
+    }
+
+    @@media (max-width:470px) {
+        .card-body {
+            height: 225px;
+            object-fit: contain;
+            padding: 5px;
+            max-width: 160px
+        }
+    }
+
+    @@media (min-width:478px) {
+        .card-body {
+            height: 220px;
+            object-fit: contain;
+            padding: 5px;
+            max-width: 210px
+        }
+    }
+</style>
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div><div class="row">
+    <div class="col-12">&nbsp;</div>
+</div><div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+<div id="loader" class="center"></div>
+
+<div id="ProductBody" style="display:none;">
+    <div class="row specials">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-12 col-lg-11">
+            @{
+                int i = 1;
+                int thumbnaiTabId = 1;
+                foreach (var a in ViewBag.Categories)
+                {
+                    if (a.Name != "Raw Material")
+                    {
+                        if (i == 1)
+                        {
+                            <div class="tabcontents" id="tab1_@thumbnaiTabId" style="display:block">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-12" style="text-align: center;padding-top:15px;">
+
+                                        @if (a.ImagePath != null && a.ImagePath != "")
+                                        {
+
+                                            <img src="@Url.Content(a.ImagePath)" class="img-fluid " style="background-position:center center;margin:auto;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="" class="img-fluid" style="background-position:center center;margin:auto" />
+                                        }
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-12">
+                                        <h4 class="producttitle">@a.Name</h4>
+                                        <p>@a.Discription</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="tabcontents" id="tab1_@thumbnaiTabId" style="display:none">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-12" style="text-align: center;padding-top:15px;">
+
+                                        @if (a.ImagePath != null && a.ImagePath != "")
+                                        {
+
+                                            <img src="@Url.Content(a.ImagePath)" class="img-fluid " style="background-position:center center;margin:auto;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="" class="img-fluid" style="background-position:center center;margin:auto" alt="Product Image" />
+                                        }
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-12">
+                                        <h4 class="producttitle">@a.Name</h4>
+                                        <p>@a.Discription</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        i++;
+                        thumbnaiTabId++;
+                    }
+                }
+
+            }
+
+
+        </div>
+
+    </div>
+
+    <section id="specials" class="specials" style="margin-top:-60px">
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-12 col-lg-3  col-md-12">
+                <ul class="nav nav-tabs flex-column " style="text-align:justify;">
+                    @{
+
+                        int j = 1;
+                        int categoryTabId = 1;
+                        foreach (var a in ViewBag.Categories)
+                        {
+                            if (a.Name != "Raw Material")
+                            {
+                                if (j == 1)
+                                {
+
+                                    <li class="nav-item">
+                                        <a class="nav-link tablinks open_tab first active category_nav_@categoryTabId" id="@a.Id" onclick="openTab1(event, 'tab2_@categoryTabId'), openTab(event, 'tab1_@categoryTabId')">&nbsp;&nbsp;  @a.Name</a>
+                                    </li>
+
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link tablinks open_tab category_nav_@categoryTabId" id="@a.Id" onclick="openTab1(event, 'tab2_@categoryTabId'), openTab(event, 'tab1_@categoryTabId')">&nbsp;&nbsp;  @a.Name</a>
+                                    </li>
+                                }
+                                j++;
+                                categoryTabId++;
+
+                            }
+
+
+                        }
+                    }
+
+
+                </ul>
+            </div>
+
+            <div class="col-lg-8 col-md-12 mt-4 mt-lg-0 col-12" style="overflow-y:scroll;height:400px">
+
+                @{
+                    int itemTabId = 1;
+                    foreach (var a in ViewBag.Categories)
+                    {
+
+                        if (a.Name != "Raw Material")
+                        {
+                            if (itemTabId == 1)
+                            {
+                                <div class="tabcontent tab2_category_@a.Id row" id="tab2_@itemTabId" style="display:block">
+                                    <div class="row tab2_@itemTabId justify-content-center">
+
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="tabcontent tab2_category_@a.Id row" id="tab2_@itemTabId" style="display:none">
+                                    <div class="row tab2_@itemTabId justify-content-center"></div>
+                                </div>
+
+                            }
+                            itemTabId++;
+
+                        }
+                    }
+
+
+                }
+
+
+            </div>
+        </div>
+    </section><!-- End Specials Section -->
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            document.querySelector(
+                "#loader").style.visibility = "visible";
+            $(async function () {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                $('.first').click();
+            })
+            $(async function () {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                $('.first').click();
+
+                document.querySelector(
+                    "#loader").style.visibility = "hidden";
+            })
+
+        })
+    </script>
+    <script>
+
+        $(document).on('click', '.product', function () {
+
+            var id = $(this).attr("id");
+            id = 'product_' + id
+            var sizes = [];
+
+            $.ajax({
+                type: "GET",
+
+                url: "/Home/GetItemSize",
+                data: { 'Itemid': $(this).attr("id") },
+                success: function (data) {
+                    $.each(data, function (i, e) {
+                        sizes.push(
+                            '<label class="box" style="border:1px solid black;margin-left:10px;padding:0 5px 0 5px;font-size:16px;margin-right:2px;">' + e.Size + " " + e.UnitOfMeasurement + '</label>'
+                        );
+                    })
+
+                    $('.' + id).html(sizes);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        });
+
+        document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+
+                document.querySelector(
+                    "#loader").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                    "#loader").style.display = "none";
+                document.querySelector(
+                    "#ProductBody").style.display = "block";
+
+            }
+        };
+
+        // document.getElementById('first').click();
+
+
+        function openTab(evt, tabName) {
+
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontents");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
+
+        function openTab1(evt, tabName) {
+
+
+
+
+            var id = 0;
+            var products = [];
+            $('.open_tab').click(function () {
+                if (id === 0) {
+                    if (id != $(this).attr('id')) {
+                        id = $(this).attr('id');
+
+                        $.ajax({
+                            type: "GET",
+                            url: "/Home/getProducts",
+                            data: {
+                                'Id': id,
+                                "start": 0
+                            },
+                            success: function (data) {
+
+                                $.each(data, function (i, e) {
+
+                                    products.push(
+                                        '<div class="col-lg-3 col-6 col-md-4 card-body product text-center shadow" id=' + e.Id + ' style="cursor:pointer;margin:10px;">' +
+                                        '<img src=' + e.Photo.replace("~", "") + ' class="img-fluid" />' +
+                                        '<div class="card-title">' + e.Name + ' </div>' +
+                                        '<div class="card product_sizes">' +
+                                        '<div class="card-header text-center">Sizes</div>' +
+                                        '<div class="card-body product_sizes_card  product_' + e.Id + '" style="padding:0;padding-top:1.25rem;height:auto">' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>'
+
+                                    );
+
+                                })
+
+
+                                $('.' + tabName).html(products);
+                                products = [];
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    }
+
+                }
+
+            })
+
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            $(tabName).addClass("active");
+            evt.currentTarget.className += " active";
+
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+
+        $(document).on('mouseenter', '.product', function () {
+
+            $(this).click();
+            $(this).find('.product_sizes').css('visibility', 'visible');
+            $(this).find('.product_sizes').css('opacity', '1');
+            $(this).find('.product_sizes').css('margin-top', '-100px');
+
+        })
+        $(document).on('mouseleave', '.product', function () {
+
+            $(this).find('.product_sizes').css('visibility', 'hidden');
+            $(this).find('.product_sizes').css('opacity', '0');
+            $(this).find('.product_sizes').css('margin-top', '300px');
+        })
+
+
+    </script>
+
+}

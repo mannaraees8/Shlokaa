@@ -1,0 +1,790 @@
+﻿
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<style>
+    body {
+        overflow-x: hidden;
+    }
+
+    .tab .tablinks {
+        color: black;
+    }
+
+    .dropdown-divider {
+        border-color: orange
+    }
+
+    /*   .btnQuickView:hover span {
+        display: none;
+    }
+
+    .btnQuickView:hover:before {
+        content: "Quick View";
+        color: white;
+    }*/
+    .btnQuickView:hover {
+        color: white
+    }
+
+    .specials .nav-link {
+        border: 0;
+        padding: 12px 1px 12px 0;
+        transition: 0.3s;
+        color: #433f39;
+        border-radius: 0;
+        border-right: 3px solid #e8e7e4;
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    .nav-tabs .nav-item {
+        cursor: pointer;
+    }
+
+    @@media (min-width:992px) {
+        .specials {
+            margin-top: 35px;
+        }
+    }
+
+    @@media (max-width:992px) {
+        .specials {
+            margin-top: -10px;
+        }
+    }
+
+    @@media (max-width:478px) {
+        .card-body {
+            height: 250px;
+            object-fit: contain;
+            padding: 5px;
+        }
+    }
+
+    @@media (min-width:478px) {
+        .card-body {
+            height: 220px;
+            object-fit: contain;
+            padding: 5px;
+        }
+    }
+
+    @@media (min-width:992px) {
+        .card-body {
+            height: 240px;
+            object-fit: contain;
+            padding: 5px;
+        }
+    }
+
+
+    .img-fluid {
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+    }
+
+    .card-title {
+        color: black;
+        font-weight: bold;
+    }
+</style>
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div><div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+
+<div class="row specials">
+    <div class="col-lg-1">
+    </div>
+    <div class="col-12 col-lg-11">
+        <div id="AluminiumCookware" class="tabcontents fade show active">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align:center">
+                    <img src="~/Photo/productcategoryimages/1 Category Aluminium.jpg" class="img-fluid" style="background-position:center center;margin:auto" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">Aluminium Cookware</h4>
+                    <p>Aluminium is a great conductor of heat which makes it an ideal choice for cookware. It heats up quickly, evenly and 16 times faster than a stainless steel pot! Aluminium cookware is generally affordable, as it is the third most abundant element in nature.</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div id="BlackAnodisedCookware" class="tabcontents " style="display: none;">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align: center; "><img class="img-fluid" src="~/Photo/productcategoryimages/2 Category BA.jpg" style="background-position:center center;margin:auto" /></div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">Black Anodised Cookware</h4>
+                    <p>Hard anodising is a process extension using higher voltage and lower temperature, which results in an even harder and more durable cookware coating. This layer of oxide hardens the aluminium and makes it resitant to corrosion.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="WhiteAnodisedCookware" class="tabcontents" style="display:none;">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align: center;"><img class="img-fluid" src="~/Photo/productcategoryimages/3 Category WA.png" style="background-position:center center;margin:auto" /></div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">White Anodised Cookware</h4>
+                    <p>Anodised aluminium have an extremely long life span. Anodised surfaces do not chip or peel. An anodised finish is chemically stable. Anodising makes cookware surfaces so ultra-smooth, that they become virtually nonporous (without pores). </p>
+                </div>
+            </div>
+        </div>
+        <div id="PolishedAluminiumCookware" class="tabcontents" style="display:none;">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align: center; "><img class="img-fluid" src="~/Photo/productcategoryimages/4 Category Polished.jpeg" style="background-position:center center;margin:auto" /></div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">Polished Aluminium Cookware</h4>
+                    <p>Virgin aluminium is an excellent conductor of heat, facilitating quicker and healthier cooking. Mirror polish gives aluminium a special sheen, similar to stainless steel lustre.</p>
+                </div>
+            </div>
+        </div>
+        <div id="StainlessSteelItem" class="tabcontents" style="display:none;">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align: center;"><img class="img-fluid" src="~/Photo/productcategoryimages/5 Category Steel.jpg" style="background-position:center center;margin:auto" /></div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">Stainless Steel Items</h4>
+                    <p>Stainless steel is preferred for making kitchen utensils because it does not influence the flavour of the food and is easy to clean. It has also got an appealing bright colour and resitant corrosion.</p>
+                </div>
+            </div>
+        </div>
+        <div id="NonstickCookware" class="tabcontents" style="display:none;">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align:center">
+                    <img src="~/Photo/productcategoryimages/6 Category NS.jpg" class="img-fluid" style="background-position:center center;margin:auto" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">Aluminium Cookware</h4>
+                    <p>Aluminium is a great conductor of heat which makes it an ideal choice for cookware. It heats up quickly, evenly and 16 times faster than a stainless steel pot! Aluminium cookware is generally affordable, as it is the third most abundant element in nature.</p>
+                </div>
+
+            </div>
+        </div>
+        <div id="OtherAppliance" class="tabcontents" style="display:none;">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-12" style="text-align:center;"><img class="img-fluid" src="~/Photo/productcategoryimages/7 Category Others.jpg" style="background-position:center center;margin:auto" /></div>
+                <div class="col-lg-9 col-md-9 col-12">
+                    <h4 class="producttitle">Other Appliances</h4>
+                    <p>Range of essential kitchenware on offer to give homemaker more of her money’s worth. Best quality equipment and appliances that will serve for many years.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<section id="specials" class="specials" style="margin-top:-60px">
+    <div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-12 col-lg-3  col-md-12">
+            <ul class="nav nav-tabs flex-column">
+                <li class="nav-item">
+                    <a class="nav-link tablinks active show " onclick="openTab(event, 'AluminiumCookwares'),openTab1(event, 'AluminiumCookware')">&nbsp;&nbsp;Aluminium Cookware</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tablinks" onclick="openTab(event, 'BlackAnodisedCookwares'),openTab1(event, 'BlackAnodisedCookware')"> &nbsp;&nbsp;Black Anodised Cookware</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tablinks" onclick="openTab(event, 'WhiteAnodisedCookwares'),openTab1(event, 'WhiteAnodisedCookware')">&nbsp;&nbsp;White Anodised Cookware</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tablinks" onclick="openTab(event, 'PolishedAluminiumCookwares'),openTab1(event, 'PolishedAluminiumCookware')">&nbsp;&nbsp;Polished Aluminium Cookware</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tablinks" onclick="openTab(event, 'StainlessSteelItems'),openTab1(event, 'StainlessSteelItem')">&nbsp;&nbsp;Stainless Steel Items</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tablinks" onclick="openTab(event, 'NonstickCookwares'),openTab1(event, 'NonstickCookware')">&nbsp;&nbsp;Nonstick Cookware</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tablinks" onclick="openTab(event, 'OtherAppliances'),openTab1(event, 'OtherAppliance')">&nbsp;&nbsp;Other Appliances</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-8 col-md-12 mt-4 mt-lg-0 col-12" style="overflow-y:scroll;height:400px">
+            <div class="tabcontent" id="AluminiumCookwares">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Adigara.png" class="img-fluid" />
+                            <div class="card-title">Adigara</div>
+                            <div class="card-subtitle">14"-20"</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Banale.png" class="img-fluid" />
+                            <div class="card-title">Banale</div>
+                            <div class="card-subtitle">8"-20"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Bavade.png" class="img-fluid" />
+                            <div class="card-title">Bavade</div>
+                            <div class="card-subtitle">8"-11"</div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Bisale.png" class="img-fluid" />
+                            <div class="card-title">Bisale</div>
+                            <div class="card-subtitle">12"-20"</div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Dabba.png" class="img-fluid" />
+                            <div class="card-title">Dabba</div>
+                            <div class="card-subtitle">12"-28"</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Gudana.png" class="img-fluid" />
+                            <div class="card-title">Gudana</div>
+                            <div class="card-subtitle">2.5kg-5.5kg</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Idli Cup.png" class="img-fluid" />
+                            <div class="card-title">Idli Cup</div>
+                            <div class="card-subtitle">4"-4.5"</div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Idli Pot.png" class="img-fluid" />
+                            <div class="card-title">Idli Pot</div>
+                            <div class="card-subtitle">15"-22"</div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Kodapana.png" class="img-fluid" />
+                            <div class="card-title">Kodapana</div>
+                            <div class="card-subtitle">16"-22"</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Lid.jpg" class="img-fluid" />
+                            <div class="card-title">Lid</div>
+                            <div class="card-subtitle">7"-28"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Madike.png" class="img-fluid" />
+                            <div class="card-title">Madike</div>
+                            <div class="card-subtitle">12"-30"</div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Saucepan.png" class="img-fluid" />
+                            <div class="card-title">Saucepan</div>
+                            <div class="card-subtitle">9"-14"</div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/imagesaluminiumcookware/Tope.png" class="img-fluid" />
+                            <div class="card-title">Tope</div>
+                            <div class="card-subtitle">10"-30"</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabcontent" id="BlackAnodisedCookwares" style="display:none">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/blackanodisedproductimages/Bisale.png" class="img-fluid" />
+                            <div class="card-title">Bisale</div>
+                            <div class="card-subtitle">10"-18"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/blackanodisedproductimages/Handi.png" class="img-fluid" />
+                            <div class="card-title">Handi</div>
+                            <div class="card-subtitle">10"-18"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/blackanodisedproductimages/Huruli.png" class="img-fluid" />
+                            <div class="card-title">Huruli</div>
+                            <div class="card-subtitle">10"-18"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/blackanodisedproductimages/Madike.png" class="img-fluid" />
+                            <div class="card-title">Madike</div>
+                            <div class="card-subtitle">10"-20"</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow shadow" style="margin-bottom:10px">
+                            <img src="~/Photo/blackanodisedproductimages/Tope.png" class="img-fluid" />
+                            <div class="card-title">Tope</div>
+                            <div class="card-subtitle">10"-24"</div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="tabcontent" id="WhiteAnodisedCookwares" style="display:none">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom: 10px">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Bisale.png" class="img-fluid" />
+                            <div class="card-title">Bisale</div>
+                            <div class="card-subtitle">10"-18"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Handi.png" class="img-fluid" />
+                            <div class="card-title">Handi</div>
+                            <div class="card-subtitle">10"-22"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Huruli.png" class="img-fluid" />
+                            <div class="card-title">Huruli</div>
+                            <div class="card-subtitle">10"-24"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Idli Pot.jpeg" class="img-fluid" />
+                            <div class="card-title">Idli Pot</div>
+                            <div class="card-subtitle">8Idly-33Idly</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Kadai.png" class="img-fluid" />
+                            <div class="card-title">Kadai</div>
+                            <div class="card-subtitle">8"-16"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Lid.png" class="img-fluid" />
+                            <div class="card-title">Lid</div>
+                            <div class="card-subtitle">7"-28"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Madike.png" class="img-fluid" />
+                            <div class="card-title">Madike</div>
+                            <div class="card-subtitle">10"-20"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Milk Handi.png" class="img-fluid" />
+                            <div class="card-title">Milk Handi</div>
+                            <div class="card-subtitle">10"-18"</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Saucepan.png" class="img-fluid" />
+                            <div class="card-title">Saucepan</div>
+                            <div class="card-subtitle">9"-14"</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdwhiteanodisedproductimages/Tope.png" class="img-fluid" />
+                            <div class="card-title">Tope</div>
+                            <div class="card-subtitle">10"-24"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabcontent" id="PolishedAluminiumCookwares" style="display:none">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/Polished Tawa.png" class="img-fluid" />
+                            <div class="card-title">Dosa Tawa</div>
+                            <div class="card-subtitle">260mm,290mm</div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="tabcontent" id="StainlessSteelItems" style="display:none">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Adasale.png" class="img-fluid" />
+                            <div class="card-title">Adasale</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Adigara.png" class="img-fluid" />
+                            <div class="card-title">Adigara</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Bisale.png" class="img-fluid" />
+                            <div class="card-title">Bisale</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4 ">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Dinner Plate.jpg" class="img-fluid" />
+                            <div class="card-title">Dinner Plate</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Gudana.png" class="img-fluid" />
+                            <div class="card-title">Gudana</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Gundu.png" class="img-fluid" />
+                            <div class="card-title">Gundu</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Idli Pot.png" class="img-fluid" />
+                            <div class="card-title">Idli Pot</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4 ">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Katara.png" class="img-fluid" />
+                            <div class="card-title">Katara</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Kavanga Mangalore.png" class="img-fluid" />
+                            <div class="card-title">Kavanga Mangalore</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Kavanga Udupi.png" class="img-fluid" />
+                            <div class="card-title">Kavanga Udupi</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Kitchen Rack.png" class="img-fluid" />
+                            <div class="card-title">Kitchen Rack</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4 ">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Kodapana.png" class="img-fluid" />
+                            <div class="card-title">Kodapana</div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Ladle.png" class="img-fluid" />
+                            <div class="card-title">Ladle</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Milk Can.png" class="img-fluid" />
+                            <div class="card-title">Milk Can</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Rice Filter.png" class="img-fluid" />
+                            <div class="card-title">Rice Filter</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4 ">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Rice Kadai.png" class="img-fluid" />
+                            <div class="card-title">Rice Kadai</div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/fwdstainlesssteelproductimages/Tope set.jpg" class="img-fluid" />
+                            <div class="card-title">Tope set</div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="tabcontent" id="NonstickCookwares" style="display:none">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/nonstickproductimages/Appachetty Open with Lid.jpg" class="img-fluid" />
+
+                            <div class="card-title">Appachetty</div>
+                            <div class="card-subtitle">225mm</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/nonstickproductimages/Appakara 9 Onyx.jpg" class="img-fluid" />
+                            <div class="card-title">Appakara</div>
+                            <div class="card-subtitle">7,9,11,12 holes</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/nonstickproductimages/Concave Tawa.jpg" class="img-fluid" />
+                            <div class="card-title">Concave Tawa</div>
+                            <div class="card-subtitle">260mm,290mm</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/nonstickproductimages/Dosa Tawa Angled Onyx.jpg" class="img-fluid" />
+                            <div class="card-title">Dosa Tawa</div>
+                            <div class="card-subtitle">260mm,290mm</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/nonstickproductimages/Dosa Tawa Induction Base.png" class="img-fluid" />
+                            <div class="card-title">Dosa Tawa IB</div>
+                            <div class="card-subtitle">260mm,280mm</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/nonstickproductimages/Fry Pan Inclined Black.png" class="img-fluid" />
+                            <div class="card-title">Fry Pan</div>
+                            <div class="card-subtitle">240mm</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/nonstickproductimages/Kadai Onyx.jpg" class="img-fluid" />
+                            <div class="card-title">Kadai</div>
+                            <div class="card-subtitle">240mm</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow">
+                            <img src="~/Photo/nonstickproductimages/Pathri Tawa.jpg" class="img-fluid" />
+                            <div class="card-title">Pathri Tawa</div>
+                            <div class="card-subtitle">300mmX180mm</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tabcontent" id="OtherAppliances" style="display:none">
+                <div class="row">
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/Cooker.jpg" class="img-fluid" />
+                            <div class="card-title">Pressure Cooker</div>
+                            <div class="card-subtitle">3,5,7.5,10,12litres</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/Copper Bottle Open.jpg" class="img-fluid" />
+                            <div class="card-title">Copper Bottle</div>
+                            <div class="card-subtitle">Various</div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px">
+                        <div class="card-body text-center shadow" style="margin-bottom:10px;">
+                            <img src="~/Photo/Thermal Pot.png" class="img-fluid" />
+                            <div class="card-title">Thermal Pot</div>
+                            <div class="card-subtitle">1,1.5,2 kgs</div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Specials Section -->
+
+
+
+
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div><div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="quickView">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Tawa
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-2"></div><div class="col-8">
+                        <img src="~/Photo/Tawa.jpg" class="img-fluid" style="height:300px;width:500px" />
+                    </div><div class="col-2"></div>
+
+                </div>
+                <hr />
+                <div class="text-center">
+                    <div class="row">
+                        <div class="col-2"></div><div class="col-8">
+                            <h2>Price: 500</h2>
+                        </div><div class="col-2"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div><div class="col-8">
+                            <h3>Size: 12mm X 12mm</h3>
+                        </div><div class="col-2"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Discription</h3>
+                            <p style="text-align:justify">
+                                Enriched with 25 years of hands-on engineering experience with 10+ years in kitchenware
+                                business, the promoter conceived Shlokaa in 2017 as an independent entity to create happy
+                                kitchens.
+
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    function openTab1(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontents");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+

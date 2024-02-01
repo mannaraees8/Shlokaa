@@ -1,0 +1,80 @@
+﻿@model SIMS.ViewModels.CategoryModel.CategoryModel
+
+@{
+    ViewBag.Title = "Add SubCategory";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm("Create", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Add Category</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+
+                    <div class="row" style="padding-bottom:10px;">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Name)
+                            @Html.EditorFor(model => model.Name, "", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Thumbnail)<br />
+                            <input type="file" name="ImageFile" id="ImageFile" />
+                        </div>
+
+                    </div>
+                    <div class="row" style="padding-bottom:10px;">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Discription)
+                            @Html.EditorFor(model => model.Discription, "", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Discription)
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-6 col-sm-3">
+                            <input type="submit" value="Create" name="Create" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px;" />
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,180 @@
+@model SIMS.ViewModels.PaymentModel
+
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    label {
+        margin-bottom: 0.5rem;
+    }
+</style>
+@using SIMS.BL
+
+@{ int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("Payment");
+    if (accessMatrix != null)
+    {
+        AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3> Payment Details</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-12 col-md-10">
+                            <div class="row">
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.Id)
+                                </div>
+                                <div class="col-sm-6 col-6">
+                                    : @Html.DisplayFor(model => model.Id)
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.Expense)
+                                </div>
+                                <div class="col-sm-7 col-6">
+                                    :@Html.DisplayFor(model => model.Expense)
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.Frequency)
+                                </div>
+                                <div class="col-sm-7 col-6">
+                                    :@Html.DisplayFor(model => model.Frequency)
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.Amount)
+                                </div>
+                                <div class="col-sm-7 col-6">
+                                    :@Html.DisplayFor(model => model.Amount)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.DueDate)
+                                </div>
+                                <div class="col-sm-7 col-6">
+                                    : @Html.ValueFor(model => model.DueDate, "{0:dd-MM-yyyy}")
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-6">
+                                    @Html.DisplayNameFor(model => model.Narration)
+                                </div>
+                                <div class="col-sm-7 col-6">
+                                    :@Html.ValueFor(model => model.Narration, "{0:dd-MM-yyyy}")
+                                </div>
+                            </div>
+                            @if (Model.PaidDate == DateTime.MinValue)
+                            {
+                                <div class="row">
+
+                                    <div class="col-sm-4 col-6">
+                                        @Html.DisplayNameFor(model => model.PaidDate)
+                                    </div>
+                                    <div class="col-sm-7 col-6">
+                                        : @*@Html.ValueFor(model => model.PaidDate, "{0:dd-MM-yyyy}")*@
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-sm-4 col-6">
+                                        <label>
+                                            Days Overdue
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-7 col-6">
+                                        :@Html.Label("", DateTime.Now.Subtract(Model.DueDate).Days.ToString())
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row">
+
+                                    <div class="col-sm-4 col-6">
+                                        @Html.DisplayNameFor(model => model.PaidDate)
+                                    </div>
+                                    <div class="col-sm-7 col-6">
+                                        :@Html.ValueFor(model => model.PaidDate, "{0:dd-MM-yyyy}")
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-sm-4 col-6">
+                                        <label>
+                                            Days Overdue
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-7 col-6">
+                                        : @*:@Html.Label("", DateTime.Now.Subtract(Model.DueDate).Days.ToString())*@
+                                    </div>
+                                </div>
+                            }
+
+
+
+                            <div class="row">
+                                <div class="col-12">&nbsp;</div>
+                            </div>
+                            @if (accessMatrixDetails.IsEdit == true)
+                            {
+                                <div class="row">
+
+                                    <div class="col-sm-3 col-6">
+                                        @Html.ActionLink("Edit", "Edit", "Payment", new { id = Model.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                    <div class="col-sm-3 col-6">
+                                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                </div>}
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-sm-3 col-6">
+                                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </div>
+                                </div>}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+}

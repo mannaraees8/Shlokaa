@@ -1,0 +1,125 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.ViewModels.UsersModel.UsersModel>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3> Deactive Users List</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-9"></div>
+                            <div class="col-sm-3">
+                                @Html.ActionLink("Create New Users", "Create", null, new { @class = "btn btn-dark btn-block" })
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                        <!-- table-striped -->
+                        <table class="table table-responsive-md table-bordered table-hover table-sm">
+                            <tr class="bg-dark text-white">
+                                <th class="d-none">
+                                   @Html.DisplayNameFor(model => model.First().Id)
+                                </th>
+                                <th>
+                                   @Html.DisplayNameFor(model => model.First().Name)
+                                </th>
+
+                                <th>
+                                   @Html.DisplayNameFor(model => model.First().Mobile)
+                                </th>
+
+                                <th>
+                                   @Html.DisplayNameFor(model => model.First().Email)
+                                </th>
+                                <th>
+                                   @Html.DisplayNameFor(model => model.First().Department)
+                                </th>
+
+                                <th>
+                                   @Html.DisplayNameFor(model => model.First().Usertype)
+                                </th>
+                                <th></th>
+
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="d-none">
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mobile)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Department)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Usertype)
+                                    </td>
+                                    <td>
+
+                                        @Html.ActionLink("Activate", "Activate", "Users", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </table>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        @Html.PagedListPager(Model, pageIndex => Url.Action("ActivateUsers", new
+                      {
+                          pageIndex,
+                     search = Request.QueryString["search"],
+                     startdate = Request.QueryString["startdate"],
+                     enddate = Request.QueryString["enddate"]
+                 }),
+                    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                        @*@Html.Partial("_PagingFooter")*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,166 @@
+@model SIMS.ViewModels.ItemModel.ItemModel
+
+
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    .multiselect {
+        width: auto;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+
+    #SizeId {
+        position: absolute;
+        display: none;
+        border: 1px #dadada solid;
+        width: 90%;
+        background: white;
+        z-index: 1;
+        padding: 7px;
+    }
+
+
+    input[type=checkbox] {
+        margin: 2px;
+        margin-left: 5px;
+    }
+
+    .lable {
+        font-weight: 100;
+        font-size: 14px !important;
+        margin-left: 3px;
+    }
+</style>
+
+@using (Html.BeginForm("Create", "Item", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Create Item</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+                    <div class="card-body">
+                        <div class="row" style="padding-bottom:10px;">
+
+                            <div class="col-sm-6">
+                                <label>Category</label>
+                                @Html.DropDownListFor(model => model.CatagoryId, new SelectList(Model.CategoryList, "ID", "Name"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CatagoryId)
+
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.SubCatagoryId)
+                                @Html.DropDownListFor(model => model.SubCatagoryId, new SelectList(Model.SubCategoryList, "ID", "Name"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SubCatagoryId)
+
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="padding-bottom:10px;">
+
+                            <div class="col-sm-6">
+                                <label>Unit Of Measurement</label>
+                                @Html.DropDownListFor(model => model.UnitOfMeasurementId, new SelectList(Model.UnitOfMeasurementList, "ID", "UnitOfMeasurementName"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UnitOfMeasurementId)
+                            </div>
+
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.SizeId)
+
+                                <div class="multiselect">
+                                    <select onclick="myFunction()" class="dropbtns form-control"><option hidden>Size</option></select>
+                                    <div id="Size" class="checkboxes" style="max-height:150px">
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="row" style="padding-bottom:10px;">
+
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Name)
+                                @Html.EditorFor(model => model.Name, "", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.Photo)<br />
+
+                                <input type="file" name="ImageFile" id="ImageFile" required="" />
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+                        <div class="row">
+                            <div class=" col-sm-2"></div>
+                            <div class="col-6 col-sm-4">
+                                <div class="input-group">
+
+                                    <input type="submit" value="Create" class="btn btn-sm btn-dark btn-block" style="margin-bottom:20px" />
+
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="input-group">
+                                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

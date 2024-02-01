@@ -1,0 +1,102 @@
+﻿@model SIMS.Models.LeaveApplyModel
+
+@{
+    ViewBag.Title = "Approve";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form" >
+    <div class="card-body admin-form">
+        <h3>Leave Apply Details</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-10">
+
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        @Html.DisplayNameFor(model => model.Staffid)
+                    </div>
+                    <div class="col-7">
+                        : @Html.DisplayFor(model => model.Staffid)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </div>
+                    <div class="col-7">
+                        : @Html.DisplayFor(model => model.UserName)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </div>
+                    <div class="col-7">
+                        :@Html.ValueFor(model => model.Date, "{0:dd-MM-yyyy}")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        @Html.DisplayNameFor(model => model.Leavetype)
+                    </div>
+                    <div class="col-7">
+                        : @Html.DisplayFor(model => model.Leavetype)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        @Html.DisplayNameFor(model => model.LeaveCategory)
+                    </div>
+                    <div class="col-7">
+                        : @Html.DisplayFor(model => model.LeaveCategory)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        @Html.DisplayNameFor(model => model.Reason)
+                    </div>
+                    <div class="col-7">
+                        : @Html.DisplayFor(model => model.Reason)
+                    </div>
+                </div>
+
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-4">
+                            <input type="submit" value="Approve" name="Approve" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            @Html.ActionLink("Back to List", "ManagerApprovalPage", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>}
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

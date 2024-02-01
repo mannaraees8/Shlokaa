@@ -1,0 +1,162 @@
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.Models.PlaceModel>
+
+@{
+    ViewBag.Title = "Place";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@section scripts{
+    <script src="~/Scripts/Jquery/jquery.validate.unobtrusive.js"></script>
+}
+@using SIMS.BL
+
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+@using (@Html.BeginForm("Index", "Place", FormMethod.Get))
+{
+
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("Place");
+    if (accessMatrix != null)
+    {
+AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3> Place List</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="card">
+
+                                <div class="card-body">
+
+
+                                    <div class="row">
+                                        @if (accessMatrixDetails.IsSearch == true)
+                                        {
+                                            <div class="col-8 col-md-8 col-lg-4">
+                                                @Html.TextBox("search", null, new { @class = "search form-control", @placeholder = "Search", name = "search" })
+                                            </div>
+
+                                            <div class="col-4 col-md-4 col-lg-2">
+                                                <input type="submit" value="search" class="btn btn-block btn-outline-dark" />
+                                            </div>
+
+                                            <div class="col-6 col-md-5 col-lg-3 btnReadAll">
+                                                <button id="btnReadAll" class=" btn btn-block btn-dark">Show All</button>
+                                            </div>}
+                                        @if (accessMatrixDetails.IsCreate == true)
+                                        {
+
+                                            <div class="col-6 col-md-7 col-lg-3 btnReadAll">
+                                                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-dark btn-block" })
+                                            </div>
+
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">&nbsp;</div>
+                                    </div>
+                                    <!-- table-striped -->
+                                    <table class="table table-responsive-lg  w3-table w3-striped w3-border" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="d-none">
+                                                    @Html.DisplayNameFor(model => model.First().Id)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().PlaceName)
+                                                </th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @if (Model.Count() == 0)
+                                        {
+
+
+                                            <tr>
+                                                <td colspan="4">
+                                                    No rows matching search criteria
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.PlaceName)
+                                                    </td>
+                                                    <td>
+
+                                                        @if (accessMatrixDetails.IsEdit == true)
+                                                        {
+
+                                                            @Html.ActionLink("Edit", "Edit", "Place", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                                        }
+                                                    </td>
+                                                    <td>
+
+                                                        @if (accessMatrixDetails.Isdeleted == true)
+                                                        {
+
+
+                                                            @Html.ActionLink("Delete", "Delete", "Place", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                        }
+                                                    </td>
+
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+
+
+                                </div>
+                                <div class="card-footer text-muted">
+                                    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new
+                               {
+                                   pageIndex,
+                                   search = Request.QueryString["search"],
+                                   startdate = Request.QueryString["startdate"],
+                                   enddate = Request.QueryString["enddate"]
+                               }),
+new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                                    @*@Html.Partial("_PagingFooter")*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+}

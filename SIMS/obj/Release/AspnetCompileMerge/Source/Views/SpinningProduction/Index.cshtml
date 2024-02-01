@@ -1,0 +1,369 @@
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.ViewModels.SpinningProductionModel.SpinningProductionModel>
+@{
+    ViewBag.Title = "Spinning Production";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using SIMS.BL
+
+@using (@Html.BeginForm("Index", "SpinningProduction", FormMethod.Get))
+{
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("SpinningProduction");
+    if (accessMatrix != null)
+    {
+        AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3>Spinning Production List</h3>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        @if (accessMatrixDetails.IsSearch == true)
+                                        {
+                                            <div class="col-12 col-md-5 col-lg-3" style="float: right">
+                                                <div style="border:0.5px solid rgba(128, 128, 128, 0.59);border-radius:5px;padding:2px;">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            @Html.TextBox("search", null, new { @class = "search", @placeholder = "Name", name = "search", style = "width:auto;border:none;outline:none;display:inline-flex" })
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-5 col-lg-4 d-flex btnReadAll">
+                                                <div class="mr-2 text-center" style="border:0.5px solid rgba(128, 128, 128, 0.59);border-radius:5px;padding:2px;display:inline-flex">
+                                                    @Html.TextBox("startdate", null, new { @class = "search", @placeholder = "dd-mm-yyyy", id = "sdatepicker", name = "startdate", style = "width:105px;border:none;outline:none;" })
+                                                    <span>&nbsp;-&nbsp;&nbsp;</span>
+                                                    @Html.TextBox("enddate", null, new { @class = "search", @placeholder = "dd-mm-yyyy", id = "edatepicker", name = "enddate", style = "width:105px;border:none;outline:none;" })
+                                                </div>
+                                                <button type="submit" class="btn btn-block btn-outline-dark">
+                                                    Search
+                                                </button>
+                                            </div>
+
+                                            <div class="col-6 col-md-6 col-lg-2 btnReadAll">
+                                                <button id="btnReadAll" class=" btn btn-block btn-dark">Show All</button>
+                                            </div>
+                                        }
+                                        @if (accessMatrixDetails.IsCreate == true)
+                                        {
+                                            <div class="col-6 col-md-6 col-lg-2 btnReadAll">
+
+                                                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-dark btn-block" })
+
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @if (accessMatrixDetails.IsExport == true)
+                                    {
+                                        <div class="row" style="margin-top:10px;">
+                                            <div class="col-lg-10 col-6">
+                                            </div>
+
+                                            <div class="col-lg-2 col-6">
+                                                @Html.ActionLink("Export", "Excel", "SpinningProduction", new
+                                           {
+                                               search = Request.QueryString["search"],
+                                               startdate = Request.QueryString["startdate"],
+                                               enddate = Request.QueryString["enddate"]
+                                           }, new { @class = "btn btn-dark btn-block ", style = "margin-top:15px;margin-bottom:5px;" })
+
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">&nbsp;</div>
+                                        </div>
+                                    }
+                                    <!-- table-striped -->
+                                    <table class="table table-responsive  table-sm w3-table w3-striped w3-border" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="d-none">
+                                                    @Html.DisplayNameFor(model => model.First().Id)
+                                                </th>
+
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Date)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().ItemName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().CircleSize)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().CircleIssued)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().EmployeeName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().FGWeight)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Trimming)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Broken1)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().BrokenPercentage)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().ProductionFromBroken)
+                                                </th>
+
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().NetBroken)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().NetBrokenPercentage)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Discrepancy)
+                                                </th>
+                                                @if (accessMatrixDetails.IsEdit == true)
+                                                {
+                                                    <th></th>
+
+                                                }
+                                                @if (accessMatrixDetails.IsDetails == true)
+                                                {
+                                                    <th></th>
+
+                                                }
+                                                @if (accessMatrixDetails.Isdeleted == true)
+                                                {
+                                                    <th></th>
+
+                                                }
+                                            </tr>
+                                        </thead>
+
+                                        @if (Model.Count() == 0)
+                                        {
+                                            <tr>
+                                                <td colspan="11">No rows matching search criteria </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.ValueFor(modelItem => item.Date, "{0:dd-MM-yyyy}")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ItemName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CircleSize)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CircleIssued)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FGWeight)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Trimming)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Broken1)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.BrokenPercentage)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ProductionFromBroken)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.NetBroken)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.NetBrokenPercentage)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Discrepancy)
+                                                    </td>
+                                                    @if (accessMatrixDetails.IsIndex == false)
+                                                    {
+
+                                                        if (accessMatrixDetails.IsEdit == true)
+                                                        {
+                                                            <td>
+                                                                @Html.ActionLink("Edit", "Edit", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                            </td>
+                                                        }
+
+                                                        if (accessMatrixDetails.IsDetails == true)
+                                                        {
+                                                            <td>
+                                                                @Html.ActionLink("Details", "Details", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                            </td>
+                                                        }
+
+                                                        if (accessMatrixDetails.Isdeleted == true)
+                                                        {
+
+                                                            <td>
+                                                                @Html.ActionLink("Delete", "Delete", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                            </td>
+                                                        }
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        if (accessMatrixDetails.IsEdit == true)
+                                                        {
+
+                                                            if (userId != item.StaffId)
+                                                            {
+                                                                if (user.Usertype == "Admin" || user.Usertype == "Group Head")
+                                                                {
+                                                                    <td>
+
+                                                                        @Html.ActionLink("Edit", "Edit", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                                    </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td></td>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>
+
+                                                                    @Html.ActionLink("Edit", "Edit", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                                </td>
+                                                            }
+
+
+                                                        }
+                                                        if (accessMatrixDetails.IsDetails == true)
+                                                        {
+
+
+                                                            <td>
+
+                                                                @Html.ActionLink("Details", "Details", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                            </td>
+
+
+                                                        }
+                                                        if (accessMatrixDetails.Isdeleted == true)
+                                                        {
+
+                                                            <td>
+
+                                                                @Html.ActionLink("Delete", "Delete", "SpinningProduction", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+
+                                                            </td>
+                                                        }
+                                                    }
+
+                                                </tr>
+                                            }
+                                        }
+
+                                    </table>
+
+
+                                </div>
+                                <div class="card-footer text-muted">
+                                    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new
+                               {
+                                   pageIndex,
+                                   search = Request.QueryString["search"],
+                                   startdate = Request.QueryString["startdate"],
+                                   enddate = Request.QueryString["enddate"]
+                               }),
+new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                                    @*@Html.Partial("_PagingFooter")*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    @*<script>
+
+            $(document).ready(function () {
+                $(".btnExport").hide();
+
+            });
+            function btnExportFullHide() {
+                var chkFull = document.getElementById("chkFull").checked;
+                if (chkFull == false) {
+                    $("#btnExportFull").hide();
+                    $(".btnExport").show();
+                } else {
+                    $("#btnExportFull").show();
+                    $(".btnExport").hide();
+
+                }
+            }
+            function exportToExcel(elem) {
+                var table = document.getElementById("dataTable");
+                var html = table.outerHTML;
+                var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
+                elem.setAttribute("href", url);
+                elem.setAttribute("download", "SpinningProduction.xls"); // Choose the file name
+                return false;
+            }
+
+        </script>*@
+
+}

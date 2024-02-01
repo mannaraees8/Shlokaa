@@ -1,0 +1,78 @@
+﻿@model SIMS.ViewModels.ItemSizeModel.ItemSizeModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form" >
+    <div class="card-body admin-form">
+        <h3>Item Size Details</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+       
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-12 col-md-10">
+
+   
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Size)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Size)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.UnitOfMeasurementId)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.UnitOfMeasurementId)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        @Html.ActionLink("Edit", "Edit", "ItemSize", new { id = Model.Id }, new { @class = "btn btn-sm btn-dark btn-block",style="margin-bottom:10px" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                    </div>
+                </div>
+             
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

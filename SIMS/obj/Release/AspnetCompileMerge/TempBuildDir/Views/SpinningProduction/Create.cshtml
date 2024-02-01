@@ -1,0 +1,262 @@
+@model SIMS.ViewModels.SpinningProductionModel.SpinningProductionModel
+@{
+    ViewBag.Title = "Spinning Production";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    .cardStyle {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        box-shadow: none;
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Create Spinning Production</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="card cardStyle">
+                        <div class="card-body shadow">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Date)
+                                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control " } })
+                                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.ItemName)
+                                    @Html.DropDownListFor(model => model.ItemName, new SelectList(Model.ItemList, "Name", "Name"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.CircleSize)
+                                    @Html.EditorFor(model => model.CircleSize, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CircleSize, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.CircleDate)
+                                    @Html.EditorFor(model => model.CircleDate, new { htmlAttributes = new { @class = "form-control " } })
+                                    @Html.ValidationMessageFor(model => model.CircleDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.CircleIssued)
+                                    @Html.EditorFor(model => model.CircleIssued, new { htmlAttributes = new { @class = "form-control ", @onchange = "BrokenPercentageFun(),NetBrokenPercenatge(),DiscrepancyFun()" } })
+                                    @Html.ValidationMessageFor(model => model.CircleIssued, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.EmployeeName)
+                                    @Html.DropDownListFor(model => model.StaffId, new SelectList(Model.UsersList, "Id", "Name"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.StaffId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.FGWeight)
+                                    @Html.EditorFor(model => model.FGWeight, new { htmlAttributes = new { @class = "form-control ", @onchange = "DiscrepancyFun()" } })
+                                    @Html.ValidationMessageFor(model => model.FGWeight, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Trimming)
+                                    @Html.EditorFor(model => model.Trimming, new { htmlAttributes = new { @class = "form-control ", @onchange = "DiscrepancyFun()" } })
+                                    @Html.ValidationMessageFor(model => model.Trimming, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div> <div class="card cardStyle">
+                        <div class="card-body shadow">
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.Broken1)
+                                    @Html.EditorFor(model => model.Broken1, new { htmlAttributes = new { @class = "form-control ", @onchange = "BrokenPercentageFun(),NetBrokenVal()" } })
+                                    @Html.ValidationMessageFor(model => model.Broken1, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.BrokenPercentage)
+                                    @Html.EditorFor(model => model.BrokenPercentage, new { htmlAttributes = new { @class = "form-control ", @readonly = "readonly", @onchange = "BrokenPercentageFun(),NetBrokenVal()" } })
+                                    @Html.ValidationMessageFor(model => model.BrokenPercentage, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.ProductionFromBroken)
+                                    @Html.EditorFor(model => model.ProductionFromBroken, new { htmlAttributes = new { @class = "form-control ", @onchange = "NetBrokenVal(),DiscrepancyFun();" } })
+                                    @Html.ValidationMessageFor(model => model.ProductionFromBroken, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.ProductFromBroken)
+                                    @Html.DropDownListFor(model => model.ProductFromBroken, new SelectList(Model.ItemList, "Name", "Name"), new { @class = "form-control", @onchange = "NetBrokenVal(),DiscrepancyFun();" })
+                                    @Html.ValidationMessageFor(model => model.ProductFromBroken, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.NetBroken)
+                                    @Html.EditorFor(model => model.NetBroken, new { htmlAttributes = new { @class = "form-control col-12", @readonly = "readonly", @onchange = "NetBrokenPercenatge(),DiscrepancyFun();" } })
+                                    @Html.ValidationMessageFor(model => model.NetBroken, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(model => model.NetBrokenPercentage)
+                                    @Html.EditorFor(model => model.NetBrokenPercentage, new { htmlAttributes = new { @class = "form-control ", @readonly = "readonly", @onchange = "NetBrokenPercenatge(),DiscrepancyFun();" } })
+                                    @Html.ValidationMessageFor(model => model.NetBrokenPercentage, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @Html.LabelFor(model => model.Discrepancy)
+
+                                    @Html.EditorFor(model => model.Discrepancy, new { htmlAttributes = new { @class = "form-control ", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.Discrepancy, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @Html.LabelFor(model => model.Remarks)
+                                    @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control col-12 ", style = "height:80px;" } })
+                                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <input type="submit" value="Create" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px;" />
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+            $("#ItemName").select2();
+            $("#ProductFromBroken").select2();
+        });</script>
+    <script>
+        window.onload = function () {
+            BrokenPercentageFun();
+            NetBrokenVal();
+            NetBrokenPercenatge();
+            DiscrepancyFun();
+        }
+        function BrokenPercentageFun() {
+            var brokenStr = document.getElementById("Broken1").value;
+            var circleIssuedStr = document.getElementById("CircleIssued").value;
+
+
+            if (brokenStr.trim() != "" && circleIssuedStr.trim() != "") {
+                var broken = Number(document.getElementById("Broken1").value);
+                var circleIssued = Number(document.getElementById("CircleIssued").value);
+                var brokenPerc = (broken / circleIssued) * 100;
+                document.getElementById("BrokenPercentage").value = brokenPerc.toFixed(2);
+                DiscrepancyFun();
+
+            }
+
+        }
+        function NetBrokenVal() {
+            var brokenstr = document.getElementById("Broken1").value;
+            var productionfrombrokenstr = document.getElementById("ProductionFromBroken").value;
+
+            if (brokenstr.trim() != "" && productionfrombrokenstr.trim() != "") {
+                var broken = Number(document.getElementById("Broken1").value);
+                var productionfrombroken = Number(document.getElementById("ProductionFromBroken").value);
+                var netbroken = broken - productionfrombroken;
+                document.getElementById("NetBroken").value = netbroken.toFixed(3);
+                NetBrokenPercenatge();
+                DiscrepancyFun();
+
+            }
+
+        }
+        function NetBrokenPercenatge() {
+            var netBrokenStr = document.getElementById("NetBroken").value;
+            var circleIssuedStr = document.getElementById("CircleIssued").value;
+
+            if (netBrokenStr.trim() != "" && circleIssuedStr.trim() != "") {
+                var netBroken = Number(document.getElementById("NetBroken").value);
+                var circleIssued = Number(document.getElementById("CircleIssued").value);
+                var netbrokenperc = (netBroken / circleIssued) * 100;
+                document.getElementById("NetBrokenPercentage").value = netbrokenperc.toFixed(2);
+                DiscrepancyFun();
+            }
+
+        }
+        function DiscrepancyFun() {
+            var netBrokenStr = document.getElementById("NetBroken").value;
+            var fgWeightStr = document.getElementById("FGWeight").value;
+            var trimmingStr = document.getElementById("Trimming").value;
+            var circleIssuedStr = document.getElementById("CircleIssued").value;
+            var productionfrombrokenstr = document.getElementById("ProductionFromBroken").value;
+
+            if (netBrokenStr.trim() != "" && circleIssuedStr.trim() != "" && fgWeightStr.trim() != "" && trimmingStr.trim() != "" && productionfrombrokenstr.trim() != "") {
+                var netBroken = Number(document.getElementById("NetBroken").value);
+                var fgWeight = Number(document.getElementById("FGWeight").value);
+                var trimming = Number(document.getElementById("Trimming").value);
+                var productionfrombroken = Number(document.getElementById("ProductionFromBroken").value);
+                var circleIssued = Number(document.getElementById("CircleIssued").value);
+                var discrepancy = circleIssued - (fgWeight + productionfrombroken + trimming + netBroken);
+                document.getElementById("Discrepancy").value = discrepancy.toFixed(3);
+
+            }
+
+        }
+    </script>
+}
+
+

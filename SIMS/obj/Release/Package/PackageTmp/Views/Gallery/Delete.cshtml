@@ -1,0 +1,154 @@
+﻿@model SIMS.Models.GalleryModel
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3> Delete Content</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-12 col-md-10">
+                <div class="row d-none">
+
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control " } })
+                    </div>
+                </div>
+                <div class="row d-none">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-6">
+                        @{
+                            if (Model.FileType == "Image")
+                            {
+                                <div class="gallery-items">
+                                    <a class="venobox" data-gall="gallery-item">
+                                        <img src="@Url.Content(Model.FileData)" alt="" height="250" class="imgMobileAdjustment" style="background-position:center;">
+                                    </a>
+
+                                </div>
+                            }
+                            else
+                            {
+                              
+                                <div class="gallery-items">
+                                    <a class="venobox" data-gall="gallery-item">
+                                        <img src="@Url.Content(Model.Thumbnail)" alt="" height="250" class="imgMobileAdjustment" style="background-position:center;">
+                                    </a>
+
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-4 col-sm-2">
+                        @Html.DisplayNameFor(model => model.FileName)
+                    </div>
+                    <div class="col-8 col-sm-4">
+                        @Html.DisplayFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control " } })
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-4 col-sm-2">
+                        @Html.DisplayNameFor(model => model.FileType)
+                    </div>
+                    <div class="col-8 col-sm-4">
+                        @Html.DisplayFor(model => model.FileType, new { htmlAttributes = new { @class = "form-control " } })
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
+                </div>
+                @{
+                    if (Model.FileType == "Pdf" || Model.FileType == "doc")
+                    {
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-4 col-sm-2">
+                                @Html.DisplayNameFor(model => model.Title)
+                            </div>
+                            <div class="col-8 col-sm-4">
+                                @Html.DisplayFor(model => model.Title, new { htmlAttributes = new { @class = "form-control " } })
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-4 col-sm-2">
+                                @Html.DisplayNameFor(model => model.FileDiscription)
+                            </div>
+                            <div class="col-8 col-sm-4">
+                                @Html.DisplayFor(model => model.FileDiscription, new { htmlAttributes = new { @class = "form-control " } })
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-6 col-sm-4">
+                            <input type="submit" value="Delete" class="btn btn-sm btn-dark btn-block" style="margin-bottom:20px;" />
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

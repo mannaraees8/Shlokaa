@@ -1,0 +1,173 @@
+@model SIMS.ViewModels.AccessMatrixDetailsModel.AccessMatrixDetailsModel
+
+
+@{
+    ViewBag.Title = "AccessMatrix";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3> AccessMatrix Details</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12 col-md-10">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        <label>Id</label>
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.Id)
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.ModuleName)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.ModuleName)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.UserType)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.UserType)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsCreate)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsCreate)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsEdit)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsEdit)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsDetails)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsDetails)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsTally)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsTally)
+                    </div>
+                </div>
+                <br />
+                @*<div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsUpdate)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsUpdate)
+                    </div>
+                </div>
+                <br />*@
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsIndex)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsIndex)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsSearch)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsSearch)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsExport)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsExport)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 col-6">
+                        @Html.DisplayNameFor(model => model.IsDeleted)
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        : @Html.DisplayFor(model => model.IsDeleted)
+                    </div>
+                </div>
+                <br />
+
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3 col-6">
+                            <input type="submit" value="Delete" class="btn  btn-dark btn-block" />
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-dark btn-block" })
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

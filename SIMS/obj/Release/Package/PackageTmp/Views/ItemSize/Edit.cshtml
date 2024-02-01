@@ -1,0 +1,84 @@
+﻿
+@model SIMS.ViewModels.ItemSizeModel.ItemSizeModel
+
+@{
+    ViewBag.Title = "AddCategoryInfoModel";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Item Size</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+
+                <div class="col-12 col-md-10">
+
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row" style="padding-bottom:10px;">
+
+
+                        <div class="col-sm-6 col-12">
+                            @Html.LabelFor(model => model.UnitOfMeasurementId)
+                            @Html.DropDownListFor(model => model.UnitOfMeasurementId, new SelectList(Model.UnitOfMeasurementList, "Id", "UnitOfMeasurementName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UnitOfMeasurementId)
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-bottom:10px;">
+
+                        <div class="col-12 col-sm-6">
+                            @Html.LabelFor(model => model.Size)
+                            @Html.EditorFor(model => model.Size, "", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Size)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-6 col-sm-3">
+                            <input type="submit" value="Update" name="Update" class="btn btn-sm btn-dark btn-block" />
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

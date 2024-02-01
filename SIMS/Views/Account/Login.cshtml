@@ -1,0 +1,189 @@
+﻿@{
+    Layout = null;
+}
+@model SIMS.Models.LoginModel
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon" href="~/Photo/Shlokaa Jet Black.JPG" type="image/x-icon" class="rounded-circle" />
+    <link href="~/Content/Admin/LoginCss.css" rel="stylesheet" />
+    <title>Login</title>
+</head>
+<body class="carousel-item active" style="height:100vh;background: url('/Photo/BG Fork Knife.jpg') no-repeat; background-size: cover; background-position: center center;">
+
+    <section id="topbar" class="align-items-center fixed-top topbar-transparent" style="background-color: black;
+        opacity: 1">
+        <div class="container-fluid text-right" style="color: rgba(255, 255, 255, 0.7);font-size: 15px;margin-top:13px;">
+            <a href="~/Home/Index" style="margin-right: 50px;color:white"> <i class="fa fa-home" style="color:orange;"></i>&nbsp;Home</a>
+        </div>
+    </section>
+    <div class="row">
+        <div class="col-12">&nbsp;</div>
+    </div>   <div class="row">
+        <div class="col-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-12">&nbsp;</div>
+    </div><div class="row">
+        <div class="col-12">&nbsp;</div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class=" col-md-2 col-lg-4">
+            </div>
+            <div class="col-12 col-md-8 col-lg-4" style="padding-right:0">
+
+                <div class="card-body" style="border-radius:20px;box-shadow:2px 0px 20px 5px rgba(128, 128, 128, 0.9);background-color:rgba(0, 0, 0, 0.3);margin:0 5px 0 5px;padding:0 10px 0">
+                    <h1 style="font-family: Calibri;font-weight:600;color:white;text-align:center;">Login</h1>
+
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-center">
+
+                            <i class="fa fa-user-circle" style="font-size:90px;color:white"></i>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <div class="row d-none d-lg-block">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+                        if (Model.ReturnUrl != null)
+                        {
+                            <div hidden>
+                                @Html.EditorFor(model => model.ReturnUrl)
+                            </div>
+
+                        }
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-12 col-sm-10" style="margin-top:20px;">
+
+                                <input type="text" id="email" name="email" required="" class="form-control col-12" placeholder="Email Id" style="border-radius:30px;height:50px;background-color:rgba(0, 0, 0, 0.4);margin-left:7px" />
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-12 col-sm-10" style="margin-top:20px;">
+
+                                <input type="password" id="password" name="password" required="" class="form-control col-12" placeholder="Password" style="border-radius:30px;height:50px;background-color:rgba(0, 0, 0, 0.4);margin-left:7px" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-12 col-sm-10">
+                                <input type="submit" id="loginbtn" class="btn btn-block btn-warning col-12" style="border-radius:30px;height:50px;margin:20px 0 30px 10px;" value="Login">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-12 col-sm-10">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+            <div class="col-md-2 col-lg-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>   <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div> <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+    </div>
+    <footer id="footer" class="footer d-block d-flex" style="color:#777777;padding:10px 0 10px 0;margin-right:0">
+
+        <div class="container">
+
+            <div class="copyright">
+                <a href="#"><i class=" fa fa-twitter" style="font-size:30px;margin-left:20px;color:grey"></i></a>
+                <a href="#"><i class="fa fa-facebook" style="font-size:30px;color:grey"></i></a>
+                <a href="#"><i class="fa fa-instagram" style="font-size:30px;color:grey"></i></a>
+                <a href="#"><i class="fa fa-whatsapp" style="font-size:30px;color:grey"></i></a>
+            </div>
+            <div class="credits">
+                &copy; Copyright <strong><span>Delicious</span></strong>. All Rights Reserved
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/delicious-free-restaurant-bootstrap-theme/ -->
+                Designed by <a href="https://bootstrapmade.com/" style="color:#777777">BootstrapMade</a>
+            </div>
+
+
+        </div>
+
+    </footer>
+    <div class="row d-block d-md-none d-lg-none">
+        <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row d-block d-md-none d-lg-none">
+        <div class="col-md-12">&nbsp;</div>
+    </div>
+</body>
+
+
+</html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+
+<script>
+  $(function(){
+     var msg = "@(TempData["ErrorMsg"] as string)";
+      if (msg !== "") {
+          toastr.error(msg);
+          localStorage.clear();
+     }
+  });
+</script>
+<script>
+  $(function(){
+     var msg = "@(TempData["SuccessMsg"] as string)";
+      if (msg !== "") {
+          toastr.success(msg);
+     }
+  });
+
+
+
+
+</script>

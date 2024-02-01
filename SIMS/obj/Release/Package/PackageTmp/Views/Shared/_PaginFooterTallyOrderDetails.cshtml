@@ -1,0 +1,57 @@
+﻿<table width="100%" class="theFooter">
+    <tr>
+        <td>
+            Page @(ViewBag.PageIndex + 1) of @ViewBag.PageCount
+
+            [Pages:
+            @if (ViewBag.Pageindex > 9)
+            {
+                @Ajax.ActionLink("...", "OrderDetails", new { sortOrder = ViewBag.SortOrder, pageIndex = ((ViewBag.PageIndex / 10 * 10) - 1) },
+                            new AjaxOptions
+                            {
+                                UpdateTargetId = "MainBody",
+                                InsertionMode = InsertionMode.Replace,
+                                HttpMethod = "GET",
+                                LoadingElementId = "MainBodyLoading"
+                            })
+            }
+            @for (int i = (ViewBag.PageIndex / 10 * 10); i <= ((ViewBag.PageIndex / 10 * 10) + 10); i++)
+            {
+                if (i < ViewBag.PageCount)
+                {
+                    if (ViewBag.PageIndex == i)
+                    {
+                        @((i + 1).ToString());
+                    }
+                    else if (i == ((ViewBag.PageIndex / 10 * 10) + 10))
+                    {
+                        @Ajax.ActionLink("...", "OrderDetails", new { sortOrder = ViewBag.SortOrder, pageIndex = i },
+                                new AjaxOptions
+                                {
+                                    UpdateTargetId = "MainBody",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "GET",
+                                    LoadingElementId = "MainBodyLoading"
+                                })
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink((i + 1).ToString(), "OrderDetails", new { sortOrder = ViewBag.SortOrder, pageIndex = i },
+                                new AjaxOptions
+                                {
+                                    UpdateTargetId = "MainBody",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "GET",
+                                    LoadingElementId = "MainBodyLoading"
+                                })
+                    }
+                }
+            }]
+        </td>
+    </tr>
+</table>
+
+<div id="MainBodyLoading" style="display:none">
+    <img id="animatedgif" src="~/Images/loading.gif" alt="Loading..." />
+</div>
+

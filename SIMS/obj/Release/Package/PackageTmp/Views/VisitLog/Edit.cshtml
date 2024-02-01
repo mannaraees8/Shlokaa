@@ -1,0 +1,293 @@
+@model SIMS.ViewModels.VisitLogModel.VisitLogModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Visit Log</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+
+                    <div class="row d-none">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Id)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.DisplayFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Id)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Datetime)
+                            @Html.EditorFor(model => model.Datetime, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Datetime, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label>Customer Name</label>
+                            @Html.DropDownListFor(model => model.Customerid, new SelectList(Model.CustomerList, "Id", "Name"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Customerid, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Paymentmode)
+                            @Html.DropDownListFor(model => model.Paymentmode, new SelectListItem[]{
+                                      new SelectListItem() {Text = "Select", Value="Select"},
+           new SelectListItem() {Text = "Cash", Value="Cash"},
+           new SelectListItem() {Text = "NEFT", Value="NEFT"},
+                    new SelectListItem() {Text = "Cheque", Value="Cheque" }
+                    , new SelectListItem() {Text = "No Payment", Value="No Payment"}}, new { @class = "form-control  col-12" })
+                            @Html.ValidationMessageFor(model => model.Paymentmode, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Amount)
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Reasonfornopayment)
+                            @Html.DropDownListFor(model => model.Reasonfornopayment, new SelectListItem[]{
+                                                                new SelectListItem() {Text = "Select", Value="Select"},
+                                     new SelectListItem() {Text = "Fund Shortage", Value="Fund Shortage"},
+                                    new SelectListItem() {Text = "Owner Unavailable / Busy", Value="Owner Unavailable / Busy"},
+                                     new SelectListItem() {Text = "Shop Closed", Value="Shop Closed"},
+                                     new SelectListItem() {Text = "No Dues", Value="No Dues"}}, new { @class = "form-control  col-12" })
+                            @Html.ValidationMessageFor(model => model.Reasonfornopayment, "", new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Orderstatus)
+                            @Html.DropDownListFor(model => model.Orderstatus, new SelectListItem[]{
+                                       new SelectListItem() {Text = "Select", Value="Select"},
+            new SelectListItem() {Text = "Received", Value="Received"},
+            new SelectListItem() {Text = "Not Received", Value="Not Received"}}, new { @class = "form-control  col-12", @onchange = "Validate()" })
+                            @Html.ValidationMessageFor(model => model.Orderstatus, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Ordervalue)
+                            @Html.EditorFor(model => model.Ordervalue, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Ordervalue, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Reasonfornoorder)
+                            @Html.DropDownListFor(model => model.Reasonfornoorder, new SelectListItem[]{
+                                                                 new SelectListItem() {Text = "Select", Value="Select"},
+                                      new SelectListItem() {Text = "Business Slow", Value="Business Slow"},
+                                     new SelectListItem() {Text = "Did Not Visit", Value="Did Not Visit"},
+                                      new SelectListItem() {Text = "New Customer", Value="New Customer"},
+                                      new SelectListItem() {Text = "Old Order Pending", Value="Old Order Pending"},
+                                      new SelectListItem() {Text = "Owner Unavailable / Busy", Value="Owner Unavailable / Busy"},
+                                     new SelectListItem() {Text = "Price High", Value="Price High"},
+                                      new SelectListItem() {Text = "Quality Poor", Value="Quality Poor"},
+                                     new SelectListItem() {Text = "Service Poor", Value="Service Poor"},
+                                      new SelectListItem() {Text = "Shop Closed / Shifted", Value="Shop Closed / Shifted"},
+                                      new SelectListItem() {Text = "Stock Available", Value="Stock Available"},
+                                      new SelectListItem() {Text = "Too Many Brands", Value="Too Many Brands"}}, new { @class = "form-control  col-12" })
+                            @Html.ValidationMessageFor(model => model.Reasonfornoorder, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            @Html.LabelFor(model => model.Remarks)
+                            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control ", style = "height:80px" } })
+                            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control ", style = "display:none" } })
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px;" />
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" tabindex="9999" role="dialog" id="errormodel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h4 class="modal-title" style="color:white">
+                                Visit Log
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    Please select proper details.
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-9">
+                                </div>
+
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-default btn-block  float-right" data-dismiss="modal">
+                                        close
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+}
+@Html.Hidden("RedirectTo", Url.Action("Index", "SalesOrder"));
+
+@section Scripts {
+
+    <script>
+        window.onload = function () {
+            var visitLogStatusData = localStorage.getItem('visitLogCreateData');
+
+            if (visitLogStatusData == "VisitData") {
+                alert(visitLogStatusData);
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const Datetime = urlParams.get('Datetime');
+                const Customerid = urlParams.get('Customerid');
+                const Amount = urlParams.get('Amount');
+                const Paymentmode = urlParams.get('Paymentmode');
+                document.getElementById('Orderstatus').value = "Received";
+                document.getElementById('Datetime').value = Datetime;
+                document.getElementById('Customerid').value = Customerid;
+                document.getElementById('Amount').value = Amount;
+                document.getElementById('Paymentmode').value = Paymentmode;
+            }
+        }
+
+        function Validate() {
+            //  alert();
+            var a = document.getElementById('Orderstatus');
+            var Orderstatus = a.options[a.selectedIndex].text;
+
+            var b = document.getElementById('Paymentmode');
+            var Paymentmode = b.options[b.selectedIndex].text;
+
+            var c = document.getElementById('Reasonfornopayment');
+            var Reasonfornopayment = c.options[c.selectedIndex].text;
+
+            var d = document.getElementById('Customerid');
+            var Customerid = d.options[d.selectedIndex].text;
+            var amount = document.getElementById('Amount').value;
+
+            if (Orderstatus == "Select" || Paymentmode == "Select" || Customerid == "Select" || amount == "") {
+                $("#errormodel").modal();
+                $('#Orderstatus').val("Select");
+
+            } else {
+                var a = document.getElementById('Orderstatus');
+                var name = a.options[a.selectedIndex].text;
+                if (name == "Received") {
+                    localStorage.setItem('visitLogCreateData', "");
+
+                    localStorage.setItem('visitLogCreate', "true");
+                    window.location.href = "/SalesOrder/Create?Datetime=" + $('#Datetime').val() + "&Customerid=" + $('#Customerid').val() + "&Paymentmode=" + $('#Paymentmode').val() + "&Amount=" + $('#Amount').val();
+                    //localStorage.setItem('visitLogId', $('#Id').val());
+                    //Create();
+                }
+
+            }
+        }
+
+        function Create() {
+            var Data = {
+                Datetime: $('#Datetime').val(),
+                Customerid: $('#Customerid').val(),
+                Paymentmode: $('#Paymentmode').val(),
+                Amount: $('#Amount').val(),
+                Reasonfornopayment: $('#Reasonfornopayment').val(),
+                Orderstatus: $('#Orderstatus').val(),
+            }
+            $.ajax({
+                url: "/VisitLog/CreateForReceived",
+
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: Data,
+                success: function (results) {
+                    //window.location.href = "/SalesOrder/Create";
+                },
+                error: function () {
+                    $('#Orderstatus').Val('Select');
+
+                }
+            });
+        }
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">$(document).ready(function () { $("#Customerid").select2(); });</script>
+}
+
+

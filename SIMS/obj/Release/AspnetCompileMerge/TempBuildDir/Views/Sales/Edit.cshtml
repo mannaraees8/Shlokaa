@@ -1,0 +1,108 @@
+@model SIMS.ViewModels.SalesModel.SalesModel
+@{
+    ViewBag.Title = "Sales";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    .cardStyle {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        box-shadow: none;
+    }
+</style>
+<link href="~/Content/DropDown/select2.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Sales</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Date)
+                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.StaffID)
+                            @Html.DropDownListFor(model => model.StaffID, new SelectList(Model.UserList, "Id", "Name"), new { @class = "form-control col-12" })
+                            @Html.ValidationMessageFor(model => model.StaffID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.ProductCategory)
+                            @Html.DropDownListFor(model => model.ProductCategory, new SelectList(Model.CategoryList, "Name", "Name"), new { @class = "form-control col-12" })
+                            @Html.ValidationMessageFor(model => model.ProductCategory, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+
+                            @Html.LabelFor(model => model.SalesAmount)
+                            @Html.EditorFor(model => model.SalesAmount, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.SalesAmount, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.SalesReturnAmount)
+                            @Html.EditorFor(model => model.SalesReturnAmount, new { htmlAttributes = new { @class = "form-control " } })
+                            @Html.ValidationMessageFor(model => model.SalesReturnAmount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-4 col-6">
+                    <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                </div>
+                <div class="col-sm-4 col-6">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/DropDown/select2.js"></script>
+    <script type="text/javascript">$(document).ready(function () { $("#StaffID").select2(); });</script>
+    <script type="text/javascript">$(document).ready(function () { $("#ProductCategory").select2(); });</script>
+}
+
+

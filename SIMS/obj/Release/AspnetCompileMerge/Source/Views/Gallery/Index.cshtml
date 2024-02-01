@@ -1,0 +1,334 @@
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.Models.GalleryModel>
+
+@{
+    ViewBag.Title = "Gallery";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+<link href="~/Content/Admin/GalleryCss.css" rel="stylesheet" />
+@using SIMS.BL
+
+@{
+
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("Gallery");
+    if (accessMatrix != null)
+    {
+AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+
+            <div id="loader" class="center"></div>
+            <div id="GalleryBody" style="display: none;">
+
+                <div class="card-body admin-outer-form">
+                    <div class="card-body admin-form">
+                        <h3> Content List</h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-12">&nbsp;</div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-12 col-md-12">
+                                <div class="row">
+
+                                    <div class="col-8 col-md-8 col-lg-4">
+                                    </div>
+
+                                    <div class="col-4 col-md-4 col-lg-2">
+                                    </div>
+
+                                    <div class="col-6 col-md-5 col-lg-3 ">
+                                    </div>
+                                    @if (accessMatrixDetails.IsCreate == true)
+                                    {
+                                        <div class="col-12 col-md-7 col-lg-3 ">
+                                            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-dark btn-block" })
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">&nbsp;</div>
+                                </div>
+                                <section id="specials" class="specials">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <ul class="nav nav-tabs flex-column" style="padding-left:10px;">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active show" data-toggle="tab" data-value="Images" href="#tab-1">Images</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" data-value="Brochure" href="#tab-2">Brochure</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" data-value="Trivia" href="#tab-3">Trivia</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active show" id="tab-1">
+                                                    <section id="gallery" class="gallery" style="padding:0 0;">
+                                                        <div class="row no-gutters">
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                if (item.FileType == "Image")
+                                                                {
+                                                                    <div class="col-lg-3 col-6 col-md-4" style="margin-bottom:10px;">
+                                                                        @if (item.FileData != null)
+                                                                        {
+
+
+                                                                            <div class="gallery-item">
+                                                                                <a class="venobox" data-gall="gallery-item">
+                                                                                    <img src="@Url.Content(item.FileData)" alt="" height="250" class="imgMobileAdjustment" style="background-position:center;">
+                                                                                </a>
+
+                                                                            </div>
+                                                                            <br />
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="" alt="No image" height="250" class="imgMobileAdjustment" style="background-position:center;">
+                                                                            <br />
+                                                                        }
+                                                                        @if (accessMatrixDetails.Isdeleted == true)
+                                                                        {
+                                                                            <div class="row">
+                                                                                <div class="col-1"></div>
+                                                                                <div class="col-10">
+                                                                                    @Html.ActionLink("Delete", "Delete", "Gallery", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                                                </div>
+                                                                                <div class="col-1"></div>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+
+                                                                }
+                                                            }
+
+                                                        </div>
+
+
+
+                                                    </section><!-- End Gallery Section -->
+
+                                                </div>
+
+                                                <div class="tab-pane" id="tab-2" style="margin-top:10px;">
+
+
+                                                    <section id="gallery" class="gallery" style="padding:0 0;">
+                                                        <div class="row no-gutters">
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                if (item.FileType == "Brochure")
+                                                                {
+                                                                    <div class="col-lg-4 col-6 col-md-4 " style="margin-bottom:10px;">
+                                                                        @{
+                                                                            if (item.FileData != null)
+                                                                            {
+
+
+                                                                                <div class="wrapper" style="margin-left:10px">
+                                                                                    <!-- Just to make things a bit smaller -->
+
+                                                                                    <div class="image-container ratio-4-3">
+                                                                                        <!-- Lets go for a 4:3 aspect ratio -->
+                                                                                        <a href="@Url.Content(item.FileData)" target="_blank" style="cursor:pointer;" class="venobox" data-gall="gallery-item">
+                                                                                            <img src="@Url.Content(item.Thumbnail)" alt="" height="250" style="background-position:center;">
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <h6 style="color:orange;margin-top:3px;margin-bottom:3px;text-align:center">@Html.DisplayFor(model => item.Title)</h6>
+                                                                                    @if (accessMatrixDetails.Isdeleted == true)
+                                                                                    {<div class="row">
+                                                                                            <div class="col-1">
+                                                                                            </div>
+                                                                                            <div class="col-10">
+                                                                                                @Html.ActionLink("Delete", "Delete", "Gallery", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block", style = "margin-left:5px;margin-right:5px;" })
+                                                                                            </div>
+                                                                                            <div class="col-1">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                                @*<div class="gallery-item shadow">
+
+                                                                                        <a onclick="printPreview('@base64String2');" data-gall="gallery-item" style="cursor:pointer;margin-bottom:5px;">
+                                                                                            <img src="@base64String3" alt="" height="250" class="imgMobileAdjustment " style="background-position:center;">
+                                                                                        </a>
+                                                                                    </div>*@
+
+
+
+
+                                                                            }
+                                                                            else
+                                                                            {
+
+                                                                                <label>Data Not Found</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-1">
+                                                                                    </div>
+                                                                                    <div class="col-10">
+                                                                                        @Html.ActionLink("Delete", "Delete", "Gallery", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block", style = "margin-left:5px;margin-right:5px;" })
+                                                                                    </div>
+                                                                                    <div class="col-1">
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        }
+
+                                                                    </div>
+
+
+
+
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </section><!-- End Gallery Section -->
+
+                                                </div>
+                                                <div class="tab-pane" id="tab-3" style="margin-top:10px;">
+
+
+                                                    <section id="gallery" class="gallery" style="padding:0 0;">
+                                                        <div class="row no-gutters">
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                if (item.FileType == "Trivia")
+                                                                {
+                                                                    <div class="col-lg-4 col-6 col-md-4" style="margin-bottom:10px;">
+                                                                        @{
+                                                                            if (item.FileData != null)
+                                                                            {
+
+                                                                                <div class="wrapper" style="margin-left:10px">
+                                                                                    <!-- Just to make things a bit smaller -->
+
+                                                                                    <div class="image-container ratio-4-3">
+                                                                                        <!-- Lets go for a 4:3 aspect ratio -->
+                                                                                        <a href="@Url.Content(item.FileData)" target="_blank" style="cursor:pointer;margin-bottom:5px;" class="venobox" data-gall="gallery-item">
+                                                                                            <img src="@Url.Content(item.Thumbnail)" alt="" height="250" style="background-position:center;">
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <h6 style="color:orange;margin-top:3px;margin-bottom:3px;text-align:center">@Html.DisplayFor(model => item.Title)</h6>
+                                                                                    @if (accessMatrixDetails.Isdeleted == true)
+                                                                                    {<div class="row">
+                                                                                            <div class="col-1">
+                                                                                            </div>
+                                                                                            <div class="col-10">
+                                                                                                @Html.ActionLink("Delete", "Delete", "Gallery", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block", style = "margin-left:5px;margin-right:5px;" })
+                                                                                            </div>
+                                                                                            <div class="col-1">
+                                                                                            </div>
+                                                                                        </div>}
+                                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
+
+                                                                                <label>Data Not Found</label>
+                                                                                if (accessMatrixDetails.Isdeleted == true)
+                                                                                {
+                                                                                    <div class="row">
+                                                                                        <div class="col-1">
+                                                                                        </div>
+                                                                                        <div class="col-10">
+                                                                                            @Html.ActionLink("Delete", "Delete", "Gallery", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block", style = "margin-left:5px;margin-right:5px;" })
+                                                                                        </div>
+                                                                                        <div class="col-1">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+
+                                                                            }
+                                                                        }
+
+                                                                    </div>
+
+
+
+
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </section><!-- End Gallery Section -->
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </section><!-- End Gallery Section -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-footer text-muted">
+                            @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new
+                       {
+                           pageIndex,
+                           search = Request.QueryString["search"],
+                           startdate = Request.QueryString["startdate"],
+                           enddate = Request.QueryString["enddate"]
+                       }),
+                                                                                                                                                                                                                                                                                   new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                            @*@Html.Partial("_PagingFooter")*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    } }
+@section  Scripts{
+    @*<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>*@
+
+    <script>
+
+        document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                    "#loader").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                    "#loader").style.display = "none";
+                document.querySelector(
+                    "#GalleryBody").style.display = "block";
+            }
+        };
+        $(document).ready(function () {
+            let activeTab = sessionStorage.getItem('activeTab');
+            if (JSON.parse(activeTab) !== null) {
+                if (JSON.parse(activeTab) == "Images") {
+                    $('.nav-link[data-value="Images"]').click();
+                }
+                else if (JSON.parse(activeTab) == "Brochure") {
+                    $('.nav-link[data-value="Brochure"]').click();
+                }
+                else {
+                    $('.nav-link[data-value="Trivia"]').click();
+                }
+            }
+            else {
+                $('.nav-link[data-value="Images"]').click();
+            }
+
+        })
+        $('.nav-link').click(function () {
+            let activeTab = $(this).attr('data-value')
+            sessionStorage.setItem('activeTab', JSON.stringify(activeTab))
+        })
+    </script>
+
+}
+

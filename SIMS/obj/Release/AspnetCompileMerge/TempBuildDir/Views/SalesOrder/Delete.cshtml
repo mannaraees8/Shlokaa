@@ -1,0 +1,146 @@
+@using PagedList;
+@using PagedList.Mvc
+@using SIMS.BL
+@model IPagedList<SIMS.ViewModels.SalesOrderModel.SalesOrderModel>
+
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+@using (Html.BeginForm("Delete", "SalesOrder", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Sales Order </h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-12">&nbsp;</div>
+                                <div class="col-12">
+                                    @{
+                                        Html.RenderAction("RenderOrderMaster", "SalesOrder");
+                                    }
+                                </div>
+                                <div class="col-12">&nbsp;</div>
+                            </div>
+                            <!-- table-striped -->
+                            <table class="table table-responsive-lg  table-sm w3-table w3-striped w3-border">
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.First().ItemName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.First().CategoryName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.First().SubCategoryName)
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.First().SizeName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.First().Quantity)
+                                        </th>
+                                        <th>
+
+
+                                    </tr>
+                                </thead>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ItemName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CategoryName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SubCategoryName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SizeName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </table>
+
+                        </div>
+
+
+                        <div class="card-footer text-muted">
+                            @Html.PagedListPager(Model, pageIndex => Url.Action("OrderDetails", new
+                            {
+                                pageIndex,
+                                search = Request.QueryString["search"],
+                                startdate = Request.QueryString["startdate"],
+                                enddate = Request.QueryString["enddate"]
+                            }),
+     new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-6 col-sm-4">
+                    <input type="submit" value="Delete" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                </div>
+                <div class="col-6 col-sm-4">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+        </div>
+
+    </div>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

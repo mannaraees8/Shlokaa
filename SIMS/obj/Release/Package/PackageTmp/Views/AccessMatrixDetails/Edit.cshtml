@@ -1,0 +1,177 @@
+@model SIMS.ViewModels.AccessMatrixDetailsModel.AccessMatrixDetailsModel
+@{
+    ViewBag.Title = "AccessMatrixDetails";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Create AccessMatrixDetails</h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.ModuleName)
+                </div>
+                <div class="col-sm-4">
+                    @*@Html.DropDownListFor(model => model.AccessMatrixId, new SelectList(Model.AccessMatrixList, "Id", "ModuleName"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AccessMatrixId)*@
+                    @Html.EditorFor(model => model.ModuleName, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.HiddenFor(model => model.AccessMatrixId)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.UserType)
+                  
+                </div>
+                <div class="col-sm-4">
+                    @*@Html.DropDownListFor(model => model.UserType, new SelectList(Model.UserTypeList, "UserType", "UserType"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.UserType)*@
+                    @Html.EditorFor(model => model.UserType, new { htmlAttributes = new { @readonly = "readonly" } })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsCreate)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsCreate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsCreate)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsEdit)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsEdit, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsEdit)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsDetails)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsDetails, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsDetails)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsTally)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsTally, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsDetails)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsIndex)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsIndex, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsIndex)
+                </div>
+            </div>
+            <br />
+            @*<div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsUpdate)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsUpdate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsUpdate)
+                </div>
+            </div>
+            <br />*@
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsSearch)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsSearch, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsSearch)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsExport)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsExport, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsExport)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    @Html.LabelFor(model => model.IsDeleted)
+                </div>
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.IsDeleted, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IsDeleted)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3 col-6">
+                    <input type="submit" value="Save" class="btn btn-sm btn-dark btn-block" />
+                </div>
+                <div class="col-sm-3 col-6">
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

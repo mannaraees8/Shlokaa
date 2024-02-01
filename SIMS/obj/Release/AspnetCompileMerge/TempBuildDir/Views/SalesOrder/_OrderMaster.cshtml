@@ -1,0 +1,24 @@
+﻿@model SIMS.ViewModels.SalesOrderModel.SalesOrderModel
+
+<div class="row">
+    <div class="col-sm-6">
+        <label><b>Order No :</b></label>
+        @Html.DisplayFor(model => model.Id)
+    </div>
+    <div class="col-sm-6">
+        <label><b>Order Date :</b></label>
+        @Html.DisplayFor(model => model.Timestamp)
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <label><b>Party Name :</b></label>
+        @Html.DisplayFor(model => model.CustomerName)
+    </div>
+    <div class="col-sm-6">
+        <label><b>Employee Name :</b></label>
+        @Html.DisplayFor(model => model.StaffName)
+    </div>
+</div>
+
+

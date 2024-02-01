@@ -1,0 +1,134 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.Models.TriviaModel>
+
+@{
+    ViewBag.Title = "Trivia";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3> Trivia List</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-9"></div>
+                            <div class="col-sm-3">
+                                @Html.ActionLink("Create New Trivia", "Create", null, new { @class = "btn btn-dark btn-block" })
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">&nbsp;</div>
+                        </div>
+                        <!-- table-striped -->
+                        <table class="table table-responsive-lg  table-sm w3-table w3-striped w3-border">
+                            <thead>
+                                <tr>
+                                    <th class="d-none">
+                                        @Html.DisplayNameFor(model => model.First().Id)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().TabName)
+                                    </th>
+
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.First().Image)
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="d-none">
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TabName)
+                                    </td>
+
+                                    <td>
+
+                                        @{if (item.Image != null)
+                                            {
+                                                Byte[] imgByte = (byte[])item.Image;
+                                                string base64String = Convert.ToBase64String(imgByte, 0, imgByte.Length);
+                                                base64String = "data:image/png;base64," + base64String;
+                                                <img src="@base64String " width="150" height="150">
+                                            }
+                                            else
+                                            {
+                                                <img width="150" height="150" alt="No Image">
+
+                                            }
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", "Trivia", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("Details", "Details", "Trivia", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </td>
+
+                                    <td>
+
+                                        @Html.ActionLink("Delete", "Delete", "Trivia", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </table>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new
+                       {
+                           pageIndex,
+                      search = Request.QueryString["search"],
+                      startdate = Request.QueryString["startdate"],
+                      enddate = Request.QueryString["enddate"]
+                  }),
+                     new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                        @*@Html.Partial("_PagingFooter")*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

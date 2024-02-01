@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a792316a-5057-4e90-9e56-5361db42e526": {
+      "ProjectGuid": "a792316a-5057-4e90-9e56-5361db42e526",
+      "DisplayName": "SIMS",
+      "ColorIndex": 0
+    },
+    "3d22e803-f164-4995-9d6c-341097022cde": {
+      "ProjectGuid": "3d22e803-f164-4995-9d6c-341097022cde",
+      "DisplayName": "SIMS.BL",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}

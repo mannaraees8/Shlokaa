@@ -1,0 +1,315 @@
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<SIMS.Models.LeaveApplyModel>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+@section scripts{
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $('#userTable').dataTable({
+            paging: false,
+            "aaSorting": [[2, "desc"]]
+        });
+    </script>
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using SIMS.BL
+
+
+@using (@Html.BeginForm("Index", "LeaveApply", FormMethod.Get))
+{
+
+    int userId = Users.RetrieveStaffIdByEmail(ViewContext.HttpContext.User.Identity.Name);
+    Users user = Users.RetrieveById(userId);
+    AccessMatrix accessMatrix = AccessMatrix.RetrieveByModuleName("LeaveApply");
+    if (accessMatrix != null)
+    {
+AccessMatrixDetails accessMatrixDetails = AccessMatrixDetails.RetrieveAccess(accessMatrix.Id, user.Usertype);
+
+        if (accessMatrixDetails != null)
+        {
+            <div class="card-body admin-outer-form">
+                <div class="card-body admin-form">
+                    <h3>Leave Apply List</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body">
+
+
+                                    <div class="row">
+                                        @if (accessMatrixDetails.IsSearch == true)
+                                        {
+                                            <div class="col-12 col-md-5 col-lg-3" style="float: right">
+                                                <div style="border:0.5px solid rgba(128, 128, 128, 0.59);border-radius:5px;padding:2px;">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            @Html.TextBox("search", null, new { @class = "search", @placeholder = "Name", name = "search", style = "width:auto;border:none;outline:none;display:inline-flex" })
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-5 col-lg-4 btnReadAll d-flex">
+                                                <div class="mr-2" style="border:0.5px solid rgba(128, 128, 128, 0.59);border-radius:5px;padding:2px;display:inline-flex">
+                                                    @Html.TextBox("startdate", null, new { @class = "search", @placeholder = "dd-mm-yyyy", id = "sdatepicker", name = "startdate", style = "width:105px;border:none;outline:none;" })
+                                                    <span>&nbsp;-&nbsp;&nbsp;</span>
+                                                    @Html.TextBox("enddate", null, new { @class = "search", @placeholder = "dd-mm-yyyy", id = "edatepicker", name = "enddate", style = "width:105px;border:none;outline:none;" })
+                                                </div>
+                                                <button type="submit" class="btn btn-block btn-outline-dark">
+                                                    Search
+                                                </button>
+                                            </div>
+
+                                            <div class="col-6 col-md-6 col-lg-2 btnReadAll">
+                                                <button id="btnReadAll" class=" btn btn-block btn-dark">Show All</button>
+                                            </div>
+                                        }
+                                        @if (accessMatrixDetails.IsCreate == true)
+                                        {
+
+                                            <div class="col-6 col-md-5 col-lg-2 btnReadAll">
+                                                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-dark btn-block" })
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">&nbsp;</div>    
+                                        @if (accessMatrixDetails.IsIndex == true && user.Department == "Admin")
+                                        {
+                                            <div class="col-12 text-right btnReadAll">
+                                                @Html.ActionLink("Leave Approve", "AdminApprovalPage", "LeaveApply", new { @class = "btn btn-dark", style = "width:200px" })
+                                            </div>
+                                        }
+                                        @if (accessMatrixDetails.IsIndex == true && user.Department == "Group Head")
+                                        {
+                                            <div class="col-12 text-right btnReadAll">
+                                                @Html.ActionLink("Leave Approve", "ManagerApprovalPage", "LeaveApply", new { @class = "btn btn-dark", style = "width:200px" })
+                                            </div>
+                                        }
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-xs-12">&nbsp;</div>
+                                    </div>
+                                    <!-- table-striped -->
+                                    <table class="table table-responsive-lg  table-sm w3-table w3-striped w3-border" id="userTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="d-none">
+                                                    @Html.DisplayNameFor(model => model.First().Id)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().UserName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Date)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().LeaveCategory)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Leavetype)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().Reason)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.First().ApprovedDate)
+                                                </th>
+
+                                                <th>
+                                                    Approval
+                                                </th>
+                                                @if (accessMatrixDetails.UserType == "Group Head" && accessMatrixDetails.UserType == "Admin")
+                                                {
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                }
+                                                else
+                                                {
+                                                    <th></th>
+                                                    <th></th>
+                                                }
+                                            </tr>
+                                        </thead>
+
+                                        @if (Model.Count() == 0)
+                                        {
+                                            if (accessMatrixDetails.UserType == "Group Head" && accessMatrixDetails.UserType == "Admin")
+                                            {
+                                                <tr>
+                                                    <td colspan="9">No rows matching search criteria </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="8">No rows matching search criteria </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.UserName)
+                                                    </td>
+                                                    <td>
+                                                        <span hidden> @Html.ValueFor(modelItem => item.Date, "{0:MM-dd-yyyy}")</span>
+                                                        @Html.ValueFor(modelItem => item.Date, "{0:dd-MM-yyyy}")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.LeaveCategory)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Leavetype)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Reason)
+                                                    </td>
+                                                    @if (item.Ismanagerauthorised == true || item.Isadminauthorised == true)
+                                                    {
+                                                        <td>
+                                                            @Html.ValueFor(modelItem => item.ApprovedDate, "{0:dd-MM-yyyy}")
+
+                                                        </td>
+                                                        <td>
+                                                            <label>Approved</label>
+                                                            @* @Html.DisplayFor(modelItem => item.Ismanagerauthorised)*@
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <td>
+                                                            <label></label>
+                                                        </td>
+                                                        <td>
+                                                            <label>Pending</label>
+                                                            @* @Html.DisplayFor(modelItem => item.Ismanagerauthorised)*@
+                                                        </td>
+                                                    }
+                                                    @if (item.Isdeleted == true)
+                                                    {
+                                                        <td>
+                                                            <label>Rejected</label>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="d-none">
+                                                            <label>Rejected</label>
+                                                        </td>
+                                                    }
+                                                    @if (accessMatrixDetails.UserType == "Group Head" && accessMatrixDetails.UserType == "Admin")
+                                                    {
+                                                        if (item.UserType == "Group Head")
+                                                        {
+                                                            if (item.Isadminauthorised == true)
+                                                            {
+                                                                <td></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>
+                                                                    @Html.ActionLink("Edit", "Edit", "LeaveApply", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                                                </td>
+                                                            }
+
+                                                            <td>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.Isadminauthorised == true)
+                                                            {
+                                                                <td></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>
+                                                                    @Html.ActionLink("Edit", "Edit", "LeaveApply", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                                                </td>
+                                                            }
+
+                                                            <td>
+                                                                @Html.ActionLink("Reject", "Delete", "LeaveApply", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+                                                            </td>
+                                                        }
+                                                    }
+                                                    else if (ViewContext.HttpContext.User.IsInRole("Executive Admin") || ViewContext.HttpContext.User.IsInRole("Executive Accounts") || ViewContext.HttpContext.User.IsInRole("Executive Operations") || ViewContext.HttpContext.User.IsInRole("Executive Marketing") || ViewContext.HttpContext.User.IsInRole("Associate Admin") || ViewContext.HttpContext.User.IsInRole("Associate Accounts") || ViewContext.HttpContext.User.IsInRole("Associate Operations") || ViewContext.HttpContext.User.IsInRole("Associate Marketing"))
+                                                    {
+                                                        <td>
+                                                            @if (item.Ismanagerauthorised == false)
+                                                            {
+
+                                                                @Html.ActionLink("Edit", "Edit", "LeaveApply", new { id = item.Id }, new { @class = "btn btn-sm btn-dark btn-block" })
+
+                                                            }
+                                                        </td>
+
+
+                                                        <td>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+
+                                    </table>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    @Html.PagedListPager(Model, pageIndex => Url.Action("Index", new
+                               {
+                                   pageIndex,
+                                   search = Request.QueryString["search"],
+                                   startdate = Request.QueryString["startdate"],
+                                   enddate = Request.QueryString["enddate"]
+                               }),
+new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+                                    @*@Html.Partial("_PagingFooter")*@
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+}

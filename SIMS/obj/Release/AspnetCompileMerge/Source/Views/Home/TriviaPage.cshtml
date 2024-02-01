@@ -1,0 +1,578 @@
+﻿@model IEnumerable<SIMS.Models.TriviaModel>
+@{
+    ViewBag.Title = "Trivia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+        overflow-x: hidden;
+    }
+
+    /* Style the tab */
+    .tab {
+        float: left;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            display: block;
+            background-color: inherit;
+            color: orange;
+            padding: 8px 14px;
+            /* width: 380px;*/
+            border: none;
+            outline: none;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgba(255, 106, 0, 0.49);
+                color: white;
+                /* width: 380px;*/
+            }
+
+            /* Create an active/current "tab button" class */
+            .tab button.active {
+                background-color: #ff6a00;
+                color: white;
+                display: block;
+                /* width: 380px;*/
+            }
+
+    .btn.focus, .btn:focus {
+        box-shadow: none;
+    }
+    /* Style the tab content */
+    .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border-left: none;
+    }
+
+    .heading-Orange {
+        color: orange;
+    }
+
+    @@media (min-width:320px) and (max-width:425px) {
+        .col-lg-3 {
+            width: 300px;
+            margin: auto;
+        }
+    }
+
+    @@media (min-width:992px) {
+        .specials {
+            margin-top: 10px;
+        }
+    }
+
+    @@media (max-width:992px) {
+        .specials {
+            margin-top: -40px;
+        }
+
+        img {
+            max-height: 200px;
+        }
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">&nbsp;</div>
+</div><div class="row">
+    <div class="col-12">&nbsp;</div>
+</div>
+<!-- ======= Specials Section ======= -->
+<section id="specials" class="specials">
+    <div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-12 col-md-12 col-lg-3">
+            <ul class="nav nav-tabs flex-column">
+                @{
+                    int i = 1;
+
+                    foreach (var item in Model)
+                    {
+                        if (i == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" style="font-size: 17px;" href="#tab-@item.Id">@Html.DisplayFor(model => item.TabName)</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" style="font-size: 17px;" href="#tab-@item.Id">@Html.DisplayFor(model => item.TabName)</a>
+                            </li>
+                        }
+                        i++;
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-12 col-md-12 col-lg-8 mt-4 mt-lg-0">
+            <div class="container-fluid">
+                <div class="tab-content" style="text-align:justify">
+                    @{
+                        int j = 1;
+
+                        foreach (var item in Model)
+                        {
+
+                            if (j == 1)
+                            {
+                                <div class="tab-pane active " id="tab-@item.Id">
+                                    <div class="row">
+                                        <div class="col-12 col-md-8 col-lg-8 details order-2 order-md-1">
+                                            <div class="container-fluid">
+                                                @if (item.Contents != "")
+                                                {
+                                                    @Html.DisplayFor(model => item.Contents, new { htmlAttributes = new { @class = "form-control col-12"} })
+                                                }
+                                                else
+                                                {
+                                                    <h5>@Html.DisplayFor(model => item.Title, new { htmlAttributes = new { @class = "form-control col-6",style="padding-top:20px;" } })</h5>
+                                                    <div class="row">
+                                                        <div class="col-12">&nbsp;</div>
+                                                    </div>
+                                                    <ul>
+                                                        @if (item.Point1 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point1, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point2 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point2, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point3 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point3, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point4 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point4, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point5 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point5, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point6 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point6, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point7 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point7, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point8 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point8, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point9 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point9, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point10 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point10, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-lg-3 text-center order-1 order-md-2">
+                                            @{
+                                                Byte[] imgByte = (byte[])item.Image;
+                                                string base64String = Convert.ToBase64String(imgByte, 0, imgByte.Length);
+                                                base64String = "data:image/png;base64," + base64String;
+                                            }
+                                            <img src="@base64String " class="img-fluid Trivia-Images" alt="No Image">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-left:20px;padding-top:5px;margin-right:0px;">
+                                        
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            @if (item.Contents != "")
+                                            {
+                                                <h5 style="margin-bottom:10px">@Html.DisplayFor(model => item.Title, new { htmlAttributes = new { @class = "form-control col-6",style="padding-top:20px;" } })</h5>
+                                                
+                                                <ul>
+
+                                                    @if (item.Point1 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point1, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point2 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point2, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point3 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point3, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point4 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point4, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point5 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point5, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point6 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point6, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point7 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point7, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point8 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point8, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point9 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point9, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point10 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point10, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+
+                                                </ul>
+                                            }
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="row" style="padding-left:30px;margin-right:0px;">
+                                       
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            @if (item.SubContents != "")
+                                            {
+
+                                                @Html.DisplayFor(model => item.SubContents, new { htmlAttributes = new { @class = "form-control col-12" } })
+                                            }
+                                        </div>
+
+
+                                    </div>
+                                    
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="tab-pane  " id="tab-@item.Id">
+                                    <div class="row">
+                                        <div class="col-12 col-md-8 col-lg-8 details order-2 order-md-1">
+                                            <div class="container-fluid">
+                                                @if (item.Contents != "")
+                                                {
+                                                    @Html.DisplayFor(model => item.Contents, new { htmlAttributes = new { @class = "form-control col-12", style = "height:400px;" } })
+                                                }
+                                                else
+                                                {
+                                                    <h5 style="margin-bottom:10px">@Html.DisplayFor(model => item.Title, new { htmlAttributes = new { @class = "form-control col-6",style="padding-top:20px;" } })</h5>
+                                                   
+                                                    <ul>
+                                                        @if (item.Point1 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point1, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point2 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point2, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point3 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point3, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point4 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point4, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point5 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point5, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point6 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point6, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point7 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point7, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point8 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point8, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point9 != "")
+                                                        {
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point9, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                        @if (item.Point10 != "")
+                                                        {
+
+                                                            <li>
+                                                                @Html.DisplayFor(model => item.Point10, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-lg-3 text-center order-1 order-md-2">
+                                            @{
+                                                Byte[] imgByte = (byte[])item.Image;
+                                                string base64String = Convert.ToBase64String(imgByte, 0, imgByte.Length);
+                                                base64String = "data:image/png;base64," + base64String;
+                                            }
+                                            <img src="@base64String " class="img-fluid Trivia-Images" alt="No Image">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-left:30px;padding-top:10px;margin-right:0px;">
+                                        
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            @if (item.Contents != "")
+                                            {
+                                                <h5>@Html.DisplayFor(model => item.Title, new { htmlAttributes = new { @class = "form-control col-6" ,style="padding-top:20px;"} })</h5>
+                                                <div class="row">
+                                                    <div class="col-12">&nbsp;</div>
+                                                </div>
+                                                <ul>
+
+                                                    @if (item.Point1 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point1, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point2 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point2, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point3 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point3, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point4 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point4, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point5 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point5, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point6 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point6, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point7 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point7, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point8 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point8, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point9 != "")
+                                                    {
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point9, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+                                                    @if (item.Point10 != "")
+                                                    {
+
+                                                        <li>
+                                                            @Html.DisplayFor(model => item.Point10, new { htmlAttributes = new { @class = "form-control col-12" } })
+
+                                                        </li>
+                                                    }
+
+                                                </ul>
+                                            }
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="row" style="padding-left:30px;margin-right:0px;">
+                                      
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            @if (item.SubContents != "")
+                                            {
+
+                                                @Html.DisplayFor(model => item.SubContents, new { htmlAttributes = new { @class = "form-control col-12" } })
+                                            }
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            }
+                            j++;
+                        }
+
+                    }
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Specials Section -->

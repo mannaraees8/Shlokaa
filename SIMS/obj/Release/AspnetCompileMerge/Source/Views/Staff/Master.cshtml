@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "AddCategoryInfoModel";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Item Master</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+   
+
+        <div class="row">
+
+            <div class="col-6 col-md-3">
+              <div class="card" style="min-height:200px">
+                    
+                    <div class="card-body">
+                        Item<br />
+
+                        <small>You can Add,Delete and Modify Item details.</small>
+                    </div>
+                    <div class="card-footer">
+                        <a href="~/Item/Index" class="btn btn-block btn-success">Item Management</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card" style="min-height:200px">
+                    <div class="card-body">
+                        Category<br />
+                        <small>You can Add,Delete and Modify Category details.</small>
+                    </div>
+                    <div class="card-footer">
+                        <a href="~/Category/Index" class="btn btn-block btn-success">Category Management</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card" style="min-height:200px">
+                    <div class="card-body">
+                         Sub Category<br />
+                        <small>You can Add,Delete and Modify Sub Category details.</small>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="~/SubCategory/Index" class="btn btn-block btn-success">SubCategory Management</a>
+                    </div>
+                </div>
+            </div>    
+            <div class="col-6 col-md-3">
+              <div class="card" style="min-height:200px">
+                    <div class="card-body">
+                         Unit<br />
+                        <small>You can Add,Delete and Modify Unit details.</small>
+                    </div>
+                    <div class="card-footer">
+                        <a href="~/UnitOfMeasurement/Index" class="btn btn-block btn-success">Unit Management</a>
+                    </div>
+                </div>
+            </div>    
+            <div class="col-6 col-md-3">
+              <div class="card" style="min-height:200px">
+                    <div class="card-body">
+                         Size
+                        <br />
+                        <small>You can Add,Delete and Modify Size details.</small>
+                    </div>
+                    <div class="card-footer">
+                        <a href="~/ItemSize/Index" class="btn btn-block btn-success">Size Management</a>
+                    </div>
+                </div>
+            </div>     
+       
+        </div>
+    </div>
+</div>

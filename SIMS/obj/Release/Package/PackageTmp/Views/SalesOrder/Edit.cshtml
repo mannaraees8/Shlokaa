@@ -1,0 +1,364 @@
+@model SIMS.ViewModels.SalesOrderModel.SalesOrderModel
+
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+@using (Html.BeginForm("Edit", "SalesOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="card-body admin-outer-form">
+        <div class="card-body admin-form">
+            <h3>Edit Sales Order </h3>
+            <hr />
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-12 col-md-10">
+
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div><div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.SalesOrderDetailsId)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DisplayFor(model => model.SalesOrderDetailsId)
+                            @Html.HiddenFor(model => model.SalesOrderDetailsId)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.Timestamp)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DisplayFor(model => model.Timestamp)
+                            @Html.ValidationMessageFor(model => model.Timestamp)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.StaffName)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DisplayFor(model => model.StaffName)
+                            @Html.ValidationMessageFor(model => model.StaffName)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.CustomerName)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DisplayFor(model => model.CustomerName)
+                            @Html.ValidationMessageFor(model => model.CustomerName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.ItemName)
+                        </div>
+                        <div class="col-7 col-sm-6 Id">
+                            @Html.DropDownListFor(model => model.ItemId, new SelectList(Model.ItemList, "ID", "Name"), new { @class = "form-control", onchange = "LoadSize(this)" })
+                            @Html.ValidationMessageFor(model => model.ItemName)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.CategoryName)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryList, "ID", "Name"), new { @class = "form-control", onchange = "LoadSubCategory(this)" })
+                            @Html.ValidationMessageFor(model => model.CategoryName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.SubCategoryName)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DropDownListFor(model => model.SubCategoryId, new SelectList(Model.SubCategoryList, "ID", "Name"), new { @class = "form-control", onchange = "LoadItem(this)" })
+                            @Html.ValidationMessageFor(model => model.SubCategoryName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row d-none">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.UnitOfMeasurement)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DropDownListFor(model => model.UnitOfMeasurementId, new SelectList(Model.UnitOfMeasurementList, "ID", "UnitOfMeasurementName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UnitOfMeasurement)
+                        </div>
+                    </div>
+                    <div class="row d-none">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.SizeName)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.DropDownListFor(model => model.SizeId, new SelectList(Model.ItemSizeList, "SizeId", "Size"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SizeName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.Quantity)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.EditorFor(model => model.Quantity, "", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Quantity)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.OrderValue)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.EditorFor(model => model.OrderValue, "", new { htmlAttributes = new { @class = "form-control", onchange = "totalOrderValueCal()" } })
+                            @Html.ValidationMessageFor(model => model.OrderValue)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-5 col-sm-4">
+                            @Html.LabelFor(model => model.TotalOrderValue)
+                        </div>
+                        <div class="col-7 col-sm-6">
+                            @Html.EditorFor(model => model.TotalOrderValue, "", new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.TotalOrderValue)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-6 col-sm-4">
+                            <input type="submit" value="Update" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-dark btn-block" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">&nbsp;</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $("#ItemId").select2();
+            $("#CategoryId").select2();
+            $("#SubCategoryId").select2();
+            $("#UnitOfMeasurementId").select2();
+            $("#SizeId").select2();
+        });
+
+        var totOrderValOriginal = 0;
+        var orderValOriginal = 0;
+        $(document).ready(function () {
+            totOrderValOriginal = parseInt($('#TotalOrderValue').val());
+            orderValOriginal = parseInt($('#OrderValue').val());
+
+        })
+        function totalOrderValueCal() {
+            var totOrderVal = 0;
+            var orderVal = parseInt($('#OrderValue').val());
+            if (orderVal > orderValOriginal) {
+                var diff = orderVal - orderValOriginal;
+                totOrderVal = totOrderValOriginal + diff;
+            } else {
+                var diff = orderValOriginal - orderVal;
+                totOrderVal = totOrderValOriginal - diff;
+            }
+            document.getElementById('TotalOrderValue').value = totOrderVal;
+
+        }
+
+        function LoadSubCategory(categoryDD) {
+
+            $.ajax({
+                type: "GET",
+                url: "/SalesOrder/getSubCategoryList",
+                data: { 'CategoryID': $(categoryDD).val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderSubCategory($('#SubCategoryId'), data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        }
+
+        function renderSubCategory(element, data) {
+
+            //render product
+            var $ele = $(element);
+            $ele.empty();
+            $ele.append($('<option/>').val('0').text('Select'));
+
+            $.each(data, function (i, val) {
+
+                $($ele).append($('<option>', {
+                    value: val.Id,
+                    text: val.Name
+                }));
+            })
+            $("#SubCategoryId").select2();
+
+        }
+
+
+        function LoadItem(item) {
+
+            $.ajax({
+                type: "GET",
+                url: "/SalesOrder/getItemList",
+                data: { 'SubCategoryID': $(item).val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderItem($('#ItemId'), data);
+                },
+                error: function (error) {
+
+                    console.log(error);
+                }
+            })
+        }
+
+
+        function renderItem(element, data) {
+
+            //render product
+            var $ele = $(element);
+            $ele.empty();
+            $ele.append($('<option/>').val('0').text('Select'));
+
+            $.each(data, function (i, val) {
+
+                $($ele).append($('<option>', {
+                    value: val.Id,
+                    text: val.Name
+                }));
+            })
+            $("#ItemId").select2();
+        }
+
+
+
+        function LoadSize(item) {
+
+            $.ajax({
+                type: "GET",
+                url: "/SalesOrder/getSizeList",
+                data: { 'ItemId': $(item).val() },
+                success: function (data) {
+                    //render products to appropriate dropdown
+                    renderSize($('#SizeId'), data);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        }
+        function renderSize(element, data) {
+            //render product
+            var $ele = $(element);
+            $ele.empty();
+            $ele.append($('<option/>').val('0').text('Select'));
+            $.each(data, function (i, val) {
+                $($ele).append($('<option>', {
+                    value: val.Id,
+                    text: val.Size
+                }));
+            })
+            $("#SizeId").select2();
+        }
+    </script>
+}
+
+

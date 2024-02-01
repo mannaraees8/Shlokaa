@@ -1,0 +1,213 @@
+﻿@model SIMS.ViewModels.SalesOrderModel.SalesOrderModel
+@{
+    ViewBag.Title = "Sales Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<style>
+    .pc, .sb, .unit, .size, .item, .quantity, .totalOrderValue, .OrderValue {
+        width: 172px;
+    }
+
+    .cl {
+        min-width: 180px;
+        width: max-content;
+    }
+
+    #orderNo {
+        color: green;
+        font-weight: bold;
+    }
+
+    @@media (max-width:1315px) {
+        .quantity, .sb {
+            margin-top: 0px;
+        }
+    }
+
+    @@media (max-width:1550px) {
+        .btn-add-sales {
+            margin-top: -22px;
+        }
+    }
+
+    @@media (max-width:1550px) {
+        .remove {
+            margin-top: 0px;
+        }
+    }
+
+    select option {
+        font-size: 15px;
+    }
+
+    .form-control {
+        font-size: 15px;
+    }
+</style>
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+
+    #totalOrderValue {
+        border: 2px solid #ddd;
+        border-radius: 3px;
+        height: 40px;
+    }
+</style>
+
+
+
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>Create Sales Order</h3>
+        <hr />
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+        <div class="master">
+
+
+            <div class="row">
+                <div class="col-6 col-md-2 col-lg-2">Order No :</div>
+                <div class="col-6 col-md-2 col-lg-1"><span id="orderNo"></span></div>
+                <div class="col-6 col-md-2 col-lg-2">Order Date :</div>
+                <div class="col-6 col-md-2 col-lg-2">@Html.DisplayFor(model => model.Timestamp)</div>
+            </div><hr />
+            <div class="row">
+                <div class="col-5 col-md-4 col-lg-3">Party Name</div>
+                <div class="col-6 col-md-4">
+                    <select id="CustomerList" class="cl form-control" onchange="LoadCustomerName()">
+                        <option>Select</option>
+                    </select>
+                    <span class="error">Select party name</span>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="details">
+            <div style="font-size: 18px">
+                Order items
+            </div>
+            <table class="table table-responsive-lg table-responsive  table-sm w3-table w3-striped w3-border">
+
+                <tr style="background: rgba(255, 165, 0, 0.14);font-weight:500">
+                    <td>Category</td>
+                    <td>Sub Category</td>
+                    <td>Item</td>
+                    <td>Size</td>
+                    <td>Quantity</td>
+                    <td>Order Value</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="mycontainer" id="mainrow">
+
+                    <td>
+                        <select id="productCategory" class="pc form-control" onchange="LoadSubCategory(this)">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select Category</span>
+                    </td>
+
+                    <td>
+                        <select id="subCategory" class="sb form-control disabled" onchange="LoadItem(this)">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select Sub Category</span>
+                    </td>
+
+
+                    <td>
+                        <select id="Item" class="item form-control" onchange="LoadSize(this)">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select Item</span>
+                    </td>
+
+                    <td>
+                        <select id="Size" class="size form-control">
+                            <option>Select</option>
+                        </select>
+                        <span class="error">Select size</span>
+                    </td>
+
+
+
+                    <td>
+                        <input type="number" id="quantity" class="quantity form-control" value="" />
+                        <span class="error">Valid quantity required</span>
+                    </td>
+                    <td>
+                        <input type="number" id="OrderValue" class="OrderValue form-control" value="" />
+                        <span class="error">Enter order value</span>
+                    </td>
+                    <td>
+                        <input type="button" id="add" value="add" style="width:80px" class="btn btn-success btn-add-sales" />
+                    </td>
+                </tr>
+            </table>
+
+            <div id="orderItems">
+                <table class="table table-responsive" id="orderdetailsItems"></table>
+                <span id="orderItemError" style="color:red"></span>
+                <span id="orderItemSuccess" style="color:Green"></span>
+            </div>
+            <div style="padding:10px 0; text-align:right">
+                <input id="submit" type="button" value="Save Order" class="btn btn-warning" style="padding:10px 20px" />
+            </div>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <label>Total Order Value </label>&nbsp;<input type="text" id="totalOrderValue" readonly />
+                    <span class="error">Enter order value</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#CustomerList").select2();
+            $("#productCategory").select2();
+            $("#subCategory").select2();
+            $("#Item").select2();
+            $("#Size").select2();
+
+        });
+
+        $(document).on("keyup", "#quantity", function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+        $(document).on("keyup", "#OrderValue", function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+    <script src="~/Scripts/Admin/SalesOrderScript.js"></script>
+
+    <style>
+        span.error {
+            display: block;
+            visibility: hidden;
+            color: red;
+            font-size: 90%;
+        }
+
+        tr.error {
+            background-color: rgba(255,0,0,0.35);
+        }
+    </style>
+
+
+}

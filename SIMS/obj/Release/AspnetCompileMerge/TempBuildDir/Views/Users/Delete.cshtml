@@ -1,0 +1,255 @@
+@model SIMS.ViewModels.UsersModel.UsersModel
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayoutpage.cshtml";
+}
+
+<style>
+    @@media (max-width:670px) {
+        .admin-outer-form {
+            padding: 0;
+        }
+
+        .admin-form {
+            padding: 20px;
+        }
+    }
+</style>
+<div class="card-body admin-outer-form">
+    <div class="card-body admin-form">
+        <h3>  User Details</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 col-lg-3 col-sm-12  text-center">
+                @if (Model.Photo != null)
+
+                {
+                    Byte[] imgByte = (byte[])Model.Photo;
+                    string base64String = Convert.ToBase64String(imgByte, 0, imgByte.Length);
+                    base64String = "data:image/png;base64," + base64String;
+
+                    <img src="@base64String " class="rounded-circle shadow" width="250" height="250" alt="No Image">
+
+
+                }
+                else
+                {
+                    <i class="fa fa-user-circle img-fluid" style="font-size:100px;color:white"></i>
+                }
+
+            </div>
+
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Id)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Name)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Mobile)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Mobile)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Email)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Address)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Location)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Location)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.State)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.State)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Dob)
+                    </div>
+                    <div class="col-8">
+                        : @Html.ValueFor(model => model.Dob, "{0:dd-MM-yyyy}")
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Doj)
+                    </div>
+                    <div class="col-8">
+                        : @Html.ValueFor(model => model.Doj, "{0:dd-MM-yyyy}")
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Adhar)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Adhar)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Esino)
+                    </div>
+                    <div class="col-8">
+                        :  @Html.DisplayFor(model => model.Esino)
+                    </div>
+                </div><div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Pfno)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Pfno)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Bankaccountno)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Bankaccountno)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Bankname)
+                    </div>
+                    <div class="col-8">
+                        :  @Html.DisplayFor(model => model.Bankname)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Branch)
+                    </div>
+                    <div class="col-8">
+                        :  @Html.DisplayFor(model => model.Branch)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Ifsc)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Ifsc)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Department)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Department)
+                    </div>
+                </div>
+                <div class="row d-none">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Usertype)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Usertype)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        IN Time
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.EnteringTime)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        OUT Time
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.LeavingTime)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.Target)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.Target)
+                    </div>
+                </div>   <div class="row">
+                    <div class="col-4">
+                        @Html.DisplayNameFor(model => model.SalesTarget)
+                    </div>
+                    <div class="col-8">
+                        : @Html.DisplayFor(model => model.SalesTarget)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">&nbsp;</div>
+                </div>
+                @using (Html.BeginForm())
+                {<div class="row">
+
+                        <div class="col-lg-4 col-sm-6">
+                            <input type="submit" value="DeActivate" class="btn btn-sm btn-dark btn-block" style="margin-bottom:10px" />
+                        </div>
+                        <div class="col-lg-4 col-sm-6">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm  btn-dark btn-block" })
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">&nbsp;</div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
